@@ -1,0 +1,899 @@
+/* General Styling */
+
+@font-face {
+      font-family: "Sequel 85";
+      src: url(SEQUEL100BLACK-85.TTF);
+}
+
+@font-face {
+      font-family: "Tunstent Compressed Medium";
+      src: url(TUNGSTENCOMPRESSED-MEDIUM.TTF);
+}
+
+@font-face {
+      font-family: "Gotham Book";
+      src: url(Gotham-Book.otf);
+}
+
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+
+:root {
+      --accent: #0044FF; /* Electric Cobalt Blue */
+      --paper: #F4F4F0; /* Warm, tactile cardstock off-white */
+      --grid: rgba(0, 0, 0, 0.05); /* Faint blueprint lines */
+}
+
+html, body {
+      font-family: "Gotham Book";
+      overflow-x: hidden;
+      background-color: transparent; /* Lets the particle canvas shine through */
+      color: #f0f0f0;
+}
+
+.logo-img, .icon {
+      filter: invert(1);
+}
+
+/* 2. Make the navigation links white */
+a {
+      color: var(--paper);
+      text-decoration: none;
+}
+
+/* 3. Lighten the dark gray paragraph text */
+p {
+      color: #f0f0f0; 
+}
+
+/* 4. Fix the Buttons so they don't blend in */
+.btn-color-1, .btn-color-2 {
+      border: 2px solid var(--paper); /* Gives them a sharp white border */
+}
+
+.btn-color-1 {
+      background: transparent;
+      color: var(--paper); /* Hollow button with white text */
+}
+
+.btn-color-2 {
+      background: var(--paper);
+      color: black; /* Solid white button with black text */
+}
+
+#particle-canvas {
+      position: fixed; 
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #050505; /* Your dark graphite background lives exclusively here now */
+      z-index: -1; 
+      pointer-events: none; /* Stops it from blocking your clicks and buttons */
+      overflow: hidden;
+}
+.star {
+      position: absolute;
+      background-color: #ffffff;
+      border-radius: 50%;
+      opacity: 0; 
+      /* UPGRADED GLOW: A tight bright core + a wider soft halo */
+      box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6); 
+      animation: pulseAndDrift linear infinite;
+      will-change: transform, opacity; 
+}
+
+/* The New Cinematic Drift Animation */
+@keyframes pulseAndDrift {
+      0% { 
+            opacity: 0; 
+            /* Start at original position, slightly scaled down */
+            transform: translate(0, 0) scale(0.5); 
+      }
+      50% { 
+            opacity: 1; 
+            /* Move halfway to the drift target and scale up massively */
+            transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); 
+      }
+      100% { 
+            opacity: 0; 
+            /* Arrive at final drift destination, scaled back down to fade out */
+            transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); 
+      }
+}
+
+h1, h2, h3 {
+      font-family: "sequel 85";
+}
+
+html {
+      scroll-behavior: smooth;
+}
+
+/* Logo Styling */
+.logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none; 
+}
+
+.logo-img {
+      height: 5rem; 
+      width: auto;    
+      transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo-link:hover .logo-img {
+      transform: scale(1.15); 
+      opacity: 0.8;           
+      cursor: pointer;
+}
+
+/*Transition*/
+a, .btn {
+      transition: all 300ms ease;
+}
+
+/*Desktop Nav*/
+
+#desktop-nav, #hamburger-nav {
+      margin-top: 2.5rem; 
+}
+nav, .nav-links {
+      display: flex;
+}
+nav {
+      align-items: center;
+      justify-content: space-between;
+      height: 17vh;
+      width: 100%;
+      padding: 0 2rem;
+}
+
+.nav-links {
+   gap: 2rem;
+   list-style: none;
+   font-size: 1.5rem;   
+}
+
+a:hover {
+      color: grey;
+      text-decoration: underline;
+      text-underline-offset: 0.5rem;
+      text-decoration-color: rgb(181, 181, 181);
+}
+
+.nav-links a {
+      transition: transform 0.3s ease;
+}
+
+.nav-links a:hover {
+      display: inline-block;
+      transform: scale(1.05); 
+}
+
+.logo {
+      font-size: 2rem;
+}
+
+.logo:hover {
+      cursor:default;
+}
+
+/* Hamburger Menu */
+#hamburger-nav {
+      display: none;
+}
+
+.hamburger-menu {
+      position: relative;
+      display: inline-block;
+}
+
+.hamburger-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 24px;
+      width: 30px;
+      cursor: pointer;
+}
+
+.hamburger-icon span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--paper);
+      transition: all 0.3s ease-in-out;
+}
+
+.menu-links {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      width: fit-content;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+}    
+
+.menu-links a {
+      display: block;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      color: black;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+}
+
+.menu-links li {
+      list-style: none;
+}
+
+.menu-links.open {
+      max-height: 300px;
+}
+
+.hamburger-icon.open span:first-child {
+      transform: rotate(45deg) translate(10px, 5px);
+}
+
+.hamburger-icon.open span:nth-child(2){
+      opacity: 0;
+}
+
+.hamburger-icon.open span:last-child {
+      transform: rotate(-45deg) translate(10px, -5px);
+}
+
+/* Sections */
+section {
+      padding-top: 4vh;
+      min-height: 100vh;
+      height: auto;
+      box-sizing: border-box;
+}
+
+.section-container {
+      display: flex;
+}
+
+/* Profile Section */
+
+#profile {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Anchors the content to the top instead of the middle */
+      min-height: 80vh; /* Reduced from 100vh so the "About" section isn't miles away */
+      padding-top: 4rem; /* Gives it perfect breathing room right under the nav */
+      padding-bottom: 2rem; 
+      width: 100%;
+}
+
+/* Layer 2: Content Layout */
+.profile-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5vh;
+      margin-top: 0; /* Removed the old negative margin we used for the bottom banner */
+      z-index: 2; 
+      max-width: 1300px; 
+      width: 100%;
+      padding: 0 2rem;
+}
+.marquee-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background: var(--accent); /* Electric Cobalt Blue */
+      padding: 0.4rem 0; /* Keeps it extremely thin and sleek */
+      white-space: nowrap;
+      z-index: 1000; /* Forces it to stay above everything, including nav */
+      border-bottom: 2px solid var(--paper); /* Sharp white bottom border */
+      overflow: hidden;
+}
+
+.marquee-text {
+      font-family: "Sequel 85", sans-serif;
+      font-size: 1rem; /* Scaled down for the thin banner */
+      color: #050505; /* Pitch black text for legibility */
+      -webkit-text-stroke: 0; 
+      display: inline-block;
+      animation: scrollText 25s linear infinite; 
+      letter-spacing: 0.2rem; 
+}
+
+@keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); } 
+}
+
+/* Card PFP */
+
+/* The Brutalist Slab Image - MASSIVELY UPSCALED */
+.tilt-card {
+      position: relative;
+      width: 500px; /* Was 380px */
+      height: 640px; /* Was 480px */
+      border-radius: 0; 
+      border: 2px solid white; 
+      box-shadow: 25px 25px 0px #0044FF;
+      overflow: hidden;
+      margin: 0;
+      flex-shrink: 0; 
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+      will-change: transform;
+      z-index: 2;
+}
+
+.tilt-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none; 
+      /* The Editorial Snap */
+      filter: grayscale(100%) contrast(120%); /* Starts stark and dramatic */
+      transition: filter 0.4s ease; /* Smooth fade */
+}
+
+.tilt-card:hover img {
+      filter: grayscale(0%) contrast(100%); /* Bursts into color on hover */
+}
+
+/* The Intro Text & Buttons */
+/* The Intro Text - SCALED UP */
+.section__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem; /* Increased breathing room between text lines */
+}
+
+/* "Hello, My Name Is" and "Rising Junior..." */
+.section__text__p1, 
+.section__text__p2 {
+      font-size: 1.5rem; /* Drastically increased from the default */
+      font-weight: 500;
+}
+
+/* The Main Title */
+.section__text .title {
+      font-size: clamp(3rem, 6vw, 6rem); /* Blew up the scale so it spans beautifully */
+      margin: 0;
+      text-align: left;
+      white-space: nowrap; 
+}
+
+.section__text .btn-container {
+      display: flex;
+      justify-content: flex-start; 
+      gap: 1rem;
+      margin-top: 0.5rem;
+}
+
+/* Icons */
+.icon {
+      cursor: pointer;
+      height: 3rem; /* Was 2rem. 50% larger */
+      transition: transform 0.3s ease;
+}
+.icon:hover {
+      transform: scale(1.15);
+}
+
+/*Buttons*/
+
+.btn {
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-weight: 600;
+      font-size: 2.25rem; /* Bigger, bolder button text */
+      transition: all 300ms ease;
+      padding: 1.5rem 2rem; /* Much thicker, premium padding */
+      width: 18rem; /* Widened the physical button */
+      border-radius: 0; 
+      text-transform: uppercase; 
+      letter-spacing: 0.1rem;
+}
+
+.btn-color-1, .btn-color-2 {
+      border: 2px solid black;
+}
+
+.btn-color-1 {
+      background: black;
+      color: white;
+}
+
+.btn-color-1:hover {
+      background: var(--accent); /* Pops to Electric Blue on hover */
+      border-color: var(--accent);
+}
+
+.btn-color-2 {
+      background: var(--paper);
+      color: black;
+}
+
+.btn-color-2:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+}
+
+/* About Section */
+#about {
+      position: relative;
+}
+
+.about-containers {
+      gap: 2rem;
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+}
+
+.about-details-container {
+      justify-content: center;
+      flex-direction: column;
+}
+
+.about-containers,
+.about-details-container {
+      display: flex;
+}
+
+.about-pic  {
+      border-radius: 2rem;
+}
+
+.arrow {
+      position: absolute;
+      right: -5rem;
+      bottom: 2.5rem
+}
+
+.details-container {
+      padding: 1.5rem;
+      flex: 1;
+      background: white;
+      border-radius: 2rem;
+      border: rgb(53, 53, 53) 0.1rem solid;
+      border-color: rgb(163, 163, 163);
+      text-align: center;
+}
+
+.section__pic-container {
+      height: 400px;
+      width: 400px;
+      margin: auto 0;
+}
+
+/* Experience Section */
+#experience {
+      position: relative;
+}
+
+.experience-sub-title {
+      color: rgb(85, 85, 85);
+      font-weight: 600;
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+}
+
+.experience-details-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+}
+
+#experience .article-container {
+      display: flex;
+      text-align: initial;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 2.5rem;
+      justify-content: space-around;
+      background: transparent; 
+      border: none; 
+}
+
+article {
+      display: flex;
+      width: 10rem;
+      justify-content: space-around;
+      gap: .5rem;
+}
+
+article .icon {
+      cursor: default;
+}
+
+/* --- Projects Section (Center-Stage Carousel) --- */
+#projects {
+      position: relative;
+      padding-top: 4vh;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+}
+
+.carousel-container {
+      position: relative;
+      width: 100vw;
+      height: 75vh; /* MASSIVELY INCREASED from 60vh to take up more screen space */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 2rem;
+}
+
+/* Base State (Hidden in the very back) */
+.carousel-item {
+      position: absolute;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+      opacity: 0;
+      transform: translateX(0) scale(0.5);
+      z-index: 0;
+      pointer-events: none;
+}
+
+/* Center Spotlight */
+.carousel-item.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      z-index: 10;
+      pointer-events: auto;
+}
+
+/* --- Layer 1: Immediate Left & Right --- */
+.carousel-item.prev {
+      opacity: 1; /* 100% visible, no transparency */
+      transform: translateX(-85%) scale(0.8); /* Pushed much further out to the left */
+      z-index: 5;
+      pointer-events: auto;
+      cursor: pointer;
+      filter: brightness(0.6); /* Optional: Darkens it slightly to keep focus on the center, without making it see-through */
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+
+.carousel-item.next {
+      opacity: 1; /* 100% visible, no transparency */
+      transform: translateX(85%) scale(0.8); /* Pushed much further out to the right */
+      z-index: 5;
+      pointer-events: auto;
+      cursor: pointer;
+      filter: brightness(0.6);
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+
+/* --- Layer 2: Outer Left & Right --- */
+.carousel-item.prev-2 {
+      opacity: 1; /* 100% visible */
+      transform: translateX(-160%) scale(0.65); /* Pushed way out to the far left edge */
+      z-index: 2;
+      pointer-events: auto;
+      cursor: pointer;
+      filter: brightness(0.3); /* Darker than Layer 1 to create deep 3D shadows */
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+
+.carousel-item.next-2 {
+      opacity: 1; /* 100% visible */
+      transform: translateX(160%) scale(0.65); /* Pushed way out to the far right edge */
+      z-index: 2;
+      pointer-events: auto;
+      cursor: pointer;
+      filter: brightness(0.3);
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+
+/* Updated Hover Effects to brighten them up when you mouse over */
+.carousel-item.prev:hover,
+.carousel-item.next:hover {
+      filter: brightness(0.9);
+}
+
+.carousel-item.prev-2:hover,
+.carousel-item.next-2:hover {
+      filter: brightness(0.7);
+}
+
+.carousel-img {
+      height: 65vh; /* INCREASED from 50vh to make the artwork towering */
+      width: auto;
+      max-width: 45vw; /* Allows wider presentations to stretch further */
+      object-fit: contain;
+      /* Removed the blue block and replaced it with a premium, deep ambient shadow */
+      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
+}
+
+.carousel-gallery {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.carousel-caption {
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2rem;
+      color: var(--paper);
+      text-align: center;
+      margin-top: 1.5rem;
+      letter-spacing: 0.1rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+}
+
+.carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--paper);
+      font-size: 4rem;
+      cursor: pointer;
+      z-index: 20;
+      transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-arrow:hover {
+      color: var(--accent);
+      transform: translateY(-50%) scale(1.1);
+}
+
+/* Automatically adds the click indicator under the active center image */
+.carousel-item.active .carousel-caption::after {
+      content: "CLICK TO EXPLORE";
+      display: block;
+      font-family: "Gotham Book", sans-serif;
+      font-size: 1rem;
+      color: var(--accent); /* Electric Blue */
+      margin-top: 0.8rem;
+      letter-spacing: 0.15rem;
+      opacity: 0;
+      animation: pulseText 2s infinite ease-in-out;
+}
+
+@keyframes pulseText {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 0.3; }
+}
+
+.left-arrow { left: 5%; }
+.right-arrow { right: 5%; }
+
+/* Contact Section */
+#contact {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 70vh;
+}
+
+.contact-info-upper-container {
+      display: flex;
+      justify-content: center;
+      border-radius: 2rem;
+      border: rgb(53, 53, 53) 0.1rem solid;
+      border-color: rgb(163, 163, 163);
+      background: rgb(250, 250, 250);
+      margin: 2rem auto;
+      padding: .5rem;
+}
+
+.contact-info-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin: 1rem;
+}
+
+.contact-icon, .email-icon {
+      cursor: default;
+}
+
+.email-icon {
+      /* Scales the image up to compensate for its internal blank space */
+      height: 2.5rem;
+      transform: scale(1.15); 
+}
+
+/* We also need to update its hover state so it still grows when you mouse over it */
+.email-icon:hover {
+      transform: scale(1.3); 
+}
+
+/* --- Brutalist Filter Menu --- */
+.project-filters {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      z-index: 20;
+}
+
+.filter-btn {
+      background: transparent;
+      border: none;
+      color: #f0f0f0; /* Brightened the gray slightly for better contrast */
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2.5rem; /* Massively increased from 1.5rem */
+      letter-spacing: 0.15rem; /* Spaced the letters out slightly more for legibility */
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding-bottom: 0.2rem;
+}
+
+.filter-btn:hover {
+      color: var(--paper);
+}
+
+.filter-btn.active-filter {
+      color: var(--accent); /* Highlights the active category in your Electric Blue */
+      border-bottom: 2px solid var(--accent);
+}
+
+/* Hides projects that don't match the active filter */
+.hidden-project {
+      display: none !important; 
+}
+
+/* --- The Deep Dive Modal --- */
+.modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 5, 5, 0.98); /* Almost pitch black */
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none; /* Hidden by default */
+      transition: opacity 0.4s ease;
+}
+
+.modal-overlay.show-modal {
+      opacity: 1;
+      pointer-events: auto;
+}
+
+.modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
+      margin: 5vh auto;
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem;
+      color: var(--paper);
+}
+
+.modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: transparent;
+      border: none;
+      color: var(--paper);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-close:hover {
+      color: var(--accent);
+      transform: scale(1.2);
+}
+
+/* Modal Inner Content Styling */
+.modal-hero-img {
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      margin-bottom: 2rem;
+}
+
+#modal-body-content h2 {
+      font-family: "Sequel 85", sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+}
+
+#modal-body-content p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+      height: auto;
+      min-height: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      margin: 0 1rem;
+}
+
+footer nav {
+      height: auto; 
+}
+
+footer p {
+      text-align: center;
+}
+
+/* --- Presentation Slide Stack Styling --- */
+.presentation-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem; 
+      margin-top: 3rem;
+      width: 100%;
+}
+
+.presentation-slide {
+      width: 100%;
+      height: auto;
+      max-width: 900px; 
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); 
+      border-radius: 4px; 
+}
+
+/* --- Modal Slideshow Formatting --- */
+#modal-body-content .presentation-stack {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 2rem;
+}
+
+.modal-slide-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid var(--paper);
+      color: var(--paper);
+      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+}
+
+.modal-slide-arrow:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+}
+
+.modal-slide-arrow.left-arrow { left: -2rem; }
+.modal-slide-arrow.right-arrow { right: -2rem; }
