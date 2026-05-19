@@ -1,4 +1,4 @@
-// --- 1. Hamburger Menu (Global Scope) ---
+// --- 1. Hamburger Menu ---
 function toggleMenu() {
       const menu = document.querySelector(".menu-links");
       const icon = document.querySelector(".hamburger-icon");
@@ -6,7 +6,7 @@ function toggleMenu() {
       icon.classList.toggle("open");
 }
 
-// --- 2. Smart Share Button (Global Scope) ---
+// --- 2. Smart Share Button ---
 window.sharePortfolio = function() {
       const siteUrl = window.location.href; 
       if (navigator.share) {
@@ -36,55 +36,15 @@ window.sharePortfolio = function() {
       }
 }
 
-// --- ALL OTHER SCRIPTS WAITING FOR THE HTML TO LOAD ---
+// --- ALL OTHER SCRIPTS WAITING FOR HTML ---
 document.addEventListener('DOMContentLoaded', () => {
 
-      // --- 3. Premium Slab 3D Tilt Effect ---
-      const tiltCard = document.getElementById('tilt-card');
-
-      if (tiltCard) {
-            let ticking = false; 
-
-            tiltCard.addEventListener('mousemove', (e) => {
-                  const mouseX = e.clientX;
-                  const mouseY = e.clientY;
-
-                  if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                              const rect = tiltCard.getBoundingClientRect();
-                              const x = mouseX - rect.left;
-                              const y = mouseY - rect.top;
-                              
-                              const centerX = rect.width / 2;
-                              const centerY = rect.height / 2;
-                              
-                              const rotateX = ((y - centerY) / centerY) * -15; 
-                              const rotateY = ((x - centerX) / centerX) * 15;
-                              
-                              tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-                              tiltCard.style.boxShadow = `${-rotateY}px ${rotateX}px 40px var(--accent)`;
-                              tiltCard.style.transition = 'none'; 
-                              
-                              ticking = false; 
-                        });
-                        ticking = true; 
-                  }
-            });
-
-            tiltCard.addEventListener('mouseleave', () => {
-                  tiltCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                  tiltCard.style.boxShadow = `25px 25px 0px var(--accent)`;
-                  tiltCard.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
-            });
-      }
-
-      // --- 4. Ambient Star Particles ---
+      // --- 3. Ambient Star Particles ---
       function createStars() {
             const container = document.getElementById('particle-canvas');
             if (!container) return; 
 
             const starCount = 350; 
-
             for (let i = 0; i < starCount; i++) {
                   let star = document.createElement('div');
                   star.classList.add('star');
@@ -92,13 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   let size = Math.random() * 2.5 + 1.5; 
                   star.style.width = `${size}px`;
                   star.style.height = `${size}px`;
-
                   star.style.left = `${Math.random() * 100}vw`;
                   star.style.top = `${Math.random() * 100}vh`;
-
                   star.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 20}vw`);
                   star.style.setProperty('--drift-y', `${(Math.random() - 0.5) * 20}vh`);
-
                   star.style.animationDuration = `${Math.random() * 4 + 2.5}s`;
                   star.style.animationDelay = `${Math.random() * 5}s`;
 
@@ -107,29 +64,48 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       createStars();
 
-      // --- 5. Carousel, Filters, & Modal Logic ---
+      // --- 4. Carousel & Filter Logic ---
       let currentCarouselIndex = 0;
       let allCarouselItems = Array.from(document.querySelectorAll('.carousel-item'));
-      let visibleCarouselItems = [...allCarouselItems]; 
+      let visibleCarouselItems = []; 
 
-      if (visibleCarouselItems.length > 0) {
-            updateCarousel(); 
+      function generateThumbnails() {
+            const thumbContainer = document.getElementById('carousel-thumbnails');
+            if (!thumbContainer) return;
+            thumbContainer.innerHTML = ''; 
+
+            visibleCarouselItems.forEach((item, index) => {
+                  const imgElement = item.querySelector('.carousel-img');
+                  if(!imgElement) return;
+
+                  const thumb = document.createElement('img');
+                  thumb.classList.add('thumbnail-dot');
+                  thumb.src = imgElement.src; 
+
+                  thumb.onclick = () => {
+                        currentCarouselIndex = index;
+                        updateCarousel();
+                  };
+                  thumbContainer.appendChild(thumb);
+            });
       }
 
-      // Filter Logic
       window.filterProjects = function(category) {
-            // Safely grab the button that was clicked and update colors
-            const clickedBtn = window.event ? window.event.currentTarget : null;
-            if (clickedBtn) {
-                  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
-                  clickedBtn.classList.add('active-filter');
-            }
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                  btn.classList.remove('active-filter');
+                  if (btn.getAttribute('onclick').includes(category)) {
+                        btn.classList.add('active-filter');
+                  }
+            });
 
             visibleCarouselItems = [];
             allCarouselItems.forEach(item => {
                   item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2'); 
                   
-                  if (category === 'all' || item.getAttribute('data-category') === category) {
+                  const isFeaturedMode = (category === 'featured' && item.getAttribute('data-featured') === 'true');
+                  const isCategoryMatch = (item.getAttribute('data-category') === category);
+
+                  if (isFeaturedMode || isCategoryMatch) {
                         item.classList.remove('hidden-project');
                         visibleCarouselItems.push(item);
                   } else {
@@ -139,11 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             currentCarouselIndex = 0;
             if (visibleCarouselItems.length > 0) {
+                  generateThumbnails(); 
                   updateCarousel();
+            } else {
+                  const thumbContainer = document.getElementById('carousel-thumbnails');
+                  if (thumbContainer) thumbContainer.innerHTML = '';
             }
       }
 
-      // Click Logic (Spin vs. Open Modal)
+      if (allCarouselItems.length > 0) {
+            filterProjects('featured'); 
+      }
+      
       window.handleProjectClick = function(clickedElement) {
             const clickedIndex = visibleCarouselItems.indexOf(clickedElement);
 
@@ -155,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
       }
 
-      // Carousel Math
       function updateCarousel() {
             const totalItems = visibleCarouselItems.length;
 
@@ -164,14 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                   if (index === currentCarouselIndex) {
                         item.classList.add('active');
-                  } else if (index === (currentCarouselIndex - 1 + totalItems) % totalItems) {
+                  } else if (totalItems >= 3 && index === (currentCarouselIndex - 1 + totalItems) % totalItems) {
                         item.classList.add('prev');
-                  } else if (index === (currentCarouselIndex + 1) % totalItems) {
+                  } else if (totalItems >= 2 && index === (currentCarouselIndex + 1) % totalItems) {
                         item.classList.add('next');
-                  } else if (index === (currentCarouselIndex - 2 + totalItems) % totalItems) {
+                  } else if (totalItems >= 5 && index === (currentCarouselIndex - 2 + totalItems) % totalItems) {
                         item.classList.add('prev-2');
-                  } else if (index === (currentCarouselIndex + 2) % totalItems) {
+                  } else if (totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems) {
                         item.classList.add('next-2');
+                  }
+            });
+
+            const thumbs = document.querySelectorAll('.thumbnail-dot');
+            thumbs.forEach((thumb, index) => {
+                  if (index === currentCarouselIndex) {
+                        thumb.classList.add('active-thumb');
+                  } else {
+                        thumb.classList.remove('active-thumb');
                   }
             });
       }
@@ -183,16 +174,106 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel();
       }
 
-      // Modal Functions
+      // --- 5. Modal Navigation Logic ---
+      let currentModalSlides = [];
+      let currentModalSlideIndex = 0;
+
       window.openModal = function(projectElement) {
             const caseStudyData = projectElement.querySelector('.case-study-data').innerHTML;
             document.getElementById('modal-body-content').innerHTML = caseStudyData;
+
+            const stack = document.getElementById('modal-body-content').querySelector('.presentation-stack');
+            
+            if (stack) {
+                  currentModalSlides = Array.from(stack.querySelectorAll('.presentation-slide'));
+                  currentModalSlideIndex = 0;
+
+                  currentModalSlides.forEach((slide, index) => {
+                        slide.style.display = index === 0 ? 'block' : 'none';
+                        slide.style.width = '100%'; 
+                        slide.style.margin = '0 auto'; 
+                  });
+
+                  const leftArrow = document.createElement('button');
+                  leftArrow.innerHTML = '&#10094;';
+                  leftArrow.className = 'modal-slide-arrow left-arrow';
+                  leftArrow.onclick = function(e) {
+                        e.stopPropagation(); 
+                        window.changeModalSlide(-1);
+                  };
+
+                  const rightArrow = document.createElement('button');
+                  rightArrow.innerHTML = '&#10095;';
+                  rightArrow.className = 'modal-slide-arrow right-arrow';
+                  rightArrow.onclick = function(e) {
+                        e.stopPropagation(); 
+                        window.changeModalSlide(1);
+                  };
+
+                  stack.appendChild(leftArrow);
+                  stack.appendChild(rightArrow);
+            }
+
             document.getElementById('project-modal').classList.add('show-modal');
             document.body.style.overflow = "hidden";
+      }
+
+      window.changeModalSlide = function(direction) {
+            if (currentModalSlides.length === 0) return;
+
+            currentModalSlides[currentModalSlideIndex].style.display = 'none';
+            const totalSlides = currentModalSlides.length;
+            currentModalSlideIndex = (currentModalSlideIndex + direction + totalSlides) % totalSlides;
+            currentModalSlides[currentModalSlideIndex].style.display = 'block';
       }
 
       window.closeModal = function() {
             document.getElementById('project-modal').classList.remove('show-modal');
             document.body.style.overflow = "auto";
+            
+            currentModalSlides = [];
+            currentModalSlideIndex = 0;
       }
+
+      // --- 6. Custom Brutalist Cursor ---
+      const cursor = document.getElementById('custom-cursor');
+      if (cursor) {
+            document.addEventListener('mousemove', (e) => {
+                  cursor.style.left = e.clientX + 'px';
+                  cursor.style.top = e.clientY + 'px';
+            });
+
+            // Removed .tilt-card from here so the image does not react to the hover!
+            const clickables = document.querySelectorAll('a, button, .icon, .thumbnail-dot, .carousel-img, .carousel-arrow');
+            clickables.forEach(el => {
+                  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+      }
+
+      // --- 7. Bottom Scroll Progress Bar ---
+      const progressBar = document.getElementById('scroll-progress');
+      if (progressBar) {
+            window.addEventListener('scroll', () => {
+                  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                  const scrollPercent = (scrollTop / scrollHeight) * 100;
+                  progressBar.style.width = scrollPercent + '%';
+            });
+      }
+
+      // --- 8. Cinematic Scroll Reveals ---
+      const cardsToReveal = document.querySelectorAll('.details-container, .contact-info-upper-container, .about-pic, .experience-sub-title');
+      cardsToReveal.forEach(card => card.classList.add('reveal-on-scroll'));
+
+      const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target); 
+                  }
+            });
+      }, { threshold: 0.15 });
+
+      cardsToReveal.forEach(card => revealObserver.observe(card));
 });

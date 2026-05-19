@@ -29,8 +29,8 @@
 
 html, body {
       font-family: "Gotham Book";
-      overflow-x: hidden;
-      background-color: transparent; /* Lets the particle canvas shine through */
+      overflow-x: clip; /* CHANGED FROM HIDDEN: This allows the sticky header to actually work! */
+      background-color: transparent; 
       color: #f0f0f0;
 }
 
@@ -51,17 +51,17 @@ p {
 
 /* 4. Fix the Buttons so they don't blend in */
 .btn-color-1, .btn-color-2 {
-      border: 2px solid var(--paper); /* Gives them a sharp white border */
+      border: 2px solid var(--paper); 
 }
 
 .btn-color-1 {
       background: transparent;
-      color: var(--paper); /* Hollow button with white text */
+      color: var(--paper); 
 }
 
 .btn-color-2 {
       background: var(--paper);
-      color: black; /* Solid white button with black text */
+      color: black; 
 }
 
 #particle-canvas {
@@ -70,9 +70,9 @@ p {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #050505; /* Your dark graphite background lives exclusively here now */
+      background-color: #050505; 
       z-index: -1; 
-      pointer-events: none; /* Stops it from blocking your clicks and buttons */
+      pointer-events: none; 
       overflow: hidden;
 }
 .star {
@@ -80,27 +80,22 @@ p {
       background-color: #ffffff;
       border-radius: 50%;
       opacity: 0; 
-      /* UPGRADED GLOW: A tight bright core + a wider soft halo */
       box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6); 
       animation: pulseAndDrift linear infinite;
       will-change: transform, opacity; 
 }
 
-/* The New Cinematic Drift Animation */
 @keyframes pulseAndDrift {
       0% { 
             opacity: 0; 
-            /* Start at original position, slightly scaled down */
             transform: translate(0, 0) scale(0.5); 
       }
       50% { 
             opacity: 1; 
-            /* Move halfway to the drift target and scale up massively */
             transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); 
       }
       100% { 
             opacity: 0; 
-            /* Arrive at final drift destination, scaled back down to fade out */
             transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); 
       }
 }
@@ -139,18 +134,30 @@ a, .btn {
 
 /*Desktop Nav*/
 
+/* --- The New Sticky Navigation --- */
+#main-header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(5, 5, 5, 0.95); /* Deep dark background so text doesn't bleed through */
+      backdrop-filter: blur(12px); /* Premium frosted glass effect */
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Crisp baseline border */
+}
+
 #desktop-nav, #hamburger-nav {
-      margin-top: 2.5rem; 
+      margin-top: 0; /* Removed the old gap so it sits flush in the header */
 }
-nav, .nav-links {
-      display: flex;
-}
+
 nav {
       align-items: center;
       justify-content: space-between;
-      height: 17vh;
+      height: 12vh; /* Slimmed down from 17vh so it isn't bulky when scrolling */
       width: 100%;
       padding: 0 2rem;
+}
+nav, .nav-links {
+      display: flex;
 }
 
 .nav-links {
@@ -263,47 +270,43 @@ section {
 }
 
 /* Profile Section */
-
 #profile {
       position: relative;
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Anchors the content to the top instead of the middle */
-      min-height: 80vh; /* Reduced from 100vh so the "About" section isn't miles away */
-      padding-top: 4rem; /* Gives it perfect breathing room right under the nav */
+      align-items: flex-start; 
+      min-height: 80vh; 
+      padding-top: 2rem; /* Reduced from 4rem to perfectly balance the new header height */
       padding-bottom: 2rem; 
       width: 100%;
 }
 
-/* Layer 2: Content Layout */
 .profile-content {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 5vh;
-      margin-top: 0; /* Removed the old negative margin we used for the bottom banner */
+      margin-top: 0; 
       z-index: 2; 
       max-width: 1300px; 
       width: 100%;
       padding: 0 2rem;
 }
 .marquee-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      background: var(--accent); /* Electric Cobalt Blue */
-      padding: 0.4rem 0; /* Keeps it extremely thin and sleek */
+      position: relative; /* Removed the fixed position */
+      width: 100%;
+      background: var(--accent); 
+      padding: 0.4rem 0; 
       white-space: nowrap;
-      z-index: 1000; /* Forces it to stay above everything, including nav */
-      border-bottom: 2px solid var(--paper); /* Sharp white bottom border */
+      z-index: 1000; 
+      border-bottom: 2px solid var(--paper); 
       overflow: hidden;
 }
 
 .marquee-text {
       font-family: "Sequel 85", sans-serif;
-      font-size: 1rem; /* Scaled down for the thin banner */
-      color: #050505; /* Pitch black text for legibility */
+      font-size: 1rem; 
+      color: #050505; 
       -webkit-text-stroke: 0; 
       display: inline-block;
       animation: scrollText 25s linear infinite; 
@@ -315,22 +318,20 @@ section {
       100% { transform: translateX(-50%); } 
 }
 
-/* Card PFP */
-
-/* The Brutalist Slab Image - MASSIVELY UPSCALED */
+/* Card PFP - True Brutalist Flat Design */
+/* Profile Picture - Static Brutalism */
 .tilt-card {
       position: relative;
-      width: 500px; /* Was 380px */
-      height: 640px; /* Was 480px */
+      width: 500px; 
+      height: 640px; 
       border-radius: 0; 
-      border: 2px solid white; 
-      box-shadow: 25px 25px 0px #0044FF;
+      border: 2px solid var(--paper); 
+      box-shadow: 15px 15px 0px var(--accent); 
       overflow: hidden;
       margin: 0;
       flex-shrink: 0; 
-      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
-      will-change: transform;
       z-index: 2;
+      /* Notice: No transition or hover effects here anymore! */
 }
 
 .tilt-card img {
@@ -338,34 +339,24 @@ section {
       height: 100%;
       object-fit: cover;
       pointer-events: none; 
-      /* The Editorial Snap */
-      filter: grayscale(100%) contrast(120%); /* Starts stark and dramatic */
-      transition: filter 0.4s ease; /* Smooth fade */
+      /* REMOVED the grayscale filter so it loads in full natural color */
 }
-
-.tilt-card:hover img {
-      filter: grayscale(0%) contrast(100%); /* Bursts into color on hover */
-}
-
 /* The Intro Text & Buttons */
-/* The Intro Text - SCALED UP */
 .section__text {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1.5rem; /* Increased breathing room between text lines */
+      gap: 1.5rem; 
 }
 
-/* "Hello, My Name Is" and "Rising Junior..." */
 .section__text__p1, 
 .section__text__p2 {
-      font-size: 1.5rem; /* Drastically increased from the default */
+      font-size: 1.5rem; 
       font-weight: 500;
 }
 
-/* The Main Title */
 .section__text .title {
-      font-size: clamp(3rem, 6vw, 6rem); /* Blew up the scale so it spans beautifully */
+      font-size: clamp(3rem, 6vw, 6rem); 
       margin: 0;
       text-align: left;
       white-space: nowrap; 
@@ -381,7 +372,7 @@ section {
 /* Icons */
 .icon {
       cursor: pointer;
-      height: 3rem; /* Was 2rem. 50% larger */
+      height: 3rem; 
       transition: transform 0.3s ease;
 }
 .icon:hover {
@@ -389,14 +380,13 @@ section {
 }
 
 /*Buttons*/
-
 .btn {
       font-family: "Tunstent Compressed Medium", sans-serif;
       font-weight: 600;
-      font-size: 2.25rem; /* Bigger, bolder button text */
+      font-size: 2.25rem; 
       transition: all 300ms ease;
-      padding: 1.5rem 2rem; /* Much thicker, premium padding */
-      width: 18rem; /* Widened the physical button */
+      padding: 1.5rem 2rem; 
+      width: 18rem; 
       border-radius: 0; 
       text-transform: uppercase; 
       letter-spacing: 0.1rem;
@@ -412,7 +402,7 @@ section {
 }
 
 .btn-color-1:hover {
-      background: var(--accent); /* Pops to Electric Blue on hover */
+      background: var(--accent); 
       border-color: var(--accent);
 }
 
@@ -515,10 +505,11 @@ article .icon {
 }
 
 /* --- Projects Section (Center-Stage Carousel) --- */
+/* --- Fixes the Cut-Off Issue --- */
 #projects {
       position: relative;
-      padding-top: 4vh;
-      min-height: 90vh;
+      padding-top: 15vh; 
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -527,22 +518,40 @@ article .icon {
 .carousel-container {
       position: relative;
       width: 100vw;
-      height: 75vh; /* MASSIVELY INCREASED from 60vh to take up more screen space */
+      height: 75vh; 
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      margin-top: 2rem;
+      overflow: visible; 
+      margin-top: 6rem; 
 }
 
-/* Base State (Hidden in the very back) */
+/* --- Base State: Unlocked Widths --- */
 .carousel-item {
       position: absolute;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+      /* Slowed down to 1.2s for a premium, deliberate glide */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;
       opacity: 0;
       transform: translateX(0) scale(0.5);
       z-index: 0;
       pointer-events: none;
+      display: block; 
+}
+
+.carousel-img {
+      height: 65vh; 
+      width: auto;
+      max-width: 48vw; 
+      object-fit: contain;
+      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
+      /* Drawn out the hover effect so the image slowly breathes outward when moused over */
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+
+/* --- The Bulletproof Hover Grow Fix --- */
+.carousel-item.active:hover .carousel-img {
+      transform: scale(1.08) !important; 
+      cursor: pointer;
 }
 
 /* Center Spotlight */
@@ -551,51 +560,61 @@ article .icon {
       transform: translateX(0) scale(1);
       z-index: 10;
       pointer-events: auto;
+      /* Slowed down to 1.2s */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; 
 }
+
+/* ==========================================================
+   THE 3D FIX: Using 'vw' guarantees perfect, uniform spacing
+   ========================================================== */
 
 /* --- Layer 1: Immediate Left & Right --- */
 .carousel-item.prev {
-      opacity: 1; /* 100% visible, no transparency */
-      transform: translateX(-85%) scale(0.8); /* Pushed much further out to the left */
+      opacity: 1; 
+      transform: translateX(-32vw) scale(0.8); 
       z-index: 5;
       pointer-events: auto;
       cursor: pointer;
-      filter: brightness(0.6); /* Optional: Darkens it slightly to keep focus on the center, without making it see-through */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+      filter: brightness(0.6); 
+      /* Slowed down to 1.2s */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
 }
 
 .carousel-item.next {
-      opacity: 1; /* 100% visible, no transparency */
-      transform: translateX(85%) scale(0.8); /* Pushed much further out to the right */
+      opacity: 1; 
+      transform: translateX(32vw) scale(0.8); 
       z-index: 5;
       pointer-events: auto;
       cursor: pointer;
       filter: brightness(0.6);
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+      /* Slowed down to 1.2s */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
 }
 
 /* --- Layer 2: Outer Left & Right --- */
 .carousel-item.prev-2 {
-      opacity: 1; /* 100% visible */
-      transform: translateX(-160%) scale(0.65); /* Pushed way out to the far left edge */
+      opacity: 1; 
+      transform: translateX(-58vw) scale(0.65); 
       z-index: 2;
       pointer-events: auto;
       cursor: pointer;
-      filter: brightness(0.3); /* Darker than Layer 1 to create deep 3D shadows */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+      filter: brightness(0.3); 
+      /* Slowed down to 1.2s */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
 }
 
 .carousel-item.next-2 {
-      opacity: 1; /* 100% visible */
-      transform: translateX(160%) scale(0.65); /* Pushed way out to the far right edge */
+      opacity: 1; 
+      transform: translateX(58vw) scale(0.65); 
       z-index: 2;
       pointer-events: auto;
       cursor: pointer;
       filter: brightness(0.3);
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease;
+      /* Slowed down to 1.2s */
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
 }
 
-/* Updated Hover Effects to brighten them up when you mouse over */
+/* Hover effects for the background layers */
 .carousel-item.prev:hover,
 .carousel-item.next:hover {
       filter: brightness(0.9);
@@ -605,16 +624,6 @@ article .icon {
 .carousel-item.next-2:hover {
       filter: brightness(0.7);
 }
-
-.carousel-img {
-      height: 65vh; /* INCREASED from 50vh to make the artwork towering */
-      width: auto;
-      max-width: 45vw; /* Allows wider presentations to stretch further */
-      object-fit: contain;
-      /* Removed the blue block and replaced it with a premium, deep ambient shadow */
-      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
-}
-
 .carousel-gallery {
       position: relative;
       width: 100%;
@@ -653,13 +662,12 @@ article .icon {
       transform: translateY(-50%) scale(1.1);
 }
 
-/* Automatically adds the click indicator under the active center image */
 .carousel-item.active .carousel-caption::after {
       content: "CLICK TO EXPLORE";
       display: block;
       font-family: "Gotham Book", sans-serif;
       font-size: 1rem;
-      color: var(--accent); /* Electric Blue */
+      color: var(--accent); 
       margin-top: 0.8rem;
       letter-spacing: 0.15rem;
       opacity: 0;
@@ -674,6 +682,167 @@ article .icon {
 
 .left-arrow { left: 5%; }
 .right-arrow { right: 5%; }
+
+/* --- Smart Thumbnail Track Styling --- */
+.carousel-thumbnails {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 0; /* We removed margin and replaced it with padding */
+      margin-bottom: 3rem; 
+      z-index: 20;
+      flex-wrap: nowrap; 
+      width: 100%;
+      max-width: 90vw; 
+      overflow-x: auto; 
+      
+      /* THE FIX: Generous internal padding gives the glowing shadows and scaled-up cards room to breathe without hitting the invisible ceiling */
+      padding-top: 2rem; 
+      padding-bottom: 2rem; 
+}
+/* Optional: Styles the scrollbar to look sleek and thin if it ever appears */
+.carousel-thumbnails::-webkit-scrollbar {
+      height: 6px;
+}
+.carousel-thumbnails::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+}
+
+.thumbnail-dot {
+      height: 75px; 
+      width: auto; /* THE MAGIC BULLET: Flawlessly adapts to both vertical posters and horizontal decks */
+      flex-shrink: 0; 
+      
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.thumbnail-dot:hover {
+      opacity: 0.8;
+      transform: translateY(-3px);
+}
+
+.thumbnail-dot.active-thumb {
+      opacity: 1;
+      transform: scale(1.1);
+      
+      /* The stroke will now hug the exact boundaries of the artwork */
+      box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); 
+}
+/* --- Brutalist Filter Menu --- */
+.project-filters {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      z-index: 20;
+}
+
+.filter-btn {
+      background: transparent;
+      border: none;
+      color: #f0f0f0; 
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2.5rem; 
+      letter-spacing: 0.15rem; 
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding-bottom: 0.2rem;
+}
+
+.filter-btn:hover {
+      color: var(--paper);
+}
+
+.filter-btn.active-filter {
+      color: var(--accent); 
+      border-bottom: 2px solid var(--accent);
+}
+
+.hidden-project {
+      display: none !important; 
+}
+
+/* --- The Deep Dive Modal --- */
+/* --- The Deep Dive Modal --- */
+.modal-overlay {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 5, 5, 0.98); 
+      z-index: 99999 !important; /* Jacked up to ensure it covers the sticky header */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      pointer-events: none; 
+      transition: opacity 0.4s ease;
+}
+
+.modal-overlay.show-modal {
+      opacity: 1;
+      pointer-events: auto;
+}
+
+.modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
+      margin: 5vh auto;
+      background: #0a0a0a !important; /* Forces the box background to render */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem;
+      color: var(--paper);
+      z-index: 100000 !important; /* Forces the box above the dark overlay */
+      box-shadow: 0px 20px 50px rgba(0,0,0,0.8);
+}
+
+.modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: transparent;
+      border: none;
+      color: var(--paper);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-close:hover {
+      color: var(--accent);
+      transform: scale(1.2);
+}
+
+.modal-hero-img {
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      margin-bottom: 2rem;
+}
+
+#modal-body-content h2 {
+      font-family: "Sequel 85", sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+}
+
+#modal-body-content p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+}
 
 /* Contact Section */
 #contact {
@@ -706,125 +875,6 @@ article .icon {
       cursor: default;
 }
 
-.email-icon {
-      /* Scales the image up to compensate for its internal blank space */
-      height: 2.5rem;
-      transform: scale(1.15); 
-}
-
-/* We also need to update its hover state so it still grows when you mouse over it */
-.email-icon:hover {
-      transform: scale(1.3); 
-}
-
-/* --- Brutalist Filter Menu --- */
-.project-filters {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-      z-index: 20;
-}
-
-.filter-btn {
-      background: transparent;
-      border: none;
-      color: #f0f0f0; /* Brightened the gray slightly for better contrast */
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2.5rem; /* Massively increased from 1.5rem */
-      letter-spacing: 0.15rem; /* Spaced the letters out slightly more for legibility */
-      cursor: pointer;
-      transition: color 0.3s ease, transform 0.3s ease;
-      padding-bottom: 0.2rem;
-}
-
-.filter-btn:hover {
-      color: var(--paper);
-}
-
-.filter-btn.active-filter {
-      color: var(--accent); /* Highlights the active category in your Electric Blue */
-      border-bottom: 2px solid var(--accent);
-}
-
-/* Hides projects that don't match the active filter */
-.hidden-project {
-      display: none !important; 
-}
-
-/* --- The Deep Dive Modal --- */
-.modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(5, 5, 5, 0.98); /* Almost pitch black */
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow-y: auto;
-      opacity: 0;
-      pointer-events: none; /* Hidden by default */
-      transition: opacity 0.4s ease;
-}
-
-.modal-overlay.show-modal {
-      opacity: 1;
-      pointer-events: auto;
-}
-
-.modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 1000px;
-      margin: 5vh auto;
-      background: #0a0a0a;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 4rem;
-      color: var(--paper);
-}
-
-.modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      background: transparent;
-      border: none;
-      color: var(--paper);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.modal-close:hover {
-      color: var(--accent);
-      transform: scale(1.2);
-}
-
-/* Modal Inner Content Styling */
-.modal-hero-img {
-      width: 100%;
-      height: auto;
-      max-height: 70vh;
-      object-fit: contain;
-      margin-bottom: 2rem;
-}
-
-#modal-body-content h2 {
-      font-family: "Sequel 85", sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent);
-}
-
-#modal-body-content p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 1rem;
-}
 
 /* Footer */
 footer {
@@ -850,10 +900,8 @@ footer p {
 /* --- Presentation Slide Stack Styling --- */
 .presentation-stack {
       display: flex;
-      flex-direction: column;
+      flex-direction: column; 
       align-items: center;
-      gap: 3rem; 
-      margin-top: 3rem;
       width: 100%;
 }
 
@@ -866,25 +914,27 @@ footer p {
       border-radius: 4px; 
 }
 
-/* --- Modal Slideshow Formatting --- */
+/* --- Interactive Modal Slideshow Layout --- */
 #modal-body-content .presentation-stack {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
-      margin-top: 2rem;
+      margin-top: 0; /* Sits flush at the top of the modal */
+      margin-bottom: 3rem; /* Creates perfect breathing room before the title */
+      min-height: 60vh; 
 }
 
 .modal-slide-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(5, 5, 5, 0.85);
       border: 2px solid var(--paper);
       color: var(--paper);
-      font-size: 2rem;
-      padding: 0.5rem 1rem;
+      font-size: 2.5rem;
+      padding: 0.5rem 1.2rem;
       cursor: pointer;
       z-index: 100;
       transition: all 0.3s ease;
@@ -893,7 +943,357 @@ footer p {
 .modal-slide-arrow:hover {
       background: var(--accent);
       border-color: var(--accent);
+      color: white;
 }
 
 .modal-slide-arrow.left-arrow { left: -2rem; }
 .modal-slide-arrow.right-arrow { right: -2rem; }
+
+/* =========================================
+   PREMIUM DARK MODE CARDS 
+   ========================================= */
+
+/* 1. Center the Section Headers */
+#about, #experience, #contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+}
+
+/* Give the tiny top subheadings your Electric Blue color to tie the site together */
+.section__text__p1 {
+      text-align: center;
+      width: 100%;
+      color: var(--accent);
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.15rem;
+      margin-bottom: 0.5rem;
+}
+
+.title {
+      margin-bottom: 3rem; /* Gives breathing room before the cards start */
+}
+
+/* 2. The Sleek Glassmorphism Cards */
+.details-container,
+.contact-info-upper-container {
+      background: rgba(15, 15, 15, 0.6); /* Deep dark frosted glass */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle crisp white edge */
+      border-radius: 1rem; /* Sharp, modern corners instead of giant blocks */
+      padding: 2.5rem;
+      color: var(--paper); /* Crisp white text */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Deep shadow to pop off the background */
+      transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Adds a premium "lift and glow" effect when you hover over the cards */
+.details-container:hover,
+.contact-info-upper-container:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 68, 255, 0.5); /* Subtle blue glow on the border */
+}
+
+/* 3. Text and Icon Formatting Inside Cards */
+.details-container h2,
+.details-container h3 {
+      color: var(--paper);
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+}
+
+.details-container p,
+.contact-info-upper-container p,
+.contact-info-upper-container a {
+      color: #cccccc; /* Soft silver for easy reading against the dark cards */
+      text-decoration: none;
+      line-height: 1.5;
+}
+
+.contact-info-upper-container a:hover {
+      color: var(--accent);
+}
+
+/* Ensure the icons stay bright white */
+.details-container .icon,
+.contact-info-upper-container .icon {
+      filter: invert(1); 
+      margin-bottom: 0.5rem;
+}
+
+/* 4. Contact Section Polish */
+.contact-info-upper-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      padding: 1.5rem 4rem;
+      border-radius: 50px; /* Keeps the horizontal shape but makes it super sleek */
+}
+
+/* =========================================
+   LANDING PAGE PREMIUM POLISH
+   ========================================= */
+
+/* 1. Fix the "Hello My Name Is" Text */
+#profile .section__text__p1 {
+      font-family: "Gotham Book", sans-serif; 
+      font-size: 1.2rem;
+      color: var(--accent); 
+      letter-spacing: 0.3rem; 
+      text-transform: uppercase;
+      margin-bottom: -1rem; 
+      font-weight: bold;
+      
+      /* THE ALIGNMENT FIX */
+      text-align: left;
+      width: 100%;
+      display: block;
+}
+
+/* 2. Upgrade the "Justin Loretz" Title */
+#profile .title {
+      /* Dialed back the max size from 8.5rem to 5.5rem, and the flex width from 8vw to 4.5vw */
+      font-size: clamp(2.5rem, 4.5vw, 5.5rem); 
+      line-height: 1.1;
+      text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); /* Tightened the shadow slightly to match the new size */
+      margin-bottom: 0.5rem;
+}
+
+/* 3. Upgrade the "Rising Junior" Subtitle */
+#profile .section__text__p2 {
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2rem;
+      color: #cccccc; 
+      letter-spacing: 0.15rem;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+}
+
+/* 4. Button Overhaul */
+.btn {
+      font-family: "Tunstent Compressed Medium", sans-serif;
+      font-size: 2.25rem; 
+      padding: 1.2rem 2rem; 
+      width: auto; 
+      min-width: 16rem;
+      border-radius: 0; 
+      text-transform: uppercase; 
+      letter-spacing: 0.1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+/* Primary Button (View Resume) */
+.btn-color-2 {
+      background: var(--paper);
+      color: #050505;
+      border: 2px solid var(--paper);
+      box-shadow: 6px 6px 0px var(--accent); 
+}
+
+.btn-color-2:hover {
+      background: var(--paper);
+      color: #050505;
+      transform: translate(-4px, -4px); 
+      box-shadow: 10px 10px 0px var(--accent);
+}
+
+/* Secondary Button (Contact Information) */
+.btn-color-1 {
+      background: transparent;
+      color: var(--paper);
+      border: 2px solid var(--accent); 
+      box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); 
+}
+
+.btn-color-1:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      transform: translate(-4px, -4px);
+      box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2);
+}
+
+/* Add breathing room between buttons */
+#profile .btn-container {
+      gap: 2rem; 
+      margin-bottom: 2rem;
+}
+
+/* 5. Glowing Social Icons */
+#socials-container .icon {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
+}
+
+#socials-container .icon:hover {
+      transform: translateY(-8px) scale(1.15); /* Physically lifts off the baseline */
+      filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); /* Casts a glowing blue shadow underneath */
+}
+
+/* =========================================
+   PREMIUM NAVIGATION ANIMATION
+   ========================================= */
+
+/* Set up the links to hold the animated line */
+.nav-links a {
+      position: relative;
+      text-decoration: none;
+}
+
+/* Turn text Electric Blue and kill the old chunky underline */
+.nav-links a:hover {
+      color: var(--accent) !important;
+      text-decoration: none !important;
+}
+
+/* Create the invisible line that starts at 0 width */
+.nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px; /* Thickness of the line */
+      bottom: -6px; /* Drops it perfectly below the letters */
+      left: 0;
+      background-color: var(--accent); /* Electric Blue line */
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Buttery smooth animation curve */
+}
+
+/* The Trigger: On hover, the line expands to 100% width */
+.nav-links a:hover::after {
+      width: 100%;
+}
+
+/* =========================================
+   STATIC EDITORIAL BEAUTY (NO HOVER NEEDED)
+   ========================================= */
+
+
+/* Ghost Watermark Right-Aligned */
+#profile::before {
+      content: 'VISION';
+      position: absolute;
+      top: 18%;
+      right: 0%; /* Anchors it flush to the right edge */
+      left: auto; /* Prevents it from stretching across the left side */
+      
+      font-family: "Sequel 85", sans-serif;
+      font-size: 13vw; /* Scaled down slightly so the 'V' escapes your photo */
+      
+      /* THE BRIGHTNESS FIX: Added a faint fill color and a brighter stroke */
+      color: rgba(255, 255, 255, 0.04); 
+      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.25); 
+      
+      z-index: 0; 
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -0.2vw;
+}
+
+/* Ensure your text and photo sit properly on top of the ghost text */
+.profile-content {
+      position: relative;
+      z-index: 10;
+}
+
+/* 5. Permanent Button Arrows (Makes the buttons look highly actionable statically) */
+.btn-color-2::after, 
+.btn-color-1::after {
+      content: ' \2197'; /* Unicode for the North-East Brutalist Arrow */
+      margin-left: 0.8rem;
+      font-family: "Gotham Book", sans-serif;
+      font-weight: bold;
+}
+
+/* =========================================
+   AGENCY LEVEL UPGRADES (A, B, C, D)
+   ========================================= */
+
+/* --- Idea D: Cinematic Film Grain --- */
+body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; 
+      width: 200vw; height: 200vh; /* Oversized to allow the animation movement */
+      /* This SVG creates the TV static noise */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.04; /* Barely visible texture */
+      pointer-events: none; /* Prevents it from blocking clicks */
+      z-index: 9999;
+      animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-5%, -10%); }
+      30% { transform: translate(3%, -15%); }
+      50% { transform: translate(12%, 9%); }
+      70% { transform: translate(9%, 4%); }
+      90% { transform: translate(-1%, 7%); }
+}
+
+/* --- Idea C: Custom Electric Scrollbars --- */
+/* The Native Right-Side Bar */
+::-webkit-scrollbar {
+      width: 6px; /* Super thin and sleek */
+}
+::-webkit-scrollbar-track {
+      background: #050505; 
+}
+::-webkit-scrollbar-thumb {
+      background: var(--accent); 
+      border-radius: 10px;
+}
+
+/* The Horizontal Bottom Progress Bar */
+.scroll-progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: var(--accent);
+      width: 0%; /* Starts at 0, JS will fill it */
+      z-index: 10000;
+      pointer-events: none;
+      box-shadow: 0px -2px 10px rgba(0, 68, 255, 0.8);
+}
+
+/* --- Idea A: Brutalist Custom Cursor --- */
+body, a, button, .icon, .thumbnail-dot, .carousel-item {
+      cursor: none !important; /* Hides the default white pointer completely */
+}
+
+.custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 24px; height: 24px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none; /* Crucial: Lets you click "through" the cursor */
+      transform: translate(-50%, -50%); /* Centers it on the mouse tip */
+      z-index: 100000;
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      box-shadow: 0 0 10px rgba(0, 68, 255, 0.4);
+}
+
+/* Expands and fills when hovering over buttons/links */
+.custom-cursor.hovering {
+      width: 60px; height: 60px;
+      background: rgba(0, 68, 255, 0.1);
+      border-width: 1px;
+}
+
+/* --- Idea B: Scroll Reveal Classes --- */
+.reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(50px); /* Pushed down slightly */
+      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0); /* Floats up into normal position */
+}

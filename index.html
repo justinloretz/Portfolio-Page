@@ -7,375 +7,526 @@
       <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="mediaqueries.css">
 </head>
-<body>
+      <body>
+      <div class="custom-cursor" id="custom-cursor"></div>
+      <div class="scroll-progress-bar" id="scroll-progress"></div>
+
       <div id="particle-canvas"></div>     
       <div class="marquee-container">
             <div class="marquee-text">
                   GRAPHIC DESIGNER • STUDENT • AUTHOR • GRAPHIC DESIGNER • STUDENT • AUTHOR • GRAPHIC DESIGNER • STUDENT • AUTHOR • GRAPHIC DESIGNER • STUDENT • AUTHOR • GRAPHIC DESIGNER • STUDENT • AUTHOR
-            </div></div>
-      <nav id="desktop-nav">
-            <a href="#" class="logo-link">
-            <img src="./assets/loretzdesignlogo-black.png" 
-            alt="Loretz Design Logo" 
-            class="logo-img">
-            </a>
-            <div>
-                  <ul class="nav-links">
-                  <li><a href="#about">ABOUT</a></li>
-                  <li><a href="#experience">EXPERIENCE</a></li>
-                  <li><a href="#projects">PROJECTS</a></li>
-                  <li><a href="#contact">CONTACT</a></li>
-                  </ul>
-                  </div>
-      </nav>
-      <nav id="hamburger-nav">
-             <a href="#" class="logo-link">
-            <img src="./assets/loretzdesignlogo-black.png" 
-            alt="Loretz Design Logo" 
-            class="logo-img">
-            <div class="hamburger-menu">
-                  <div class="hamburger-icon" onclick="toggleMenu()">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                  </div>
-                  <div class="menu-links">
-                  <li><a href="#about" onclick="toggleMenu()">About</a></li>
-                  <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-                  <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-                  <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-                  </div>
             </div>
+      </div>
+
+      <header id="main-header">
+            <nav id="desktop-nav">
+                  <a href="#" class="logo-link">
+                        <img src="./assets/loretzdesignlogo-black.png" alt="Loretz Design Logo" class="logo-img">
+                  </a>
+                  <div>
+                        <ul class="nav-links">
+                              <li><a href="#about">ABOUT</a></li>
+                              <li><a href="#experience">EXPERIENCE</a></li>
+                              <li><a href="#projects">PROJECTS</a></li>
+                              <li><a href="#contact">CONTACT</a></li>
+                        </ul>
+                  </div>
             </nav>
-          <section id="profile">
-      </div>
-
-      <div class="profile-content">
-            <div class="tilt-card" id="tilt-card">
-                  <img src="./assets/Profile-Pic-Rectangle.png" alt="Justin Loretz PFP">
-            </div>
-
-            <div class="section__text">
-                  <p class="section__text__p1">Hello, My Name Is</p>
-                  <h1 class="title">JUSTIN LORETZ</h1>
-                  <p class="section__text__p2">Rising Junior at Seton Hall</p>
-                  <div class="btn-container">
-                        <button class="btn btn-color-2" onclick="window.open('./assets/Revised Resume.pdf')">
-                              Click to View Resume
-                        </button>
-                        <button class="btn btn-color-1" onclick="location.href='./#contact'">
-                              Contact Information
-                        </button>
+            <nav id="hamburger-nav">
+                  <a href="#" class="logo-link">
+                        <img src="./assets/loretzdesignlogo-black.png" alt="Loretz Design Logo" class="logo-img">
+                  </a>
+                  <div class="hamburger-menu">
+                        <div class="hamburger-icon" onclick="toggleMenu()">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                        </div>
+                        <div class="menu-links">
+                              <li><a href="#about" onclick="toggleMenu()">About</a></li>
+                              <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
+                              <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
+                              <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+                        </div>
                   </div>
-                  <div id="socials-container" style="display: flex; gap: 1.5rem; margin-top: 1rem;">
-                        <img src="./assets/email.png" 
-                        alt="Email Me" 
-                        class="icon email-icon" 
-                        onclick="location.href='mailto:justinloretz42@gmail.com'"/>
-                        
-                        <img src="./assets/linkedin.png" 
-                        alt="My Linkedin Profile" 
-                        class="icon" 
-                        onclick="window.open('https://www.linkedin.com/in/justin-loretz-bb0336250/', '_blank')"/>
+            </nav>
+      </header>
 
-                        <img src="./assets/3dotshare.png" 
-                        alt="Share Portfolio" 
-                        class="icon" 
-                        onclick="sharePortfolio()"/>
+      <section id="profile">
+            <div class="profile-content">
+                  <div class="tilt-card" id="tilt-card">
+                        <img src="./assets/Profile-Pic-Rectangle.png" alt="Justin Loretz PFP">
+                  </div>
+
+                  <div class="section__text">
+                        <p class="section__text__p1">Hello, My Name Is</p>
+                        <h1 class="title">JUSTIN LORETZ</h1>
+                        <p class="section__text__p2">Rising Junior at Seton Hall</p>
+                        <div class="btn-container">
+                              <button class="btn btn-color-2" onclick="window.open('./assets/Revised Resume.pdf')">
+                                    Click to View Resume
+                              </button>
+                              <button class="btn btn-color-1" onclick="location.href='./#contact'">
+                                    Contact Information
+                              </button>
+                        </div>
+                        <div id="socials-container" style="display: flex; gap: 1.5rem; margin-top: 1rem;">
+                              <img src="./assets/email.png" alt="Email Me" class="icon email-icon" onclick="location.href='mailto:justinloretz42@gmail.com'"/>
+                              <img src="./assets/linkedin.png" alt="My Linkedin Profile" class="icon" onclick="window.open('https://www.linkedin.com/in/justin-loretz-bb0336250/', '_blank')"/>
+                              <img src="./assets/3dotshare.png" alt="Share Portfolio" class="icon" onclick="sharePortfolio()"/>
+                        </div>
                   </div>
             </div>
-      </div>
-</section>
-            <section id="about">
-                  <p class="section__text__p1">Get To Know More</p>
-                  <h1 class="title">ABOUT ME</h1>
-                  <div class="section-container">
+      </section>
+
+      <section id="about">
+            <p class="section__text__p1">Get To Know More</p>
+            <h1 class="title">ABOUT ME</h1>
+            <div class="section-container">
                   <div class="section__pic-container">
-                  <img src="./assets/about-pic.png"
-                  alt="Profile Picture"
-                  class="about-pic"/>
-            </div>
-            <div class="about-details-container">
-            <div class="about-containers">
-                  <div class="details-container">
-                  <img src="./assets/experience.png" 
-                  alt="Experience icon"
-                  class="icon"/>
-                  <h3>EXPERIENCE</h3>
-                  <p>5+ Years <br />Graphic Designing</p>
+                        <img src="./assets/about-pic.png" alt="Profile Picture" class="about-pic"/>
                   </div>
-            <div class="details-container">
-                  <img src="./assets/education.png" 
-                  alt="Education icon"
-                  class="icon"/>
-                  <h3>EDUCATION</h3>
-                  <p>Hempfield High School Graduate<br />Seton Hall Diploma Expected 2027</p>
-                  </div>
-            </div>
-            <div class="text-container">
-            <p>Lorem ipsum dolor sit amet.
-            </p></div>
-            </div>
-                  </div>
-                  <img src="./assets/arrow.png"
-                  alt="Arrow Icon"
-                  class="icon arrow"
-                  onclick="location.href='./#experience'" />
-            </section>
-            <section id="experience">
-                        <p class="section__text__p1">Explore My</p>
-                        <h1 class="title">EXPERIENCE</h1>
-                        <div class="experience-details-container">
-                           <div class="about-containers">
-                                    <div class="details-container">
-                                       <h2 class="experience-sub-title">GRAPHIC DESIGN</h2>
-                                          <div class="article-container">
-                                                <article>
-                                                      <img src="./assets/checkmark.png"
-                                                      alt="Experience icon"
-                                                      class="icon"
-                                                      />
-                                                      <div>
-                                                            <h3>Photoshop</h3>
-                                                            <p>Experienced</p>
-                                                      </div>
-                                                </article>
-                                                <article>
-                                                      <img src="./assets/checkmark.png"
-                                                      alt="Experience icon"
-                                                      class="icon"
-                                                      />
-                                                      <div>
-                                                            <h3>InDesign</h3>
-                                                            <p>Experienced</p>
-                                                      </div>
-                                                </article>
-                                          </div>
-                                    </div>
-                                    <div class="details-container">
-                                       <h2 class="experience-sub-title">WRITING</h2>
-                                          <div class="article-container">
-                                                <article>
-                                                      <img src="./assets/checkmark.png"
-                                                      alt="Experience icon"
-                                                      class="icon"
-                                                      />
-                                                      <div>
-                                                            <h3>WordPress</h3>
-                                                            <p>Experienced</p>
-                                                      </div>
-                                                </article>
-                                                <article>
-                                                      <img src="./assets/checkmark.png"
-                                                      alt="Experience icon"
-                                                      class="icon"
-                                                      />
-                                                      <div>
-                                                            <h3>InDesign</h3>
-                                                            <p>Experienced</p>
-                                                      </div>
-                                                </article>
-                                          </div>
-                                    </div>
+                  <div class="about-details-container">
+                        <div class="about-containers">
+                              <div class="details-container">
+                                    <img src="./assets/experience.png" alt="Experience icon" class="icon"/>
+                                    <h3>EXPERIENCE</h3>
+                                    <p>5+ Years <br />Graphic Designing</p>
                               </div>
+                              <div class="details-container">
+                                    <img src="./assets/education.png" alt="Education icon" class="icon"/>
+                                    <h3>EDUCATION</h3>
+                                    <p>Hempfield High School Graduate<br />Seton Hall Diploma Expected 2027</p>
                               </div>
-                              <img src="./assets/arrow.png"
-                  alt="Arrow Icon"
-                  class="icon arrow"
-                  onclick="location.href='./#projects'" />
-            </section>
-<section id="projects">
-      <p class="section__text__p1">Check Out My</p>
-      <h1 class="title">PROJECTS</h1>
+                        </div>
+                        <div class="text-container">
+                              <p>
+                                    I am a Management and Finance student minoring in Psychology at Seton Hall University. Driven by passion and a relentless work ethic, I have spent the last five years developing a deep foundation in visual storytelling, data presentation, and sports media. Whether I am directing graphics for the Seton Hall Sports Poll, editing articles as the Sports Editor for The Stillman Exchange, or crafting promotional content for the Sports Management & Analytics Club, my goal is always to elevate brands through clean, compelling, and data-driven design.
+                              </p>
+                        </div>
+                  </div>
+            </div>
+            <img src="./assets/arrow.png" alt="Arrow Icon" class="icon arrow" onclick="location.href='./#experience'" />
+      </section>
 
-<div class="project-filters">
-            <button class="filter-btn active-filter" onclick="filterProjects('all')">ALL</button>
-            <button class="filter-btn" onclick="filterProjects('polls')">SPORTS POLLS</button>
-            <button class="filter-btn" onclick="filterProjects('posters')">POSTERS</button>
-            <button class="filter-btn" onclick="filterProjects('layouts')">LAYOUTS & PUBS</button>
-      </div>
-      
-      <div class="carousel-container">
-            <button class="carousel-arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
+      <section id="experience">
+            <p class="section__text__p1">Explore My</p>
+            <h1 class="title">EXPERIENCE</h1>
+            <div class="experience-details-container">
+                  <div class="about-containers">
+                        <div class="details-container">
+                              <h2 class="experience-sub-title">DESIGN & MEDIA</h2>
+                              <div class="article-container">
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Adobe CC</h3>
+                                                <p>Photoshop & InDesign</p>
+                                          </div>
+                                    </article>
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Sports Media</h3>
+                                                <p>Seton Hall & Portland St.</p>
+                                          </div>
+                                    </article>
+                              </div>
+                        </div>
+
+                        <div class="details-container">
+                              <h2 class="experience-sub-title">WRITING & EDITING</h2>
+                              <div class="article-container">
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Copyediting</h3>
+                                                <p>Sports Editor</p>
+                                          </div>
+                                    </article>
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Publishing</h3>
+                                                <p>The Stillman Exchange</p>
+                                          </div>
+                                    </article>
+                              </div>
+                        </div>
+
+                        <div class="details-container">
+                              <h2 class="experience-sub-title">LEADERSHIP & DATA</h2>
+                              <div class="article-container">
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Analytics</h3>
+                                                <p>Statistical Analysis</p>
+                                          </div>
+                                    </article>
+                                    <article>
+                                          <img src="./assets/checkmark.png" alt="Experience icon" class="icon"/>
+                                          <div>
+                                                <h3>Leadership</h3>
+                                                <p>SMAC PR Chair & FBLA</p>
+                                          </div>
+                                    </article>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+            <img src="./assets/arrow.png" alt="Arrow Icon" class="icon arrow" onclick="location.href='./#projects'" />
+      </section>
+
+      <section id="projects">
+            <p class="section__text__p1">Check Out My</p>
+            <h1 class="title">PROJECTS</h1>
+
+            <div class="project-filters">
+                  <button class="filter-btn active-filter" onclick="filterProjects('featured')">FEATURED</button>
+                  <button class="filter-btn" onclick="filterProjects('polls')">SPORTS POLLS</button>
+                  <button class="filter-btn" onclick="filterProjects('posters')">POSTERS</button>
+                  <button class="filter-btn" onclick="filterProjects('layouts')">LAYOUTS & PUBS</button>
+                  
+                  <button class="filter-btn" onclick="filterProjects('hempfield')">HEMPFIELD</button>
+                  <button class="filter-btn" onclick="filterProjects('independent')">INDEPENDENT WORK</button>
+            </div>
             
-            <div class="carousel-gallery">
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img">
-                        <div class="carousel-caption">WNBA POLL</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/WNBApoll - Copy.png" class="modal-hero-img">
-                              <h2>WNBA POLL OVERVIEW</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/WorldCupTix.png" alt="World Cup Poll" class="carousel-img">
-                        <div class="carousel-caption">WORLD CUP POLL</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/WorldCupTix.png" class="modal-hero-img">
-                              <h2>WORLD CUP TICKETING</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/SHSP-NBAASG.png" alt="NBA ASG Poll" class="carousel-img">
-                        <div class="carousel-caption">2026 USA v. WORLD ASG</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/SHSP-NBAASG.png" class="modal-hero-img">
-                              <h2>2026 USA v. WORLD ASG</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/PopeLeoGraphic.png" alt="Religion in Sport Poll" class="carousel-img">
-                        <div class="carousel-caption">RELIGION IN SPORT</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/PopeLeoGraphic.png" class="modal-hero-img">
-                              <h2>RELIGION IN SPORT</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/thanksgivingevev2.png" alt="Thanksgiving Eve" class="carousel-img">
-                        <div class="carousel-caption">THANKSGIVING EVE POLL</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/thanksgivingevev2.png" class="modal-hero-img">
-                              <h2>THANKSGIVING EVE NFL</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="polls" onclick="handleProjectClick(this)">
-                        <img src="./assets/USAvInternationalFinal.png" alt="USA v. World ASG Poll" class="carousel-img">
-                        <div class="carousel-caption">2025 USA v. WORLD ASG</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/USAvInternationalFinal.png" class="modal-hero-img">
-                              <h2>2025 USA v. WORLD ASG</h2>
-                              <p><strong>Category:</strong> Sports Poll Infographic</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="posters" onclick="handleProjectClick(this)">
-                        <img src="./assets/KayvonThibodeauxProg4X5 (1).png" alt="Kayvon Thibodeaux Poster" class="carousel-img">
-                        <div class="carousel-caption">KAYVON THIBODEAUX</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/KayvonThibodeauxProg4X5 (1).png" class="modal-hero-img">
-                              <h2>KAYVON THIBODEAUX POSTER</h2>
-                              <p><strong>Category:</strong> Editorial Poster Design</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div>
-
-                  <div class="carousel-item" data-category="posters" onclick="handleProjectClick(this)">
-                        <img src="./assets/j10veproject (1).png" alt="Jordan Love Poster" class="carousel-img">
-                        <div class="carousel-caption">JORDAN LOVE</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/j10veproject (1).png" class="modal-hero-img">
-                              <h2>JORDAN LOVE POSTER</h2>
-                              <p><strong>Category:</strong> Editorial Poster Design</p>
-                              <p>Write your detailed design process, software used, and layout strategy here.</p>
-                        </div>
-                  </div> <div class="carousel-item" data-category="layouts" onclick="handleProjectClick(this)">
-                        <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Presentation Cover" class="carousel-img">
-                        <div class="carousel-caption">BURKE MAGNUS DECK</div>
-                        
-                        <div class="case-study-data" style="display: none;">
-                              <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" class="modal-hero-img">
-                              <h2>BURKE MAGNUS PRESENTATION</h2>
-                              <p><strong>Category:</strong> Layouts & Presentations</p>
-                              <p>Write a brief overview here. Detail the goal of the presentation, the target audience, and the overall design strategy used to create a cohesive layout.</p>
-                              
-                              <div class="presentation-stack">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide2.PNG" alt="Slide 2" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide3.PNG" alt="Slide 3" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide4.PNG" alt="Slide 4" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide5.PNG" alt="Slide 5" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide6.PNG" alt="Slide 6" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide7.PNG" alt="Slide 7" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide8.PNG" alt="Slide 8" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide9.PNG" alt="Slide 9" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide10.PNG" alt="Slide 10" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide11.PNG" alt="Slide 11" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide12.PNG" alt="Slide 12" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide13.PNG" alt="Slide 13" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide14.PNG" alt="Slide 14" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide15.PNG" alt="Slide 15" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide16.PNG" alt="Slide 16" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide17.PNG" alt="Slide 17" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide18.PNG" alt="Slide 18" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide19.PNG" alt="Slide 19" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide20.PNG" alt="Slide 20" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide21.PNG" alt="Slide 21" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide22.PNG" alt="Slide 22" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide23.PNG" alt="Slide 23" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide24.PNG" alt="Slide 24" class="presentation-slide">
-                                    <img src="./assets/Burke Magnus Slide Deck/Slide25.PNG" alt="Slide 25" class="presentation-slide">
+            <div class="carousel-container">
+                  <button class="carousel-arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
+                  
+                  <div class="carousel-gallery">
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img">
+                              <div class="carousel-caption">WNBA POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/WNBApoll - Copy.png" class="modal-hero-img">
+                                    <h2>WNBA POLL OVERVIEW</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/WorldCupTix.png" alt="World Cup Poll" class="carousel-img">
+                              <div class="carousel-caption">WORLD CUP POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/WorldCupTix.png" class="modal-hero-img">
+                                    <h2>WORLD CUP TICKETING</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/SHSP-NBAASG.png" alt="NBA ASG Poll" class="carousel-img">
+                              <div class="carousel-caption">2026 USA v. WORLD ASG</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/SHSP-NBAASG.png" class="modal-hero-img">
+                                    <h2>2026 USA v. WORLD ASG</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/PopeLeoGraphic.png" alt="Religion in Sport Poll" class="carousel-img">
+                              <div class="carousel-caption">RELIGION IN SPORT</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/PopeLeoGraphic.png" class="modal-hero-img">
+                                    <h2>RELIGION IN SPORT</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/thanksgivingevev2.png" alt="Thanksgiving Eve" class="carousel-img">
+                              <div class="carousel-caption">THANKSGIVING EVE POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/thanksgivingevev2.png" class="modal-hero-img">
+                                    <h2>THANKSGIVING EVE NFL</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/USAvInternationalFinal.png" alt="USA v. World ASG Poll" class="carousel-img">
+                              <div class="carousel-caption">2025 USA v. WORLD ASG</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/USAvInternationalFinal.png" class="modal-hero-img">
+                                    <h2>2025 USA v. WORLD ASG</h2>
+                                    <p><strong>Category:</strong> Sports Poll Infographic</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="posters" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/KayvonThibodeauxProg4X5 (1).png" alt="Kayvon Thibodeaux Poster" class="carousel-img">
+                              <div class="carousel-caption">KAYVON THIBODEAUX</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/KayvonThibodeauxProg4X5 (1).png" class="modal-hero-img">
+                                    <h2>KAYVON THIBODEAUX POSTER</h2>
+                                    <p><strong>Category:</strong> Editorial Poster Design</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="posters" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/j10veproject (1).png" alt="Jordan Love Poster" class="carousel-img">
+                              <div class="carousel-caption">JORDAN LOVE</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/j10veproject (1).png" class="modal-hero-img">
+                                    <h2>JORDAN LOVE POSTER</h2>
+                                    <p><strong>Category:</strong> Editorial Poster Design</p>
+                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                              </div>
+                        </div> 
+
+                        <div class="carousel-item" data-category="layouts" onclick="handleProjectClick(this)">
+                              <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Presentation Cover" class="carousel-img">
+                              <div class="carousel-caption">BURKE MAGNUS DECK</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <div class="presentation-stack">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Slide 1" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide2.PNG" alt="Slide 2" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide3.PNG" alt="Slide 3" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide4.PNG" alt="Slide 4" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide5.PNG" alt="Slide 5" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide6.PNG" alt="Slide 6" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide7.PNG" alt="Slide 7" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide8.PNG" alt="Slide 8" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide9.PNG" alt="Slide 9" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide10.PNG" alt="Slide 10" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide11.PNG" alt="Slide 11" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide12.PNG" alt="Slide 12" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide13.PNG" alt="Slide 13" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide14.PNG" alt="Slide 14" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide15.PNG" alt="Slide 15" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide16.PNG" alt="Slide 16" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide17.PNG" alt="Slide 17" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide18.PNG" alt="Slide 18" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide19.PNG" alt="Slide 19" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide20.PNG" alt="Slide 20" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide21.PNG" alt="Slide 21" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide22.PNG" alt="Slide 22" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide23.PNG" alt="Slide 23" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide24.PNG" alt="Slide 24" class="presentation-slide">
+                                          <img src="./assets/Burke Magnus Slide Deck/Slide25.PNG" alt="Slide 25" class="presentation-slide">
+                                    </div>
+                                    <h2>BURKE MAGNUS PRESENTATION</h2>
+                                    <p><strong>Category:</strong> Layouts & Presentations</p>
+                                    <p>Write a brief overview here. Detail the goal of the presentation, the target audience, and the overall design strategy used to create a cohesive layout.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="posters" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/SetonHallvNovaWP.png" alt="Project Thumbnail" class="carousel-img">
+                              <div class="carousel-caption">SETON HALL v. VILLANOVA WATCH PARTY</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/SetonHallvNovaWP.png" class="modal-hero-img">
+                                    <h2>SETON HALL v. VILLANOVA WATCH PARTY</h2>
+                                    <p><strong>Category:</strong> Poster Design</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                  </div> 
+<div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/Most-Rec-NCAABB.png" alt="2025 MOST RECOGNIZED NCAABB ATHLETES" class="carousel-img">
+                              <div class="carousel-caption">MOST RECOGNIZED NCAABB ATHLETES</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/Most-Rec-NCAABB.png" class="modal-hero-img">
+                                    <h2>2025 MOST RECOGNIZED NCAABB ATHLETES</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/ABS-March-Call-Back.png" alt="2025 ABS MARCH CALL BACK" class="carousel-img">
+                              <div class="carousel-caption">ABS MARCH CALL BACK</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/ABS-March-Call-Back.png" class="modal-hero-img">
+                                    <h2>2025 ABS MARCH CALL BACK</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="hempfield" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/BEARCATSVBK.png" alt="HEMPFIELD v. YORK" class="carousel-img">
+                              <div class="carousel-caption">HEMPFIELD v. YORK</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/BEARCATSVBK.png" class="modal-hero-img">
+                                    <h2>HEMPFIELD v. YORK</h2>
+                                    <p><strong>Category:</strong> Hempfield Athletics</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/BryceYoungFinal.png" alt="BRYCE YOUNG POSTER" class="carousel-img">
+                              <div class="carousel-caption">BRYCE YOUNG POSTER</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/BryceYoungFinal.png" class="modal-hero-img">
+                                    <h2>BRYCE YOUNG POSTER</h2>
+                                    <p><strong>Category:</strong> Independent Work</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="posters" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/EBOARD-UPDATE.png" alt="MEET THE SMAC E-BOARD" class="carousel-img">
+                              <div class="carousel-caption">MEET THE SMAC E-BOARD</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/EBOARD-UPDATE.png" class="modal-hero-img">
+                                    <h2>MEET THE SMAC E-BOARD</h2>
+                                    <p><strong>Category:</strong> Poster</p>
+                                    <p>Your detailed paragraph describing the design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/eaglesvchiefs2.png" alt="SB LIX - EAGLES v. CHIEFS POLL" class="carousel-img">
+                              <div class="carousel-caption">SB LIX - EAGLES v. CHIEFS POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/eaglesvchiefs2.png" class="modal-hero-img">
+                                    <h2>SB LIX - EAGLES v. CHIEFS POLL</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="hempfield" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/HEMPFIELDVREADING.png" alt="2022 HS FOOTBALL HEMPFIELD v. READING" class="carousel-img">
+                              <div class="carousel-caption">2022 HS FOOTBALL HEMPFIELD v. READING</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/HEMPFIELDVREADING.png" class="modal-hero-img">
+                                    <h2>2022 HS FOOTBALL HEMPFIELD v. READING</h2>
+                                    <p><strong>Category:</strong> Hempfield Athletics</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/jimmybutlerlayout.png" alt="JIMMY BUTLER CARD DESIGN" class="carousel-img">
+                              <div class="carousel-caption">JIMMY BUTLER CARD DESIGN</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/jimmybutlerlayout.png" class="modal-hero-img">
+                                    <h2>JIMMY BUTLER CARD DESIGN</h2>
+                                    <p><strong>Category:</strong> Independent Work</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/maxeywallpaper.png" alt="TYRESE MAXEY WALLPAPER" class="carousel-img">
+                              <div class="carousel-caption">TYRESE MAXEY WALLPAPER</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/maxeywallpaper.png" class="modal-hero-img">
+                                    <h2>TYRESE MAXEY WALLPAPER</h2>
+                                    <p><strong>Category:</strong> Independent Work</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/NFL Draft 8 Heads (1).png" alt="NFL DRAFT PREVIEW POLL" class="carousel-img">
+                              <div class="carousel-caption">NFL DRAFT PREVIEW POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/NFL Draft 8 Heads (1).png" class="modal-hero-img">
+                                    <h2>NFL DRAFT PREVIEW POLL</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="posters" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/psuschedule-portfolioallwd.png" alt="2024 PORTLAND STATE FOOTBALL SCHEDULE" class="carousel-img">
+                              <div class="carousel-caption">2024 PORTLAND STATE FOOTBALL SCHEDULE</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/psuschedule-portfolioallwd.png" class="modal-hero-img">
+                                    <h2>2024 PORTLAND STATE FOOTBALL SCHEDULE</h2>
+                                    <p><strong>Category:</strong> Poster Design</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/SCOTTIEFINAL.png" alt="SCOTTIE BARNES POSTER" class="carousel-img">
+                              <div class="carousel-caption">SCOTTIE BARNES POSTER</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/SCOTTIEFINAL.png" class="modal-hero-img">
+                                    <h2>SCOTTIE BARNES POSTER</h2>
+                                    <p><strong>Category:</strong> Independent Work</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="polls" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/sportspoll12-9design-final.png" alt="2024 CFB PLAYOFF POLL" class="carousel-img">
+                              <div class="carousel-caption">2024 CFB PLAYOFF POLL</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/sportspoll12-9design-final.png" class="modal-hero-img">
+                                    <h2>2024 CFB PLAYOFF POLL RESULTS</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+
+                        <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
+                              <img src="./assets/StephenALastTake.png" alt="2026 STEPHEN A. SMITH STEPS IN THE HALL " class="carousel-img">
+                              <div class="carousel-caption">2026 STEPHEN A. SMITH STEPS IN THE HALL </div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/StephenALastTake.png" class="modal-hero-img">
+                                    <h2>2026 STEPHEN A. SMITH STEPS IN THE HALL</h2>
+                                    <p><strong>Category:</strong> Sports Poll Design</p>
+                                    <p>Detailed design process, goal, and software used goes right here.</p>
+                              </div>
+                        </div>
+                  <button class="carousel-arrow right-arrow" onclick="moveCarousel(1)">&#10095;</button>
+                  
+            </div> 
+
+            <div id="carousel-thumbnails" class="carousel-thumbnails"></div>
+
+            <div id="project-modal" class="modal-overlay">
+                  <div class="modal-content">
+                        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+                        <div id="modal-body-content"></div>
                   </div>
             </div>
+      </section>
 
-            <button class="carousel-arrow right-arrow" onclick="moveCarousel(1)">&#10095;</button>
-      </div>
-
-      <div id="project-modal" class="modal-overlay">
-            <div class="modal-content">
-                  <button class="modal-close" onclick="closeModal()">&#10005;</button>
-                  <div id="modal-body-content">
-                        </div>
+      <section id="contact">
+            <p class="section__text__p1">Get In Touch</p>
+            <h1 class="title">CONTACT ME</h1>
+            <div class="contact-info-upper-container">
+                  <div class="contact-info-container">
+                        <img src="./assets/email.png" alt="Email Icon" class="icon contact-icon"/>
+                        <p><a href="mailto:justinloretz42@gmail.com">justinloretz42@gmail.com</a></p>
+                  </div>
+                  <div class="contact-info-container">
+                        <img src="./assets/linkedin.png" alt="LinkedIn Icon" class="icon contact-icon"/>
+                        <p><a href="https://www.linkedin.com/in/justin-loretz-bb0336250/" target="_blank">Justin Loretz</a></p>
+                  </div>
             </div>
-      </div>
-</section>
-            <section id="contact">
-                  <p class="section__text__p1">Get In Touch</p>
-                  <h1 class="title">CONTACT ME</h1>
-                  <div class="contact-info-upper-container">
-                        <div class="contact-info-container">
-                              <img src="./assets/email.png"
-                              alt="Email Icon"
-                              class="icon contact-icon"/>
-                              <p><a href="mailto:justinloretz42@gmail.com">justinloretz42@gmail.com</a></p>
-                              <p>
-                              </div>
-                        <div class="contact-info-container">
-                              <img src="./assets/linkedin.png"
-                              alt="LinkedIn Icon"
-                              class="icon contact-icon"/>
-                              <p><a href="https://www.linkedin.com/in/justin-loretz-bb0336250/" target="_blank">Justin Loretz</a></p>
-                              <p>
-                              </div>
-            </section>
-            <footer>
-                  <nav>
+      </section>
+
+      <footer>
+            <nav>
                   <div class="nav-links-container">
-                  <ul class="nav-links">
-                  <li><a href="#about">ABOUT</a></li>
-                  <li><a href="#experience">EXPERIENCE</a></li>
-                  <li><a href="#projects">PROJECTS</a></li>
-                  <li><a href="#contact">CONTACT</a></li>
-                  </ul>
+                        <ul class="nav-links">
+                              <li><a href="#about">ABOUT</a></li>
+                              <li><a href="#experience">EXPERIENCE</a></li>
+                              <li><a href="#projects">PROJECTS</a></li>
+                              <li><a href="#contact">CONTACT</a></li>
+                        </ul>
                   </div>
-                  </nav>
-                  <p>COPYRIGHT &#169; 2026 Justin Loretz. All Rights Reserved.</p>
-            </footer>
+            </nav>
+            <p>COPYRIGHT &#169; 2026 Justin Loretz. All Rights Reserved.</p>
+      </footer>
       <script src="script.js"></script>
 </body>
 </html>
