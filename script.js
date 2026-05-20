@@ -1,11 +1,31 @@
 // --- 1. Hamburger Menu ---
-function toggleMenu() {
+window.toggleMenu = function(e) {
+      if (e) e.stopPropagation();
       const menu = document.querySelector(".menu-links");
       const icon = document.querySelector(".hamburger-icon");
       menu.classList.toggle("open");
       icon.classList.toggle("open");
+      
+      // Locks the background from scrolling while menu is open
+      if (menu.classList.contains("open")) {
+          document.body.style.overflow = "hidden"; 
+      } else {
+          document.body.style.overflow = "auto";
+      }
 }
 
+// Closes menu when clicking ANYWHERE on the background overlay
+document.addEventListener("click", (e) => {
+      const menu = document.querySelector(".menu-links");
+      const icon = document.querySelector(".hamburger-icon");
+      if (menu && menu.classList.contains("open")) {
+            if (e.target === menu || (!menu.contains(e.target) && !icon.contains(e.target))) {
+                  menu.classList.remove("open");
+                  icon.classList.remove("open");
+                  document.body.style.overflow = "auto";
+            }
+      }
+});
 // --- 2. Smart Share Button ---
 window.sharePortfolio = function() {
       const siteUrl = window.location.href; 
@@ -78,51 +98,74 @@ document.addEventListener('DOMContentLoaded', () => {
                   const imgElement = item.querySelector('.carousel-img');
                   if(!imgElement) return;
 
+                  // NEW: The invisible wrapper that holds the image AND the background number
+                  const wrapper = document.createElement('div');
+                  wrapper.classList.add('thumbnail-wrapper');
+
                   const thumb = document.createElement('img');
                   thumb.classList.add('thumbnail-dot');
                   thumb.src = imgElement.src; 
 
-                  thumb.onclick = () => {
+                  // Make the whole wrapper clickable
+                  wrapper.onclick = () => {
                         currentCarouselIndex = index;
                         updateCarousel();
                   };
-                  thumbContainer.appendChild(thumb);
+
+                  wrapper.appendChild(thumb);
+                  thumbContainer.appendChild(wrapper);
             });
       }
 
-      window.filterProjects = function(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                  btn.classList.remove('active-filter');
-                  if (btn.getAttribute('onclick').includes(category)) {
-                        btn.classList.add('active-filter');
-                  }
-            });
+window.filterProjects = function(category) {
+      // 1. Toggles desktop buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active-filter');
+            if (btn.getAttribute('onclick').includes(category)) {
+                  btn.classList.add('active-filter');
+            }
+      });
 
-            visibleCarouselItems = [];
-            allCarouselItems.forEach(item => {
-                  item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2'); 
-                  
-                  const isFeaturedMode = (category === 'featured' && item.getAttribute('data-featured') === 'true');
-                  const isCategoryMatch = (item.getAttribute('data-category') === category);
+      // 2. Syncs the mobile dropdown
+      const mobileDropdown = document.getElementById('mobile-project-dropdown');
+      if (mobileDropdown && mobileDropdown.value !== category) {
+            mobileDropdown.value = category;
+      }
 
-                  if (isFeaturedMode || isCategoryMatch) {
-                        item.classList.remove('hidden-project');
-                        visibleCarouselItems.push(item);
-                  } else {
-                        item.classList.add('hidden-project');
-                  }
-            });
-
-            currentCarouselIndex = 0;
-            if (visibleCarouselItems.length > 0) {
-                  generateThumbnails(); 
-                  updateCarousel();
+      // 3. Toggles the "Top Ten Mode" for the CSS to read
+      const thumbContainer = document.getElementById('carousel-thumbnails');
+      if (thumbContainer) {
+            if (category === 'featured') {
+                  thumbContainer.classList.add('top-ten-mode');
             } else {
-                  const thumbContainer = document.getElementById('carousel-thumbnails');
-                  if (thumbContainer) thumbContainer.innerHTML = '';
+                  thumbContainer.classList.remove('top-ten-mode');
             }
       }
 
+      visibleCarouselItems = [];
+    
+      allCarouselItems.forEach(item => {
+            item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2'); 
+            
+            const isFeaturedMode = (category === 'featured' && item.getAttribute('data-featured') === 'true');
+            const isCategoryMatch = (item.getAttribute('data-category') === category);
+
+            if (isFeaturedMode || isCategoryMatch) {
+                  item.classList.remove('hidden-project');
+                  visibleCarouselItems.push(item);
+            } else {
+                  item.classList.add('hidden-project');
+            }
+      });
+
+      currentCarouselIndex = 0;
+      if (visibleCarouselItems.length > 0) {
+            generateThumbnails(); 
+            updateCarousel();
+      } else {
+            if (thumbContainer) thumbContainer.innerHTML = '';
+      }
+}
       if (allCarouselItems.length > 0) {
             filterProjects('featured'); 
       }
@@ -137,40 +180,48 @@ document.addEventListener('DOMContentLoaded', () => {
                   updateCarousel();
             }
       }
-
-      function updateCarousel() {
+function updateCarousel() {
             const totalItems = visibleCarouselItems.length;
+            const isTopTen = document.querySelector('.filter-btn.active-filter').innerText.includes('TOP TEN');
 
             visibleCarouselItems.forEach((item, index) => {
                   item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2');
 
                   if (index === currentCarouselIndex) {
                         item.classList.add('active');
-                  } else if (totalItems >= 3 && index === (currentCarouselIndex - 1 + totalItems) % totalItems) {
-                        item.classList.add('prev');
-                  } else if (totalItems >= 2 && index === (currentCarouselIndex + 1) % totalItems) {
-                        item.classList.add('next');
-                  } else if (totalItems >= 5 && index === (currentCarouselIndex - 2 + totalItems) % totalItems) {
+                  } else if (index === currentCarouselIndex - 1 || (!isTopTen && totalItems >= 3 && index === (currentCarouselIndex - 1 + totalItems) % totalItems)) {
+                        item.classList.add('prev'); /* Shows on the left */
+                  } else if (index === currentCarouselIndex + 1 || (!isTopTen && totalItems >= 2 && index === (currentCarouselIndex + 1) % totalItems)) {
+                        item.classList.add('next'); /* Shows on the right */
+                  } else if (index === currentCarouselIndex - 2 || (!isTopTen && totalItems >= 5 && index === (currentCarouselIndex - 2 + totalItems) % totalItems)) {
                         item.classList.add('prev-2');
-                  } else if (totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems) {
+                  } else if (index === currentCarouselIndex + 2 || (!isTopTen && totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems)) {
                         item.classList.add('next-2');
                   }
             });
 
             const thumbs = document.querySelectorAll('.thumbnail-dot');
             thumbs.forEach((thumb, index) => {
-                  if (index === currentCarouselIndex) {
-                        thumb.classList.add('active-thumb');
-                  } else {
-                        thumb.classList.remove('active-thumb');
-                  }
+                  if (index === currentCarouselIndex) thumb.classList.add('active-thumb');
+                  else thumb.classList.remove('active-thumb');
             });
       }
 
       window.moveCarousel = function(direction) {
             if (visibleCarouselItems.length === 0) return;
             const totalItems = visibleCarouselItems.length;
-            currentCarouselIndex = (currentCarouselIndex + direction + totalItems) % totalItems;
+            const isTopTen = document.querySelector('.filter-btn.active-filter').innerText.includes('TOP TEN');
+            
+            let newIndex = currentCarouselIndex + direction;
+            
+            if (isTopTen) {
+                  // Hard stop: Don't wrap around in Top 10 mode
+                  if (newIndex < 0 || newIndex >= totalItems) return; 
+                  currentCarouselIndex = newIndex;
+            } else {
+                  // Wrap around normally for other filters
+                  currentCarouselIndex = (newIndex + totalItems) % totalItems;
+            }
             updateCarousel();
       }
 
@@ -243,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
                   cursor.style.top = e.clientY + 'px';
             });
 
-            // Removed .tilt-card from here so the image does not react to the hover!
             const clickables = document.querySelectorAll('a, button, .icon, .thumbnail-dot, .carousel-img, .carousel-arrow');
             clickables.forEach(el => {
                   el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
@@ -276,4 +326,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { threshold: 0.15 });
 
       cardsToReveal.forEach(card => revealObserver.observe(card));
+
+      // --- 9. The Vault Preloader ---
+      setTimeout(() => {
+            document.body.classList.add('vault-open');
+            setTimeout(() => {
+                  const vault = document.getElementById('vault-preloader');
+                  if (vault) vault.style.display = 'none';
+            }, 2200); 
+      }, 2200);
+
+      // --- 10. Article Sorting Logic ---
+      window.sortArticles = function() {
+            const container = document.querySelector('.editorial-index-container');
+            const rows = Array.from(container.querySelectorAll('.editorial-row'));
+            const sortType = document.getElementById('article-sort').value;
+
+            rows.sort((a, b) => {
+                  if (sortType === 'views') {
+                        return parseInt(b.dataset.views) - parseInt(a.dataset.views);
+                  } else if (sortType === 'oldest') {
+                        return new Date(a.dataset.date) - new Date(b.dataset.date);
+                  } else { // Newest (Default)
+                        return new Date(b.dataset.date) - new Date(a.dataset.date);
+                  }
+            });
+
+            // Re-append rows in the new sorted order
+            rows.forEach(row => container.appendChild(row));
+      }
+
 });

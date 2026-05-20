@@ -1,19 +1,9 @@
-/* General Styling */
-
-@font-face {
-      font-family: "Sequel 85";
-      src: url(SEQUEL100BLACK-85.TTF);
-}
-
-@font-face {
-      font-family: "Tunstent Compressed Medium";
-      src: url(TUNGSTENCOMPRESSED-MEDIUM.TTF);
-}
-
-@font-face {
-      font-family: "Gotham Book";
-      src: url(Gotham-Book.otf);
-}
+/* =========================================
+   1. BASE STYLING, FONTS & VARIABLES
+   ========================================= */
+@font-face { font-family: "Sequel 85"; src: url(SEQUEL100BLACK-85.TTF); }
+@font-face { font-family: "Tunstent Compressed Medium"; src: url(TUNGSTENCOMPRESSED-MEDIUM.TTF); }
+@font-face { font-family: "Gotham Book"; src: url(Gotham-Book.otf); }
 
 * {
       margin: 0;
@@ -22,1249 +12,34 @@
 }
 
 :root {
-      --accent: #0044FF; /* Electric Cobalt Blue */
-      --paper: #F4F4F0; /* Warm, tactile cardstock off-white */
-      --grid: rgba(0, 0, 0, 0.05); /* Faint blueprint lines */
+      --accent: #0044FF; 
+      --paper: #F4F4F0; 
+      --grid: rgba(0, 0, 0, 0.05); 
 }
 
 html, body {
-      font-family: "Gotham Book";
-      overflow-x: clip; /* CHANGED FROM HIDDEN: This allows the sticky header to actually work! */
+      font-family: "Gotham Book", sans-serif;
+      width: 100%;
+      max-width: 100%; 
+      overflow-x: clip !important; /* THE FIX: Physically impossible to scroll sideways now */
       background-color: transparent; 
-      color: #f0f0f0;
+      color: var(--paper); 
 }
-
-.logo-img, .icon {
-      filter: invert(1);
+h1, h2, h3, .title { 
+      font-family: "Sequel 85", sans-serif; 
+      color: var(--paper); /* FIX: Stops your name from turning black */
 }
-
-/* 2. Make the navigation links white */
 a {
       color: var(--paper);
       text-decoration: none;
-}
-
-/* 3. Lighten the dark gray paragraph text */
-p {
-      color: #f0f0f0; 
-}
-
-/* 4. Fix the Buttons so they don't blend in */
-.btn-color-1, .btn-color-2 {
-      border: 2px solid var(--paper); 
-}
-
-.btn-color-1 {
-      background: transparent;
-      color: var(--paper); 
-}
-
-.btn-color-2 {
-      background: var(--paper);
-      color: black; 
-}
-
-#particle-canvas {
-      position: fixed; 
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #050505; 
-      z-index: -1; 
-      pointer-events: none; 
-      overflow: hidden;
-}
-.star {
-      position: absolute;
-      background-color: #ffffff;
-      border-radius: 50%;
-      opacity: 0; 
-      box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6); 
-      animation: pulseAndDrift linear infinite;
-      will-change: transform, opacity; 
-}
-
-@keyframes pulseAndDrift {
-      0% { 
-            opacity: 0; 
-            transform: translate(0, 0) scale(0.5); 
-      }
-      50% { 
-            opacity: 1; 
-            transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); 
-      }
-      100% { 
-            opacity: 0; 
-            transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); 
-      }
-}
-
-h1, h2, h3 {
-      font-family: "sequel 85";
-}
-
-html {
-      scroll-behavior: smooth;
-}
-
-/* Logo Styling */
-.logo-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none; 
-}
-
-.logo-img {
-      height: 5rem; 
-      width: auto;    
-      transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.logo-link:hover .logo-img {
-      transform: scale(1.15); 
-      opacity: 0.8;           
-      cursor: pointer;
-}
-
-/*Transition*/
-a, .btn {
       transition: all 300ms ease;
 }
 
-/*Desktop Nav*/
-
-/* --- The New Sticky Navigation --- */
-#main-header {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background: rgba(5, 5, 5, 0.95); /* Deep dark background so text doesn't bleed through */
-      backdrop-filter: blur(12px); /* Premium frosted glass effect */
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Crisp baseline border */
-}
-
-#desktop-nav, #hamburger-nav {
-      margin-top: 0; /* Removed the old gap so it sits flush in the header */
-}
-
-nav {
-      align-items: center;
-      justify-content: space-between;
-      height: 12vh; /* Slimmed down from 17vh so it isn't bulky when scrolling */
-      width: 100%;
-      padding: 0 2rem;
-}
-nav, .nav-links {
-      display: flex;
-}
-
-.nav-links {
-   gap: 2rem;
-   list-style: none;
-   font-size: 1.5rem;   
-}
-
-a:hover {
-      color: grey;
-      text-decoration: underline;
-      text-underline-offset: 0.5rem;
-      text-decoration-color: rgb(181, 181, 181);
-}
-
-.nav-links a {
-      transition: transform 0.3s ease;
-}
-
-.nav-links a:hover {
-      display: inline-block;
-      transform: scale(1.05); 
-}
-
-.logo {
-      font-size: 2rem;
-}
-
-.logo:hover {
-      cursor:default;
-}
-
-/* Hamburger Menu */
-#hamburger-nav {
-      display: none;
-}
-
-.hamburger-menu {
-      position: relative;
-      display: inline-block;
-}
-
-.hamburger-icon {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 24px;
-      width: 30px;
-      cursor: pointer;
-}
-
-.hamburger-icon span {
-      width: 100%;
-      height: 2px;
-      background-color: var(--paper);
-      transition: all 0.3s ease-in-out;
-}
-
-.menu-links {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: white;
-      width: fit-content;
-      max-height: 0;
-      overflow: hidden;
-      transition: all 0.3s ease-in-out;
-}    
-
-.menu-links a {
-      display: block;
-      padding: 10px;
-      text-align: center;
-      font-size: 1.5rem;
-      color: black;
-      text-decoration: none;
-      transition: all 0.3s ease-in-out;
-}
-
-.menu-links li {
-      list-style: none;
-}
-
-.menu-links.open {
-      max-height: 300px;
-}
-
-.hamburger-icon.open span:first-child {
-      transform: rotate(45deg) translate(10px, 5px);
-}
-
-.hamburger-icon.open span:nth-child(2){
-      opacity: 0;
-}
-
-.hamburger-icon.open span:last-child {
-      transform: rotate(-45deg) translate(10px, -5px);
-}
-
-/* Sections */
-section {
-      padding-top: 4vh;
-      min-height: 100vh;
-      height: auto;
-      box-sizing: border-box;
-}
-
-.section-container {
-      display: flex;
-}
-
-/* Profile Section */
-#profile {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start; 
-      min-height: 80vh; 
-      padding-top: 2rem; /* Reduced from 4rem to perfectly balance the new header height */
-      padding-bottom: 2rem; 
-      width: 100%;
-}
-
-.profile-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5vh;
-      margin-top: 0; 
-      z-index: 2; 
-      max-width: 1300px; 
-      width: 100%;
-      padding: 0 2rem;
-}
-.marquee-container {
-      position: relative; /* Removed the fixed position */
-      width: 100%;
-      background: var(--accent); 
-      padding: 0.4rem 0; 
-      white-space: nowrap;
-      z-index: 1000; 
-      border-bottom: 2px solid var(--paper); 
-      overflow: hidden;
-}
-
-.marquee-text {
-      font-family: "Sequel 85", sans-serif;
-      font-size: 1rem; 
-      color: #050505; 
-      -webkit-text-stroke: 0; 
-      display: inline-block;
-      animation: scrollText 25s linear infinite; 
-      letter-spacing: 0.2rem; 
-}
-
-@keyframes scrollText {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); } 
-}
-
-/* Card PFP - True Brutalist Flat Design */
-/* Profile Picture - Static Brutalism */
-.tilt-card {
-      position: relative;
-      width: 500px; 
-      height: 640px; 
-      border-radius: 0; 
-      border: 2px solid var(--paper); 
-      box-shadow: 15px 15px 0px var(--accent); 
-      overflow: hidden;
-      margin: 0;
-      flex-shrink: 0; 
-      z-index: 2;
-      /* Notice: No transition or hover effects here anymore! */
-}
-
-.tilt-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none; 
-      /* REMOVED the grayscale filter so it loads in full natural color */
-}
-/* The Intro Text & Buttons */
-.section__text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem; 
-}
-
-.section__text__p1, 
-.section__text__p2 {
-      font-size: 1.5rem; 
-      font-weight: 500;
-}
-
-.section__text .title {
-      font-size: clamp(3rem, 6vw, 6rem); 
-      margin: 0;
-      text-align: left;
-      white-space: nowrap; 
-}
-
-.section__text .btn-container {
-      display: flex;
-      justify-content: flex-start; 
-      gap: 1rem;
-      margin-top: 0.5rem;
-}
-
-/* Icons */
-.icon {
-      cursor: pointer;
-      height: 3rem; 
-      transition: transform 0.3s ease;
-}
-.icon:hover {
-      transform: scale(1.15);
-}
-
-/*Buttons*/
-.btn {
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-weight: 600;
-      font-size: 2.25rem; 
-      transition: all 300ms ease;
-      padding: 1.5rem 2rem; 
-      width: 18rem; 
-      border-radius: 0; 
-      text-transform: uppercase; 
-      letter-spacing: 0.1rem;
-}
-
-.btn-color-1, .btn-color-2 {
-      border: 2px solid black;
-}
-
-.btn-color-1 {
-      background: black;
-      color: white;
-}
-
-.btn-color-1:hover {
-      background: var(--accent); 
-      border-color: var(--accent);
-}
-
-.btn-color-2 {
-      background: var(--paper);
-      color: black;
-}
-
-.btn-color-2:hover {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-}
-
-/* About Section */
-#about {
-      position: relative;
-}
-
-.about-containers {
-      gap: 2rem;
-      margin-bottom: 2rem;
-      margin-top: 2rem;
-}
-
-.about-details-container {
-      justify-content: center;
-      flex-direction: column;
-}
-
-.about-containers,
-.about-details-container {
-      display: flex;
-}
-
-.about-pic  {
-      border-radius: 2rem;
-}
-
-.arrow {
-      position: absolute;
-      right: -5rem;
-      bottom: 2.5rem
-}
-
-.details-container {
-      padding: 1.5rem;
-      flex: 1;
-      background: white;
-      border-radius: 2rem;
-      border: rgb(53, 53, 53) 0.1rem solid;
-      border-color: rgb(163, 163, 163);
-      text-align: center;
-}
-
-.section__pic-container {
-      height: 400px;
-      width: 400px;
-      margin: auto 0;
-}
-
-/* Experience Section */
-#experience {
-      position: relative;
-}
-
-.experience-sub-title {
-      color: rgb(85, 85, 85);
-      font-weight: 600;
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
-}
-
-.experience-details-container {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-}
-
-#experience .article-container {
-      display: flex;
-      text-align: initial;
-      flex-wrap: wrap;
-      flex-direction: row;
-      gap: 2.5rem;
-      justify-content: space-around;
-      background: transparent; 
-      border: none; 
-}
-
-article {
-      display: flex;
-      width: 10rem;
-      justify-content: space-around;
-      gap: .5rem;
-}
-
-article .icon {
-      cursor: default;
-}
-
-/* --- Projects Section (Center-Stage Carousel) --- */
-/* --- Fixes the Cut-Off Issue --- */
-#projects {
-      position: relative;
-      padding-top: 15vh; 
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-}
-
-.carousel-container {
-      position: relative;
-      width: 100vw;
-      height: 75vh; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: visible; 
-      margin-top: 6rem; 
-}
-
-/* --- Base State: Unlocked Widths --- */
-.carousel-item {
-      position: absolute;
-      /* Slowed down to 1.2s for a premium, deliberate glide */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;
-      opacity: 0;
-      transform: translateX(0) scale(0.5);
-      z-index: 0;
-      pointer-events: none;
-      display: block; 
-}
-
-.carousel-img {
-      height: 65vh; 
-      width: auto;
-      max-width: 48vw; 
-      object-fit: contain;
-      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
-      /* Drawn out the hover effect so the image slowly breathes outward when moused over */
-      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
-}
-
-/* --- The Bulletproof Hover Grow Fix --- */
-.carousel-item.active:hover .carousel-img {
-      transform: scale(1.08) !important; 
-      cursor: pointer;
-}
-
-/* Center Spotlight */
-.carousel-item.active {
-      opacity: 1;
-      transform: translateX(0) scale(1);
-      z-index: 10;
-      pointer-events: auto;
-      /* Slowed down to 1.2s */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; 
-}
-
-/* ==========================================================
-   THE 3D FIX: Using 'vw' guarantees perfect, uniform spacing
-   ========================================================== */
-
-/* --- Layer 1: Immediate Left & Right --- */
-.carousel-item.prev {
-      opacity: 1; 
-      transform: translateX(-32vw) scale(0.8); 
-      z-index: 5;
-      pointer-events: auto;
-      cursor: pointer;
-      filter: brightness(0.6); 
-      /* Slowed down to 1.2s */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
-}
-
-.carousel-item.next {
-      opacity: 1; 
-      transform: translateX(32vw) scale(0.8); 
-      z-index: 5;
-      pointer-events: auto;
-      cursor: pointer;
-      filter: brightness(0.6);
-      /* Slowed down to 1.2s */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
-}
-
-/* --- Layer 2: Outer Left & Right --- */
-.carousel-item.prev-2 {
-      opacity: 1; 
-      transform: translateX(-58vw) scale(0.65); 
-      z-index: 2;
-      pointer-events: auto;
-      cursor: pointer;
-      filter: brightness(0.3); 
-      /* Slowed down to 1.2s */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
-}
-
-.carousel-item.next-2 {
-      opacity: 1; 
-      transform: translateX(58vw) scale(0.65); 
-      z-index: 2;
-      pointer-events: auto;
-      cursor: pointer;
-      filter: brightness(0.3);
-      /* Slowed down to 1.2s */
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease, filter 1.2s ease;
-}
-
-/* Hover effects for the background layers */
-.carousel-item.prev:hover,
-.carousel-item.next:hover {
-      filter: brightness(0.9);
-}
-
-.carousel-item.prev-2:hover,
-.carousel-item.next-2:hover {
-      filter: brightness(0.7);
-}
-.carousel-gallery {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-}
-
-.carousel-caption {
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2rem;
-      color: var(--paper);
-      text-align: center;
-      margin-top: 1.5rem;
-      letter-spacing: 0.1rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-}
-
-.carousel-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      color: var(--paper);
-      font-size: 4rem;
-      cursor: pointer;
-      z-index: 20;
-      transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.carousel-arrow:hover {
-      color: var(--accent);
-      transform: translateY(-50%) scale(1.1);
-}
-
-.carousel-item.active .carousel-caption::after {
-      content: "CLICK TO EXPLORE";
-      display: block;
-      font-family: "Gotham Book", sans-serif;
-      font-size: 1rem;
-      color: var(--accent); 
-      margin-top: 0.8rem;
-      letter-spacing: 0.15rem;
-      opacity: 0;
-      animation: pulseText 2s infinite ease-in-out;
-}
-
-@keyframes pulseText {
-      0% { opacity: 0.3; }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: 0.3; }
-}
-
-.left-arrow { left: 5%; }
-.right-arrow { right: 5%; }
-
-/* --- Smart Thumbnail Track Styling --- */
-.carousel-thumbnails {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      margin-top: 0; /* We removed margin and replaced it with padding */
-      margin-bottom: 3rem; 
-      z-index: 20;
-      flex-wrap: nowrap; 
-      width: 100%;
-      max-width: 90vw; 
-      overflow-x: auto; 
-      
-      /* THE FIX: Generous internal padding gives the glowing shadows and scaled-up cards room to breathe without hitting the invisible ceiling */
-      padding-top: 2rem; 
-      padding-bottom: 2rem; 
-}
-/* Optional: Styles the scrollbar to look sleek and thin if it ever appears */
-.carousel-thumbnails::-webkit-scrollbar {
-      height: 6px;
-}
-.carousel-thumbnails::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-}
-
-.thumbnail-dot {
-      height: 75px; 
-      width: auto; /* THE MAGIC BULLET: Flawlessly adapts to both vertical posters and horizontal decks */
-      flex-shrink: 0; 
-      
-      border-radius: 4px;
-      cursor: pointer;
-      opacity: 0.35;
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.thumbnail-dot:hover {
-      opacity: 0.8;
-      transform: translateY(-3px);
-}
-
-.thumbnail-dot.active-thumb {
-      opacity: 1;
-      transform: scale(1.1);
-      
-      /* The stroke will now hug the exact boundaries of the artwork */
-      box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); 
-}
-/* --- Brutalist Filter Menu --- */
-.project-filters {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-      z-index: 20;
-}
-
-.filter-btn {
-      background: transparent;
-      border: none;
-      color: #f0f0f0; 
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2.5rem; 
-      letter-spacing: 0.15rem; 
-      cursor: pointer;
-      transition: color 0.3s ease, transform 0.3s ease;
-      padding-bottom: 0.2rem;
-}
-
-.filter-btn:hover {
-      color: var(--paper);
-}
-
-.filter-btn.active-filter {
-      color: var(--accent); 
-      border-bottom: 2px solid var(--accent);
-}
-
-.hidden-project {
-      display: none !important; 
-}
-
-/* --- The Deep Dive Modal --- */
-/* --- The Deep Dive Modal --- */
-.modal-overlay {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(5, 5, 5, 0.98); 
-      z-index: 99999 !important; /* Jacked up to ensure it covers the sticky header */
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow-y: auto;
-      overflow-x: hidden;
-      opacity: 0;
-      pointer-events: none; 
-      transition: opacity 0.4s ease;
-}
-
-.modal-overlay.show-modal {
-      opacity: 1;
-      pointer-events: auto;
-}
-
-.modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 1000px;
-      margin: 5vh auto;
-      background: #0a0a0a !important; /* Forces the box background to render */
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 4rem;
-      color: var(--paper);
-      z-index: 100000 !important; /* Forces the box above the dark overlay */
-      box-shadow: 0px 20px 50px rgba(0,0,0,0.8);
-}
-
-.modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      background: transparent;
-      border: none;
-      color: var(--paper);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.modal-close:hover {
-      color: var(--accent);
-      transform: scale(1.2);
-}
-
-.modal-hero-img {
-      width: 100%;
-      height: auto;
-      max-height: 70vh;
-      object-fit: contain;
-      margin-bottom: 2rem;
-}
-
-#modal-body-content h2 {
-      font-family: "Sequel 85", sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent);
-}
-
-#modal-body-content p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 1rem;
-}
-
-/* Contact Section */
-#contact {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      height: 70vh;
-}
-
-.contact-info-upper-container {
-      display: flex;
-      justify-content: center;
-      border-radius: 2rem;
-      border: rgb(53, 53, 53) 0.1rem solid;
-      border-color: rgb(163, 163, 163);
-      background: rgb(250, 250, 250);
-      margin: 2rem auto;
-      padding: .5rem;
-}
-
-.contact-info-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      margin: 1rem;
-}
-
-.contact-icon, .email-icon {
-      cursor: default;
-}
-
-
-/* Footer */
-footer {
-      height: auto;
-      min-height: fit-content;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      padding-bottom: 2rem;
-      margin: 0 1rem;
-}
-
-footer nav {
-      height: auto; 
-}
-
-footer p {
-      text-align: center;
-}
-
-/* --- Presentation Slide Stack Styling --- */
-.presentation-stack {
-      display: flex;
-      flex-direction: column; 
-      align-items: center;
-      width: 100%;
-}
-
-.presentation-slide {
-      width: 100%;
-      height: auto;
-      max-width: 900px; 
-      border: 1px solid rgba(255, 255, 255, 0.15); 
-      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); 
-      border-radius: 4px; 
-}
-
-/* --- Interactive Modal Slideshow Layout --- */
-#modal-body-content .presentation-stack {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      margin-top: 0; /* Sits flush at the top of the modal */
-      margin-bottom: 3rem; /* Creates perfect breathing room before the title */
-      min-height: 60vh; 
-}
-
-.modal-slide-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(5, 5, 5, 0.85);
-      border: 2px solid var(--paper);
-      color: var(--paper);
-      font-size: 2.5rem;
-      padding: 0.5rem 1.2rem;
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s ease;
-}
-
-.modal-slide-arrow:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-}
-
-.modal-slide-arrow.left-arrow { left: -2rem; }
-.modal-slide-arrow.right-arrow { right: -2rem; }
-
 /* =========================================
-   PREMIUM DARK MODE CARDS 
+   2. CUSTOM UTILITIES (Cursor, Scrollbar, Stars)
    ========================================= */
-
-/* 1. Center the Section Headers */
-#about, #experience, #contact {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      width: 100%;
-}
-
-/* Give the tiny top subheadings your Electric Blue color to tie the site together */
-.section__text__p1 {
-      text-align: center;
-      width: 100%;
-      color: var(--accent);
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.15rem;
-      margin-bottom: 0.5rem;
-}
-
-.title {
-      margin-bottom: 3rem; /* Gives breathing room before the cards start */
-}
-
-/* 2. The Sleek Glassmorphism Cards */
-.details-container,
-.contact-info-upper-container {
-      background: rgba(15, 15, 15, 0.6); /* Deep dark frosted glass */
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle crisp white edge */
-      border-radius: 1rem; /* Sharp, modern corners instead of giant blocks */
-      padding: 2.5rem;
-      color: var(--paper); /* Crisp white text */
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Deep shadow to pop off the background */
-      transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-/* Adds a premium "lift and glow" effect when you hover over the cards */
-.details-container:hover,
-.contact-info-upper-container:hover {
-      transform: translateY(-5px);
-      border-color: rgba(0, 68, 255, 0.5); /* Subtle blue glow on the border */
-}
-
-/* 3. Text and Icon Formatting Inside Cards */
-.details-container h2,
-.details-container h3 {
-      color: var(--paper);
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-}
-
-.details-container p,
-.contact-info-upper-container p,
-.contact-info-upper-container a {
-      color: #cccccc; /* Soft silver for easy reading against the dark cards */
-      text-decoration: none;
-      line-height: 1.5;
-}
-
-.contact-info-upper-container a:hover {
-      color: var(--accent);
-}
-
-/* Ensure the icons stay bright white */
-.details-container .icon,
-.contact-info-upper-container .icon {
-      filter: invert(1); 
-      margin-bottom: 0.5rem;
-}
-
-/* 4. Contact Section Polish */
-.contact-info-upper-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 3rem;
-      padding: 1.5rem 4rem;
-      border-radius: 50px; /* Keeps the horizontal shape but makes it super sleek */
-}
-
-/* =========================================
-   LANDING PAGE PREMIUM POLISH
-   ========================================= */
-
-/* 1. Fix the "Hello My Name Is" Text */
-#profile .section__text__p1 {
-      font-family: "Gotham Book", sans-serif; 
-      font-size: 1.2rem;
-      color: var(--accent); 
-      letter-spacing: 0.3rem; 
-      text-transform: uppercase;
-      margin-bottom: -1rem; 
-      font-weight: bold;
-      
-      /* THE ALIGNMENT FIX */
-      text-align: left;
-      width: 100%;
-      display: block;
-}
-
-/* 2. Upgrade the "Justin Loretz" Title */
-#profile .title {
-      /* Dialed back the max size from 8.5rem to 5.5rem, and the flex width from 8vw to 4.5vw */
-      font-size: clamp(2.5rem, 4.5vw, 5.5rem); 
-      line-height: 1.1;
-      text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); /* Tightened the shadow slightly to match the new size */
-      margin-bottom: 0.5rem;
-}
-
-/* 3. Upgrade the "Rising Junior" Subtitle */
-#profile .section__text__p2 {
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2rem;
-      color: #cccccc; 
-      letter-spacing: 0.15rem;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-}
-
-/* 4. Button Overhaul */
-.btn {
-      font-family: "Tunstent Compressed Medium", sans-serif;
-      font-size: 2.25rem; 
-      padding: 1.2rem 2rem; 
-      width: auto; 
-      min-width: 16rem;
-      border-radius: 0; 
-      text-transform: uppercase; 
-      letter-spacing: 0.1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-/* Primary Button (View Resume) */
-.btn-color-2 {
-      background: var(--paper);
-      color: #050505;
-      border: 2px solid var(--paper);
-      box-shadow: 6px 6px 0px var(--accent); 
-}
-
-.btn-color-2:hover {
-      background: var(--paper);
-      color: #050505;
-      transform: translate(-4px, -4px); 
-      box-shadow: 10px 10px 0px var(--accent);
-}
-
-/* Secondary Button (Contact Information) */
-.btn-color-1 {
-      background: transparent;
-      color: var(--paper);
-      border: 2px solid var(--accent); 
-      box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); 
-}
-
-.btn-color-1:hover {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-      transform: translate(-4px, -4px);
-      box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2);
-}
-
-/* Add breathing room between buttons */
-#profile .btn-container {
-      gap: 2rem; 
-      margin-bottom: 2rem;
-}
-
-/* 5. Glowing Social Icons */
-#socials-container .icon {
-      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
-}
-
-#socials-container .icon:hover {
-      transform: translateY(-8px) scale(1.15); /* Physically lifts off the baseline */
-      filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); /* Casts a glowing blue shadow underneath */
-}
-
-/* =========================================
-   PREMIUM NAVIGATION ANIMATION
-   ========================================= */
-
-/* Set up the links to hold the animated line */
-.nav-links a {
-      position: relative;
-      text-decoration: none;
-}
-
-/* Turn text Electric Blue and kill the old chunky underline */
-.nav-links a:hover {
-      color: var(--accent) !important;
-      text-decoration: none !important;
-}
-
-/* Create the invisible line that starts at 0 width */
-.nav-links a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 3px; /* Thickness of the line */
-      bottom: -6px; /* Drops it perfectly below the letters */
-      left: 0;
-      background-color: var(--accent); /* Electric Blue line */
-      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Buttery smooth animation curve */
-}
-
-/* The Trigger: On hover, the line expands to 100% width */
-.nav-links a:hover::after {
-      width: 100%;
-}
-
-/* =========================================
-   STATIC EDITORIAL BEAUTY (NO HOVER NEEDED)
-   ========================================= */
-
-
-/* Ghost Watermark Right-Aligned */
-#profile::before {
-      content: 'VISION';
-      position: absolute;
-      top: 18%;
-      right: 0%; /* Anchors it flush to the right edge */
-      left: auto; /* Prevents it from stretching across the left side */
-      
-      font-family: "Sequel 85", sans-serif;
-      font-size: 13vw; /* Scaled down slightly so the 'V' escapes your photo */
-      
-      /* THE BRIGHTNESS FIX: Added a faint fill color and a brighter stroke */
-      color: rgba(255, 255, 255, 0.04); 
-      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.25); 
-      
-      z-index: 0; 
-      pointer-events: none;
-      white-space: nowrap;
-      letter-spacing: -0.2vw;
-}
-
-/* Ensure your text and photo sit properly on top of the ghost text */
-.profile-content {
-      position: relative;
-      z-index: 10;
-}
-
-/* 5. Permanent Button Arrows (Makes the buttons look highly actionable statically) */
-.btn-color-2::after, 
-.btn-color-1::after {
-      content: ' \2197'; /* Unicode for the North-East Brutalist Arrow */
-      margin-left: 0.8rem;
-      font-family: "Gotham Book", sans-serif;
-      font-weight: bold;
-}
-
-/* =========================================
-   AGENCY LEVEL UPGRADES (A, B, C, D)
-   ========================================= */
-
-/* --- Idea D: Cinematic Film Grain --- */
-body::after {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; 
-      width: 200vw; height: 200vh; /* Oversized to allow the animation movement */
-      /* This SVG creates the TV static noise */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      opacity: 0.04; /* Barely visible texture */
-      pointer-events: none; /* Prevents it from blocking clicks */
-      z-index: 9999;
-      animation: grain 8s steps(10) infinite;
-}
-
-@keyframes grain {
-      0%, 100% { transform: translate(0, 0); }
-      10% { transform: translate(-5%, -10%); }
-      30% { transform: translate(3%, -15%); }
-      50% { transform: translate(12%, 9%); }
-      70% { transform: translate(9%, 4%); }
-      90% { transform: translate(-1%, 7%); }
-}
-
-/* --- Idea C: Custom Electric Scrollbars --- */
-/* The Native Right-Side Bar */
-::-webkit-scrollbar {
-      width: 6px; /* Super thin and sleek */
-}
-::-webkit-scrollbar-track {
-      background: #050505; 
-}
-::-webkit-scrollbar-thumb {
-      background: var(--accent); 
-      border-radius: 10px;
-}
-
-/* The Horizontal Bottom Progress Bar */
-.scroll-progress-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      height: 4px;
-      background: var(--accent);
-      width: 0%; /* Starts at 0, JS will fill it */
-      z-index: 10000;
-      pointer-events: none;
-      box-shadow: 0px -2px 10px rgba(0, 68, 255, 0.8);
-}
-
-/* --- Idea A: Brutalist Custom Cursor --- */
 body, a, button, .icon, .thumbnail-dot, .carousel-item {
-      cursor: none !important; /* Hides the default white pointer completely */
+      cursor: none !important; 
 }
 
 .custom-cursor {
@@ -1273,27 +48,598 @@ body, a, button, .icon, .thumbnail-dot, .carousel-item {
       width: 24px; height: 24px;
       border: 2px solid var(--accent);
       border-radius: 50%;
-      pointer-events: none; /* Crucial: Lets you click "through" the cursor */
-      transform: translate(-50%, -50%); /* Centers it on the mouse tip */
+      pointer-events: none; 
+      transform: translate(-50%, -50%); 
       z-index: 100000;
       transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
       box-shadow: 0 0 10px rgba(0, 68, 255, 0.4);
 }
 
-/* Expands and fills when hovering over buttons/links */
 .custom-cursor.hovering {
       width: 60px; height: 60px;
       background: rgba(0, 68, 255, 0.1);
       border-width: 1px;
 }
 
-/* --- Idea B: Scroll Reveal Classes --- */
-.reveal-on-scroll {
-      opacity: 0;
-      transform: translateY(50px); /* Pushed down slightly */
-      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+.scroll-progress-bar {
+      position: fixed; bottom: 0; left: 0; height: 4px; background: var(--accent);
+      width: 0%; z-index: 10000; pointer-events: none; box-shadow: 0px -2px 10px rgba(0, 68, 255, 0.8);
 }
-.reveal-on-scroll.is-visible {
+
+#particle-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background-color: #050505; z-index: -1; pointer-events: none; overflow: hidden;
+}
+.star {
+      position: absolute; background-color: #ffffff; border-radius: 50%; opacity: 0; 
+      box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6); 
+      animation: pulseAndDrift linear infinite; will-change: transform, opacity; 
+}
+
+@keyframes pulseAndDrift {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      50% { opacity: 1; transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); }
+      100% { opacity: 0; transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); }
+}
+
+.reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+.reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+/* =========================================
+   3. VAULT PRELOADER
+   ========================================= */
+#vault-preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      z-index: 999999; display: flex; justify-content: center; align-items: center; pointer-events: none;
+}
+.vault-door {
+      position: absolute; top: 0; width: 50%; height: 100vh; background: #050505;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1;
+}
+.vault-door.left { left: 0; }
+.vault-door.right { right: 0; }
+.vault-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; transition: opacity 0.4s ease; }
+.vault-title { font-family: "Sequel 85", sans-serif; font-size: 4rem; color: var(--paper); letter-spacing: 0.2rem; margin-bottom: 0.5rem; }
+.vault-sub { 
+      font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); letter-spacing: 0.5rem; 
+}
+/* This animates the 3 dots typing out! */
+.vault-sub::after {
+      content: "";
+      animation: dots 1.5s infinite steps(4);
+}
+@keyframes dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75% { content: "..."; }
+}
+body.vault-open .vault-door.left { transform: translateX(-100%); }
+body.vault-open .vault-door.right { transform: translateX(100%); }
+body.vault-open .vault-content { opacity: 0; }
+
+/* =========================================
+   4. HEADER & NAVIGATION
+   ========================================= */
+
+.marquee-container {
+      position: relative; width: 100%; background: var(--accent); padding: 0.4rem 0; 
+      white-space: nowrap; z-index: 1000; border-bottom: 2px solid var(--paper); overflow: hidden;
+      
+      /* THE FIX: Pushes the marquee safely below your newly fixed header */
+      margin-top: 12vh; 
+}
+.marquee-text {
+      font-family: "Sequel 85", sans-serif; font-size: 1rem; color: #050505; -webkit-text-stroke: 0; 
+      display: inline-block; animation: scrollText 25s linear infinite; letter-spacing: 0.2rem; 
+}
+@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+#main-header {
+      position: fixed; /* Better than sticky for mobile */
+      top: 0; left: 0; width: 100%; 
+      background: rgba(5, 5, 5, 0.95); 
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      
+      /* THE FIX: 10000 z-index guarantees the header and 'X' stay on top of the menu! */
+      z-index: 10000; 
+      
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+nav { align-items: center; justify-content: space-between; height: 12vh; width: 100%; padding: 0 2rem; display: flex; }
+#desktop-nav, #hamburger-nav { margin-top: 0; }
+
+.logo-link { display: flex; align-items: center; text-decoration: none; }
+.logo-img, .icon { filter: invert(1); }
+.logo-img { height: 5rem; width: auto; transition: transform 0.3s ease, opacity 0.3s ease; }
+.logo-link:hover .logo-img { transform: scale(1.15); opacity: 0.8; }
+.icon { cursor: none; height: 3rem; transition: transform 0.3s ease; }
+.icon:hover { transform: scale(1.15); }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; font-size: 1.5rem; }
+.nav-links a { position: relative; text-decoration: none; transition: transform 0.3s ease; }
+.nav-links a:hover { color: var(--accent) !important; text-decoration: none !important; transform: scale(1.05); }
+.nav-links a::after {
+      content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 0;
+      background-color: var(--accent); transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* Hamburger */
+#hamburger-nav { display: none; }
+.hamburger-menu { position: relative; display: inline-block; }
+/* THE MAGIC: Flawless "X" Fold Animation */
+.hamburger-icon { 
+      display: flex; flex-direction: column; justify-content: space-between; 
+      height: 24px; width: 32px; z-index: 10001; position: relative; cursor: pointer;
+}
+.hamburger-icon span { 
+      width: 100%; height: 2px; background-color: var(--paper); 
+      transition: all 0.3s ease-in-out; 
+      
+      /* Anchors the lines to the left so they fold inward perfectly */
+      transform-origin: left center; 
+}
+.hamburger-icon.open span:first-child { transform: rotate(45deg); }
+.hamburger-icon.open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger-icon.open span:last-child { transform: rotate(-45deg); }
+/* THE CINEMATIC FULL-SCREEN MENU */
+.menu-links { 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100vw; height: 100vh; 
+      
+      /* THE FIX: Added a deep, rich glowing gradient so it's not a flat black box */
+      background: radial-gradient(circle at bottom right, rgba(0, 68, 255, 0.2) 0%, rgba(5, 5, 5, 0.98) 60%); 
+      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4vh; 
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; 
+      
+      /* Sits right under your floating header */
+      z-index: 9999; 
+}    
+.menu-links li { 
+      list-style: none; 
+      overflow: hidden; /* Hides the text before it slides up */
+}
+.menu-links a { 
+      font-family: "Sequel 85", sans-serif; 
+      font-size: clamp(2rem, 10vw, 4rem); 
+      letter-spacing: 0.2rem; 
+      color: var(--paper); 
+      text-decoration: none; 
+      
+      /* THE FIX: Automatically forces all text to be CAPITALIZED */
+      text-transform: uppercase; 
+      
+      transform: translateY(100%); 
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, color 0.3s ease; 
+}
+.menu-links.open { opacity: 1; pointer-events: auto; }
+
+/* THE MAGIC: Triggers the staggered slide-up animation when opened */
+.menu-links.open a {
+      transform: translateY(0);
       opacity: 1;
-      transform: translateY(0); /* Floats up into normal position */
+      transition-delay: calc(0.1s * var(--i)); 
+}
+.menu-links a:hover { color: var(--accent); }
+/* =========================================
+   5. PROFILE / HERO SECTION
+   ========================================= */
+#profile {
+      position: relative; display: flex; justify-content: center; align-items: flex-start; 
+      min-height: 80vh; padding-top: 2rem; padding-bottom: 2rem; width: 100%;
+}
+.profile-content {
+      display: flex; justify-content: center; align-items: center; gap: 5vh; 
+      margin-top: 0; z-index: 10; max-width: 1300px; width: 100%; padding: 0 2rem; position: relative;
+}
+
+.tilt-card {
+      position: relative; width: 500px; height: 640px; border-radius: 0; border: 2px solid var(--paper); 
+      box-shadow: 15px 15px 0px var(--accent); overflow: hidden; margin: 0; flex-shrink: 0; z-index: 2;
+}
+.tilt-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+.section__text { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+#profile .section__text__p1 {
+      font-family: "Gotham Book", sans-serif; font-size: 1.2rem; color: var(--accent); 
+      letter-spacing: 0.3rem; text-transform: uppercase; margin-bottom: -1rem; font-weight: bold; text-align: left; width: 100%; display: block;
+}
+#profile .title { font-size: clamp(2.5rem, 4.5vw, 5.5rem); line-height: 1.1; text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); margin-bottom: 0.5rem; text-align: left; white-space: nowrap; }
+#profile .section__text__p2 { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; color: #cccccc; letter-spacing: 0.15rem; text-transform: uppercase; margin-bottom: 2.5rem; }
+
+#profile .btn-container { display: flex; justify-content: flex-start; gap: 2rem; margin-bottom: 2rem; }
+.socials-container { display: flex; gap: 1.5rem; margin-top: 1rem; }
+#socials-container .icon { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease; }
+#socials-container .icon:hover { transform: translateY(-8px) scale(1.15); filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); }
+
+/* Buttons */
+.btn {
+      font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2.25rem; font-weight: 600; padding: 1.2rem 2rem; 
+      width: auto; min-width: 16rem; border-radius: 0; text-transform: uppercase; letter-spacing: 0.1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.btn::after { content: ' \2197'; margin-left: 0.8rem; font-family: "Gotham Book", sans-serif; font-weight: bold; }
+
+.btn-color-2 { background: var(--paper); color: #050505; border: 2px solid var(--paper); box-shadow: 6px 6px 0px var(--accent); }
+.btn-color-2:hover { background: var(--paper); color: #050505; transform: translate(-4px, -4px); box-shadow: 10px 10px 0px var(--accent); }
+.btn-color-1 { background: transparent; color: var(--paper); border: 2px solid var(--accent); box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); }
+.btn-color-1:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); transform: translate(-4px, -4px); box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2); }
+
+/* =========================================
+   6. GLOBAL SECTION LAYOUTS & NUMERALS
+   ========================================= */
+section { padding-top: 4vh; min-height: 100vh; height: auto; box-sizing: border-box; position: relative; z-index: 1; overflow: hidden; }
+.section-container { display: flex; }
+
+#about, #experience, #contact { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+.section__text__p1 { text-align: center; width: 100%; color: var(--accent); font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; letter-spacing: 0.15rem; margin-bottom: 0.5rem; }
+.title { margin-bottom: 3rem; }
+
+/* =========================================
+   7. ABOUT ME SECTION
+   ========================================= */
+.about-containers { display: flex; gap: 2rem; margin-bottom: 2rem; margin-top: 2rem; max-width: 1100px; margin: 2rem auto !important; }
+.about-details-container { display: flex; justify-content: center; flex-direction: column; }
+.section__pic-container { height: 400px; width: 400px; margin: auto 0; }
+.about-pic { border-radius: 2rem; }
+.arrow { position: absolute; right: -5rem; bottom: 2.5rem; }
+
+/* Extracted Inline Styles */
+.about-text-container { text-align: left; max-width: 800px; margin: 0 auto; }
+.about-text-container h3 { font-family: "Sequel 85", sans-serif; font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; }
+.about-text-container p { font-size: 1.25rem; line-height: 1.8; margin-bottom: 2rem; }
+.about-text-container p.sub-text { color: #cccccc; margin-bottom: 0; }
+
+/* =========================================
+   8. GLASSMORPHISM CARDS (EXPERIENCE & CONTACT)
+   ========================================= */
+.details-container, .contact-info-upper-container {
+      background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); 
+      border-radius: 1rem; padding: 2.5rem; color: var(--paper); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); 
+      transition: transform 0.3s ease, border-color 0.3s ease; text-align: center;
+}
+.details-container:hover, .contact-info-upper-container:hover { transform: translateY(-5px); border-color: rgba(0, 68, 255, 0.5); }
+
+/* Experience Grid Specifics */
+/* WIDENED the grid so there is less empty space on the sides */
+.details-container { flex: 1 1 45% !important; min-width: 450px !important; }
+.experience-sub-title { color: var(--accent); font-weight: 600; font-size: 1.4rem !important; margin-bottom: 2rem; }
+.promotion-text { font-size: 0.85rem; color: #888; margin-bottom: 1.2rem; letter-spacing: 0.1rem; text-transform: uppercase; font-family: 'Gotham Book', sans-serif; }
+
+/* Keep ONLY headers on one line */
+.details-container h2, .details-container h3 {
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; margin-top: 1rem; margin-bottom: 0.5rem;
+}
+.details-container h3 { text-transform: uppercase; font-size: 1.5rem !important; }
+
+/* LET THE PARAGRAPHS WRAP SO YOU CAN WRITE MORE! */
+.details-container p {
+      white-space: normal !important; 
+      line-height: 1.6;
+      margin-top: 1rem;
+      color: #cccccc;
+}
+
+/* Make the overall container wider to eat up the dead space */
+.about-containers { max-width: 1400px !important; }
+/* Contact Container Specifics */
+.contact-info-upper-container { display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 3rem; padding: 1.5rem 4rem; border-radius: 50px; }
+.contact-info-upper-container p, .contact-info-upper-container a { color: #cccccc; text-decoration: none; line-height: 1.5; }
+.contact-info-upper-container a:hover { color: var(--accent); }
+.details-container .icon, .contact-info-upper-container .icon { filter: invert(1); margin-bottom: 0.5rem; height: 2.5rem; }
+.contact-info-container { display: flex; align-items: center; justify-content: center; gap: .5rem; margin: 1rem; }
+
+/* =========================================
+   9. PROJECTS & CAROUSEL
+   ========================================= */
+#projects { position: relative; padding-top: 15vh; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+/* THE FIX: Overrides the global title margin just for this section */
+/* THE FIX: Restored breathing room under the title */
+#projects .title {
+      margin-bottom: 2rem; 
+}
+
+.project-filters { 
+      display: flex; 
+      justify-content: center; 
+      gap: 2rem; 
+      margin-top: 0; 
+      
+      /* THE FIX: Added 3rem of bottom margin to push the giant images away from the text! */
+      margin-bottom: 3rem; 
+      
+      flex-wrap: wrap; 
+      z-index: 20; 
+}
+.desktop-filters { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; }
+.mobile-filters { display: none; width: 100%; justify-content: center; margin-bottom: 2rem; }
+#mobile-project-dropdown { 
+      width: 80%; max-width: 350px; padding: 0.8rem 1rem; 
+      font-family: "Tunstent Compressed Medium", sans-serif; font-size: 1.8rem; letter-spacing: 0.1rem; 
+      background: rgba(15, 15, 15, 0.9); color: var(--accent); 
+      border: 2px solid var(--accent); border-radius: 6px; outline: none; text-align: center; cursor: pointer;
+}
+.filter-btn { background: transparent; border: none; color: #f0f0f0; font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2.5rem; letter-spacing: 0.15rem; transition: color 0.3s ease, transform 0.3s ease; padding-bottom: 0.2rem; }
+.filter-btn:hover { color: var(--paper); }
+.filter-btn.active-filter { color: var(--accent); border-bottom: 2px solid var(--accent); }
+.hidden-project { display: none !important; }
+
+.carousel-container { 
+      position: relative; 
+      width: 100%; 
+      
+      /* THE FIX: Gave the container a safe 48vh height */
+      height: 48vh; 
+      
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      overflow: visible; 
+      margin-top: 0; 
+}
+
+.carousel-img { 
+      /* THE FIX: Set the image slightly smaller (45vh) so it fits safely inside the container */
+      height: 45vh; 
+      width: auto; 
+      max-width: 48vw; 
+      
+      object-fit: contain; 
+      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+}.carousel-gallery { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+
+.carousel-item { position: absolute; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; opacity: 0; transform: translateX(0) scale(0.5); z-index: 0; pointer-events: none; display: block; }
+.carousel-item.active { opacity: 1; transform: translateX(0) scale(1); z-index: 10; pointer-events: auto; }
+.carousel-item.active:hover .carousel-img { transform: scale(1.08) !important; cursor: none; }
+/* THE FIX: Pulled all values closer to the center (e.g. from 32vw down to 22vw) */
+.carousel-item.prev { opacity: 1; transform: translateX(-22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
+.carousel-item.next { opacity: 1; transform: translateX(22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
+.carousel-item.prev-2 { opacity: 1; transform: translateX(-40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }
+.carousel-item.next-2 { opacity: 1; transform: translateX(40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }.carousel-item.prev:hover, .carousel-item.next:hover { filter: brightness(0.9); }
+.carousel-item.prev-2:hover, .carousel-item.next-2:hover { filter: brightness(0.7); }
+
+.carousel-caption { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; color: var(--paper); text-align: center; margin-top: 1.5rem; letter-spacing: 0.1rem; opacity: 0; transition: opacity 0.3s; }
+.carousel-item.active .carousel-caption::after { content: "CLICK TO EXPLORE"; display: block; font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); margin-top: 0.8rem; letter-spacing: 0.15rem; opacity: 0; animation: pulseText 2s infinite ease-in-out; }
+@keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.3; } }
+
+.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--paper); font-size: 4rem; z-index: 20; transition: color 0.3s ease, transform 0.3s ease; }
+.carousel-arrow:hover { color: var(--accent); transform: translateY(-50%) scale(1.1); }
+.left-arrow { left: 5%; }
+.right-arrow { right: 5%; }
+
+/* 1. Base Container (Default for non-Top Ten) */
+.carousel-thumbnails { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 1.5rem; 
+      
+      /* THE FIX: Changed top margin to 0 so it snaps up under the images */
+      margin: 0 auto 3rem auto; 
+      
+      /* THE FIX: Shaved down the top padding */
+      padding: 0.5rem 1vw 4rem 1vw !important; 
+      
+      z-index: 20; 
+      width: 100%; 
+      max-width: 95vw; 
+      overflow: visible; 
+      counter-reset: topTenCounter;
+}
+.thumbnail-wrapper:has(.active-thumb)::before {
+      color: var(--accent); /* FIX: Fills the active number with solid blue */
+      -webkit-text-stroke: 0; /* Removes the stroke on the active number */
+      transform: scale(1.1) translate(-5px, -5px); 
+}
+
+/* ... keep your existing .carousel-thumbnails::-webkit-scrollbar, .thumbnail-wrapper, and .thumbnail-dot rules here ... */
+
+/* 3. The Proportional Foreground Numbers */
+.thumbnail-wrapper::before {
+      content: counter(topTenCounter); 
+      position: absolute;
+      
+      /* THE FIX: Pulled the numbers much tighter to the bottom-left corner */
+      bottom: -10px; 
+      left: -30px; 
+      
+      font-family: "Sequel 85", sans-serif;
+      
+      /* THE FIX: Scaled the numbers down from 10rem to 6.5rem */
+      font-size: 6.5rem; 
+      line-height: 0.75;
+      
+      color: #050505; 
+      -webkit-text-stroke: 3px rgba(255, 255, 255, 0.2); 
+      
+      z-index: 5; 
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+/* 2. Hides the ugly thumbnail scrollbar but keeps it scrollable! */
+.carousel-thumbnails::-webkit-scrollbar { display: none; }
+.thumbnail-dot { height: 75px; width: auto; flex-shrink: 0; border-radius: 4px; opacity: 0.35; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.thumbnail-dot:hover { opacity: 0.8; transform: translateY(-3px); }
+.thumbnail-dot.active-thumb { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); }
+
+/* --- Deep Dive Modal --- */
+.modal-overlay { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.98); z-index: 99999 !important; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; overflow-x: hidden; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.modal-overlay.show-modal { opacity: 1; pointer-events: auto; }
+.modal-content { position: relative; width: 90%; max-width: 1000px; margin: 5vh auto; background: #0a0a0a !important; border: 1px solid rgba(255, 255, 255, 0.1); padding: 4rem; color: var(--paper); z-index: 100000 !important; box-shadow: 0px 20px 50px rgba(0,0,0,0.8); }
+.modal-close { position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; color: var(--paper); font-size: 2rem; transition: color 0.3s ease, transform 0.3s ease; }
+.modal-close:hover { color: var(--accent); transform: scale(1.2); }
+.modal-hero-img { width: 100%; height: auto; max-height: 70vh; object-fit: contain; margin-bottom: 2rem; }
+#modal-body-content h2 { font-family: "Sequel 85", sans-serif; font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+#modal-body-content p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 1rem; }
+
+.presentation-stack { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.presentation-slide { width: 100%; height: auto; max-width: 900px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 4px; }
+#modal-body-content .presentation-stack { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 0; margin-bottom: 3rem; min-height: 60vh; }
+.modal-slide-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(5, 5, 5, 0.85); border: 2px solid var(--paper); color: var(--paper); font-size: 2.5rem; padding: 0.5rem 1.2rem; z-index: 100; transition: all 0.3s ease; }
+.modal-slide-arrow:hover { background: var(--accent); border-color: var(--accent); color: white; }
+.modal-slide-arrow.left-arrow { left: -2rem; }
+.modal-slide-arrow.right-arrow { right: -2rem; }
+
+/* =========================================
+   10. STILLMAN EXCHANGE: EDITORIAL INDEX
+   ========================================= */
+#writing { display: flex; flex-direction: column; align-items: center; min-height: auto; padding-bottom: 10vh; }
+.editorial-index-container { width: 96%; max-width: 1900px; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.15); border-bottom: 1px solid rgba(255, 255, 255, 0.15); z-index: 10; max-height: 70vh; overflow-y: auto; overflow-x: hidden; padding-right: 1rem; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 3rem; align-content: start; }
+.editorial-index-container::-webkit-scrollbar { width: 4px; }
+.editorial-index-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+.editorial-index-container::-webkit-scrollbar-thumb { background: var(--accent); }
+
+.editorial-row { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 0.8rem; padding: 2rem 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.15); background: transparent; color: var(--paper); text-decoration: none; transition: background 0.4s ease, padding-left 0.4s ease; }
+.editorial-row:hover { background: rgba(0, 68, 255, 0.05); padding-left: 1.5rem; }
+.editorial-meta { font-family: "Gotham Book", sans-serif; font-size: 0.85rem; letter-spacing: 0.15rem; color: var(--accent); width: 100%; }
+.editorial-title { font-family: "Sequel 85", sans-serif; font-size: 1.25rem; color: var(--paper); text-transform: uppercase; margin: 0; width: 100%; transition: color 0.3s ease; line-height: 1.3; }
+.editorial-row:hover .editorial-title { color: var(--accent); }
+
+.editorial-excerpt { font-family: "Gotham Book", sans-serif; font-size: 0.95rem; color: #999999; line-height: 1.6; margin: 0.5rem 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s ease; }
+.editorial-row:hover .editorial-excerpt { color: #cccccc; }
+.editorial-action { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 1.3rem; letter-spacing: 0.1rem; color: #666666; transition: color 0.3s ease; margin-top: 0.5rem; }
+.editorial-row:hover .editorial-action { color: var(--paper); }
+
+/* =========================================
+   11. FOOTER
+   ========================================= */
+footer { height: auto; min-height: fit-content; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding-bottom: 2rem; margin: 0 1rem; }
+footer nav { height: auto; }
+footer p { text-align: center; }
+
+/* =========================================
+   STATIC EDITORIAL: ARCHITECTURAL SPINES & LIGHTING
+   ========================================= */
+
+/* 1. Ambient Studio Lighting (Deep, faint glows in the corners) */
+body::before {
+      content: '';
+      position: fixed;
+      top: -20vh; left: -10vw;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(0, 68, 255, 0.08) 0%, transparent 60%);
+      z-index: -2;
+      pointer-events: none;
+}
+body::after {
+      content: '';
+      position: fixed;
+      bottom: -20vh; right: -10vw;
+      width: 70vw; height: 70vw;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+      z-index: -2;
+      pointer-events: none;
+}
+
+/* 2. Architectural Spines (Breaks up the empty space permanently) */
+.scroll-progress-bar::before, .scroll-progress-bar::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      width: 1px;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.04); /* Razor thin, barely visible */
+      z-index: -1;
+      pointer-events: none;
+}
+.scroll-progress-bar::before { left: 20%; }
+.scroll-progress-bar::after { right: 20%; }
+/* =========================================
+/* =========================================
+   THUMBNAIL SYSTEMS (STANDARD & TOP TEN)
+   ========================================= */
+
+/* 1. Base Container (Default for non-Top Ten) */
+.carousel-thumbnails { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 1.5rem; 
+      margin: 1rem auto 3rem auto; 
+      padding: 1rem 1vw 4rem 1vw !important; 
+      z-index: 20; 
+      width: 100%; 
+      max-width: 95vw; 
+      overflow: visible; 
+      counter-reset: topTenCounter;
+}
+.carousel-thumbnails::-webkit-scrollbar { display: none; }
+
+.thumbnail-wrapper {
+      position: relative;
+      cursor: none;
+      z-index: 1;
+}
+
+/* 2. Standard Dots (Restored Original Style - NO CROPPING) */
+.thumbnail-dot { 
+      height: 75px !important; 
+      width: auto !important; 
+      
+      /* THE FIX: Forces the image to keep its natural dimensions, stopping the "card" look */
+      object-fit: contain !important; 
+      
+      border-radius: 4px; 
+      opacity: 0.35; 
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+      filter: grayscale(0%);
+}
+.thumbnail-dot:hover { opacity: 0.8; transform: translateY(-3px); }
+.thumbnail-dot.active-thumb { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); }
+.thumbnail-wrapper::before { display: none; } /* Hides numbers on standard dots */
+
+/* =========================================
+   3. TOP TEN MODE OVERRIDES
+   ========================================= */
+
+/* Expands the gap specifically for the Top Ten layout */
+.carousel-thumbnails.top-ten-mode { gap: 3.5vw; }
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper { counter-increment: topTenCounter; flex-shrink: 0; }
+
+/* Converts dots into Trading Cards */
+/* Converts dots into Trading Cards */
+.carousel-thumbnails.top-ten-mode .thumbnail-dot { 
+      width: 5vw !important; 
+      height: 7.5vw !important; 
+      min-width: 45px !important; 
+      min-height: 65px !important; 
+      opacity: 0.4; 
+      filter: grayscale(100%);
+      
+      /* THE FIX: Forces the Top Ten images to crop and fill the entire box perfectly */
+      object-fit: cover !important; 
+}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot:hover { opacity: 0.8; transform: translateY(-5px); }
+.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb { 
+      opacity: 1; 
+      filter: grayscale(0%); 
+      transform: scale(1.15) translateY(-8px); 
+      box-shadow: 0 10px 20px rgba(0, 68, 255, 0.5); 
+      
+      /* THE FIX: Shaved the chunky 2px border down to a razor-thin 1px line */
+      border: 2px solid var(--accent);
+}
+
+/* Turns on the Massive Background Numbers */
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
+      display: block; 
+      content: counter(topTenCounter); 
+      position: absolute;
+      bottom: -0.5vw; left: -2.5vw; 
+      font-family: "Sequel 85", sans-serif;
+      font-size: 5vw; line-height: 0.75;
+      color: #050505; -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2); 
+      z-index: 5; pointer-events: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before {
+      color: var(--accent); -webkit-text-stroke: 0; transform: scale(1.1) translate(-2px, -2px); 
 }
