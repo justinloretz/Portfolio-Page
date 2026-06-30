@@ -45,11 +45,16 @@
       .section__text { align-items: center; width: 100%; }
       .section__text .btn-container { justify-content: center; flex-wrap: wrap; width: 100%; }
 
-      /* =========================================================
-         THE ABOUT ME FIX: Forces image and text to safely stack 
-         ========================================================= */
-      .section-container { flex-direction: column !important; align-items: center !important; width: 100% !important; }
-      .about-details-container { width: 100% !important; padding: 0 !important; margin-top: 2rem !important; box-sizing: border-box; }
+      /* The PFP Fix */
+      .section-container { flex-direction: column !important; align-items: center !important; width: 100% !important; gap: 2rem !important; }
+      .section__pic-container {
+            display: block !important; width: 80vw !important; max-width: 320px !important;
+            height: 100vw !important; max-height: 400px !important; margin: 0 auto !important;
+            border-radius: 1.5rem !important; overflow: hidden !important;
+      }
+      .about-pic { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center top !important; }
+      
+      .about-details-container { width: 100% !important; padding: 0 !important; box-sizing: border-box; }
       .text-container { width: 90% !important; max-width: 90% !important; margin: 0 auto !important; text-align: center !important; }
       .text-container h3 { font-size: 1.8rem !important; white-space: normal !important; line-height: 1.2 !important; word-wrap: break-word !important; }
       .text-container p { font-size: 1.1rem !important; white-space: normal !important; word-wrap: break-word !important; text-align: center !important; }
@@ -57,31 +62,33 @@
       .desktop-filters { display: none !important; }
       .mobile-filters { display: flex !important; margin-bottom: 1rem; width: 100%; padding: 0 1.5rem; box-sizing: border-box; }
 
-      /* =========================================================
-         THE EXPERIENCE CARDS FIX: Kills flex-stretch & contains width 
-         ========================================================= */
-      .about-containers { width: 100% !important; padding: 0 !important; box-sizing: border-box !important; flex-direction: column !important; align-items: center !important; margin: 0 !important; }
-      
+      /* Experience Cards */
+      .about-containers { display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
       .details-container { 
-            flex: none !important; /* THE FIX: Destroys the rule forcing them to stretch */
-            width: 85% !important; 
-            max-width: 450px !important; 
-            min-width: 0 !important;
-            margin: 0 auto 2rem auto !important; 
-            padding: 2rem !important; 
-            box-sizing: border-box !important; 
+            display: block !important; width: 85% !important; max-width: 400px !important; min-width: 0 !important;
+            margin: 0 auto 2rem auto !important; padding: 2rem !important; box-sizing: border-box !important; 
       }
       
-      /* THE ONE-LINE FIX: Forces one line, kills ellipsis, dynamic font size */
+      /* THE ONE-LINE TITLE FIX: Forces text to stay on one line and dynamically shrinks the font! */
+/* In the 800px section: */
       .details-container h2, .details-container h3, .experience-sub-title { 
-            white-space: nowrap !important; 
-            overflow: hidden !important; 
-            text-overflow: clip !important; /* Safely removes the ... */
-            font-size: clamp(0.9rem, 4vw, 1.4rem) !important; /* Math shrinks it to fit */
-            line-height: 1.3 !important; 
-            margin-bottom: 0.5rem !important;
+            white-space: nowrap !important; overflow: hidden !important; text-overflow: clip !important; 
+            font-size: clamp(0.9rem, 3.5vw, 1.25rem) !important; /* Dropped size slightly */
+            line-height: 1.2 !important; margin-bottom: 0.5rem !important;
+            padding-right: 5px !important; /* THE FIX: Gives the 'L' room to hang over the edge! */
       }
-      .details-container p { white-space: normal !important; word-wrap: break-word !important; }
+
+      /* "Promoted from" text */
+      .details-container p[style*="888"] {
+            white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+            font-size: 0.75rem !important; letter-spacing: 0.05rem !important;
+      }
+      
+      /* Description text */
+      .details-container p:last-of-type { 
+            white-space: normal !important; word-wrap: break-word !important; overflow: visible !important;
+            font-size: 1rem !important; line-height: 1.6 !important;
+      }
 
       .editorial-index-container { grid-template-columns: 1fr; max-height: 60vh; padding: 0 1.5rem; box-sizing: border-box; }
 
@@ -102,19 +109,19 @@
 @media screen and (max-width: 600px) {
       .vault-title { font-size: 8vw !important; }
       .vault-sub { font-size: 2.5vw !important; }
-
       #profile .section__text__p1 { font-size: 4vw !important; }
       .text-container h3 { font-size: 1.6rem !important; }
       .text-container p { font-size: 1rem !important; }
-
-      .details-container { width: 90% !important; padding: 1.5rem !important; }
       
+      .section__pic-container { width: 85vw !important; max-width: 280px !important; height: 106vw !important; max-height: 350px !important; }
+      .details-container { width: 88% !important; padding: 1.5rem !important; }
+      
+      /* Continues shrinking titles for standard phones */
       .details-container h2, .details-container h3, .experience-sub-title { 
-            font-size: clamp(0.85rem, 4.5vw, 1.25rem) !important; 
+            font-size: clamp(0.85rem, 4.5vw, 1.15rem) !important; 
       }
-      .promotion-text { font-size: 0.75rem !important; margin-bottom: 1rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: clip !important;}
+      .details-container p[style*="888"] { font-size: 0.65rem !important; }
 
-      .section__pic-container { width: 60vw; height: 60vw; max-width: 250px; max-height: 250px; }
       .btn-container { flex-direction: column; width: 100%; }
       .btn { width: 100%; } 
 
@@ -129,16 +136,23 @@
 /* --- 6. TINY PHONES (iPhone SE / Max 380px) --- */
 @media screen and (max-width: 380px) {
       .vault-title { font-size: 7.5vw !important; letter-spacing: 0 !important; }
-      
       #profile .title { font-size: 2.2rem !important; }
       .logo-img { height: 3rem; }
       .btn { width: 100%; font-size: 1.5rem; }
 
-      .details-container { width: 92% !important; padding: 1.25rem !important; margin-bottom: 1.5rem !important; }
+      .details-container { width: 90% !important; padding: 1.25rem !important; margin-bottom: 1.5rem !important; }
       
+      /* Final mathematical shrink to guarantee 1 line on the 375px SE display */
+     /* THE FINAL ONE-LINE FIX for 380px: Forces nowrap, stops the cutoff, and shrinks to fit */
       .details-container h2, .details-container h3, .experience-sub-title { 
-            font-size: clamp(0.7rem, 4.5vw, 1.1rem) !important; 
+            white-space: nowrap !important; 
+            overflow: visible !important; 
+            font-size: clamp(0.65rem, 4vw, 0.9rem) !important; 
+            padding-right: 5px !important; 
+            line-height: 1.2 !important; 
+            margin-bottom: 0.5rem !important;
       }
+      .details-container p[style*="888"] { font-size: 0.6rem !important; letter-spacing: 0 !important; }
 
       .carousel-thumbnails.top-ten-mode { gap: 1.5vw !important; padding: 1rem 1vw 3rem 1vw !important; }
       .carousel-thumbnails.top-ten-mode .thumbnail-dot { width: 7.5vw !important; height: 11vw !important; }

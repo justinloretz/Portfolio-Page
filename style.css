@@ -2,14 +2,11 @@
    1. BASE STYLING, FONTS & VARIABLES
    ========================================= */
 @font-face { font-family: "Sequel 85"; src: url(SEQUEL100BLACK-85.TTF); }
-@font-face { font-family: "Tunstent Compressed Medium"; src: url(TUNGSTENCOMPRESSED-MEDIUM.TTF); }
+@font-face { font-family: "Gotham Black"; src: url(Gotham-Black.otf); }
 @font-face { font-family: "Gotham Book"; src: url(Gotham-Book.otf); }
+@font-face { font-family: "Tungsten Compressed Medium"; src: url(TungstenCompressed-Medium.ttf); }
 
-* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
       --accent: #0044FF; 
@@ -18,48 +15,37 @@
 }
 
 html, body {
-      font-family: "Gotham Book", sans-serif;
+      font-family: "Sequel 85", sans-serif;
       width: 100%;
       max-width: 100%; 
-      overflow-x: clip !important; /* THE FIX: Physically impossible to scroll sideways now */
-      background-color: transparent; 
+      overflow-x: clip !important; 
       color: var(--paper); 
+      scroll-behavior: smooth; 
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; 
 }
-h1, h2, h3, .title { 
-      font-family: "Sequel 85", sans-serif; 
-      color: var(--paper); /* FIX: Stops your name from turning black */
-}
-a {
-      color: var(--paper);
-      text-decoration: none;
-      transition: all 300ms ease;
-}
+
+h1, h2, h3, .title { font-family: "Sequel 85", sans-serif; color: var(--paper); }
+a { color: var(--paper); text-decoration: none; }
 
 /* =========================================
    2. CUSTOM UTILITIES (Cursor, Scrollbar, Stars)
    ========================================= */
-body, a, button, .icon, .thumbnail-dot, .carousel-item {
-      cursor: none !important; 
-}
+body, a, button, .icon, .thumbnail-dot, .carousel-item { cursor: none !important; }
 
 .custom-cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 24px; height: 24px;
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none; 
-      transform: translate(-50%, -50%); 
-      z-index: 100000;
+      position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+      border: 2px solid var(--accent); border-radius: 50%; pointer-events: none; 
+      transform: translate(-50%, -50%); z-index: 100000;
       transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
       box-shadow: 0 0 10px rgba(0, 68, 255, 0.4);
 }
 
-.custom-cursor.hovering {
-      width: 60px; height: 60px;
-      background: rgba(0, 68, 255, 0.1);
-      border-width: 1px;
-}
+.custom-cursor.hovering { width: 60px; height: 60px; background: rgba(0, 68, 255, 0.1); border-width: 1px; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #050505; }
@@ -69,6 +55,14 @@ body, a, button, .icon, .thumbnail-dot, .carousel-item {
       position: fixed; bottom: 0; left: 0; height: 4px; background: var(--accent);
       width: 0%; z-index: 10000; pointer-events: none; box-shadow: 0px -2px 10px rgba(0, 68, 255, 0.8);
 }
+
+/* Architectural Spines */
+.scroll-progress-bar::before, .scroll-progress-bar::after {
+      content: ''; position: fixed; top: 0; width: 1px; height: 100vh;
+      background: rgba(255, 255, 255, 0.04); z-index: -1; pointer-events: none;
+}
+.scroll-progress-bar::before { left: 20%; }
+.scroll-progress-bar::after { right: 20%; }
 
 #particle-canvas {
       position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -85,39 +79,38 @@ body, a, button, .icon, .thumbnail-dot, .carousel-item {
       50% { opacity: 1; transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); }
       100% { opacity: 0; transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); }
 }
-
-.reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
-.reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-on-scroll { 
+      opacity: 0; 
+      transform: translateY(40px); /* Smooth upward lift */
+      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+      clip-path: none !important; /* Kills the bug that hid your cards */
+}
+.reveal-on-scroll.is-visible { 
+      opacity: 1;
+      transform: translateY(0);
+}
+/* Ambient Studio Lighting */
+body::before {
+      content: ''; position: fixed; top: -20vh; left: -10vw; width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(0, 68, 255, 0.08) 0%, transparent 60%); z-index: -2; pointer-events: none;
+}
+body::after {
+      content: ''; position: fixed; bottom: -20vh; right: -10vw; width: 70vw; height: 70vw;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%); z-index: -2; pointer-events: none;
+}
 
 /* =========================================
    3. VAULT PRELOADER
    ========================================= */
-#vault-preloader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-      z-index: 999999; display: flex; justify-content: center; align-items: center; pointer-events: none;
-}
-.vault-door {
-      position: absolute; top: 0; width: 50%; height: 100vh; background: #050505;
-      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1;
-}
+#vault-preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 999999; display: flex; justify-content: center; align-items: center; pointer-events: none; }
+.vault-door { position: absolute; top: 0; width: 50%; height: 100vh; background: #050505; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1; }
 .vault-door.left { left: 0; }
 .vault-door.right { right: 0; }
 .vault-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; transition: opacity 0.4s ease; }
 .vault-title { font-family: "Sequel 85", sans-serif; font-size: 4rem; color: var(--paper); letter-spacing: 0.2rem; margin-bottom: 0.5rem; }
-.vault-sub { 
-      font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); letter-spacing: 0.5rem; 
-}
-/* This animates the 3 dots typing out! */
-.vault-sub::after {
-      content: "";
-      animation: dots 1.5s infinite steps(4);
-}
-@keyframes dots {
-      0% { content: ""; }
-      25% { content: "."; }
-      50% { content: ".."; }
-      75% { content: "..."; }
-}
+.vault-sub { font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); letter-spacing: 0.5rem; }
+.vault-sub::after { content: ""; animation: dots 1.5s infinite steps(4); }
+@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
 body.vault-open .vault-door.left { transform: translateX(-100%); }
 body.vault-open .vault-door.right { transform: translateX(100%); }
 body.vault-open .vault-content { opacity: 0; }
@@ -125,34 +118,12 @@ body.vault-open .vault-content { opacity: 0; }
 /* =========================================
    4. HEADER & NAVIGATION
    ========================================= */
-
-.marquee-container {
-      position: relative; width: 100%; background: var(--accent); padding: 0.4rem 0; 
-      white-space: nowrap; z-index: 1000; border-bottom: 2px solid var(--paper); overflow: hidden;
-      
-      /* THE FIX: Pushes the marquee safely below your newly fixed header */
-      margin-top: 12vh; 
-}
-.marquee-text {
-      font-family: "Sequel 85", sans-serif; font-size: 1rem; color: #050505; -webkit-text-stroke: 0; 
-      display: inline-block; animation: scrollText 25s linear infinite; letter-spacing: 0.2rem; 
-}
-@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
 #main-header {
-      position: fixed; /* Better than sticky for mobile */
-      top: 0; left: 0; width: 100%; 
-      background: rgba(5, 5, 5, 0.95); 
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      
-      /* THE FIX: 10000 z-index guarantees the header and 'X' stay on top of the menu! */
-      z-index: 10000; 
-      
+      position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); 
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; 
       border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
 nav { align-items: center; justify-content: space-between; height: 12vh; width: 100%; padding: 0 2rem; display: flex; }
-#desktop-nav, #hamburger-nav { margin-top: 0; }
-
 .logo-link { display: flex; align-items: center; text-decoration: none; }
 .logo-img, .icon { filter: invert(1); }
 .logo-img { height: 5rem; width: auto; transition: transform 0.3s ease, opacity 0.3s ease; }
@@ -163,319 +134,419 @@ nav { align-items: center; justify-content: space-between; height: 12vh; width: 
 .nav-links { display: flex; gap: 2rem; list-style: none; font-size: 1.5rem; }
 .nav-links a { position: relative; text-decoration: none; transition: transform 0.3s ease; }
 .nav-links a:hover { color: var(--accent) !important; text-decoration: none !important; transform: scale(1.05); }
-.nav-links a::after {
-      content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 0;
-      background-color: var(--accent); transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
-}
+.nav-links a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 0; background-color: var(--accent); transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 .nav-links a:hover::after { width: 100%; }
 
-/* Hamburger */
+/* Hamburger Menu */
 #hamburger-nav { display: none; }
 .hamburger-menu { position: relative; display: inline-block; }
-/* THE MAGIC: Flawless "X" Fold Animation */
-.hamburger-icon { 
-      display: flex; flex-direction: column; justify-content: space-between; 
-      height: 24px; width: 32px; z-index: 10001; position: relative; cursor: pointer;
-}
-.hamburger-icon span { 
-      width: 100%; height: 2px; background-color: var(--paper); 
-      transition: all 0.3s ease-in-out; 
-      
-      /* Anchors the lines to the left so they fold inward perfectly */
-      transform-origin: left center; 
-}
+.hamburger-icon { display: flex; flex-direction: column; justify-content: space-between; height: 24px; width: 32px; z-index: 10001; position: relative; cursor: pointer; }
+.hamburger-icon span { width: 100%; height: 2px; background-color: var(--paper); transition: all 0.3s ease-in-out; transform-origin: left center; }
 .hamburger-icon.open span:first-child { transform: rotate(45deg); }
 .hamburger-icon.open span:nth-child(2) { opacity: 0; width: 0; }
 .hamburger-icon.open span:last-child { transform: rotate(-45deg); }
-/* THE CINEMATIC FULL-SCREEN MENU */
+
 .menu-links { 
-      position: fixed; 
-      top: 0; left: 0; 
-      width: 100vw; height: 100vh; 
-      
-      /* THE FIX: Added a deep, rich glowing gradient so it's not a flat black box */
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
       background: radial-gradient(circle at bottom right, rgba(0, 68, 255, 0.2) 0%, rgba(5, 5, 5, 0.98) 60%); 
       backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
       display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4vh; 
-      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; 
-      
-      /* Sits right under your floating header */
-      z-index: 9999; 
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 9999; 
 }    
-.menu-links li { 
-      list-style: none; 
-      overflow: hidden; /* Hides the text before it slides up */
-}
-.menu-links a { 
-      font-family: "Sequel 85", sans-serif; 
-      font-size: clamp(2rem, 10vw, 4rem); 
-      letter-spacing: 0.2rem; 
-      color: var(--paper); 
-      text-decoration: none; 
-      
-      /* THE FIX: Automatically forces all text to be CAPITALIZED */
-      text-transform: uppercase; 
-      
-      transform: translateY(100%); 
-      opacity: 0;
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, color 0.3s ease; 
-}
+.menu-links li { list-style: none; overflow: hidden; }
+.menu-links a { font-family: "Sequel 85", sans-serif; font-size: clamp(2rem, 10vw, 4rem); letter-spacing: 0.2rem; color: var(--paper); text-transform: uppercase; transform: translateY(100%); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, color 0.3s ease; }
 .menu-links.open { opacity: 1; pointer-events: auto; }
-
-/* THE MAGIC: Triggers the staggered slide-up animation when opened */
-.menu-links.open a {
-      transform: translateY(0);
-      opacity: 1;
-      transition-delay: calc(0.1s * var(--i)); 
-}
+.menu-links.open a { transform: translateY(0); opacity: 1; transition-delay: calc(0.1s * var(--i)); }
 .menu-links a:hover { color: var(--accent); }
+
 /* =========================================
    5. PROFILE / HERO SECTION
    ========================================= */
-#profile {
-      position: relative; display: flex; justify-content: center; align-items: flex-start; 
-      min-height: 80vh; padding-top: 2rem; padding-bottom: 2rem; width: 100%;
-}
-.profile-content {
-      display: flex; justify-content: center; align-items: center; gap: 5vh; 
-      margin-top: 0; z-index: 10; max-width: 1300px; width: 100%; padding: 0 2rem; position: relative;
-}
+#profile { position: relative; display: flex; justify-content: center; align-items: flex-start; min-height: 80vh; padding-top: 18vh; padding-bottom: 2rem; width: 100%; }
+.profile-content { display: flex; justify-content: center; align-items: center; gap: 5vh; margin-top: 0; z-index: 10; max-width: 1300px; width: 100%; padding: 0 2rem; position: relative; }
 
-.tilt-card {
+.tilt-card { 
       position: relative; width: 500px; height: 640px; border-radius: 0; border: 2px solid var(--paper); 
       box-shadow: 15px 15px 0px var(--accent); overflow: hidden; margin: 0; flex-shrink: 0; z-index: 2;
+      animation: autonomousFloat 10s ease-in-out infinite; will-change: transform, box-shadow; 
+}
+@keyframes autonomousFloat {
+      0% { transform: translateY(0px) rotate3d(1, 1, 0, 0deg); box-shadow: 15px 15px 0px var(--accent); }
+      33% { transform: translateY(-12px) rotate3d(1, -1, 0, 2deg); box-shadow: 20px 20px 0px rgba(0, 68, 255, 0.6); }
+      66% { transform: translateY(8px) rotate3d(-1, 1, 0, -1deg); box-shadow: 10px 10px 0px rgba(0, 68, 255, 0.9); }
+      100% { transform: translateY(0px) rotate3d(1, 1, 0, 0deg); box-shadow: 15px 15px 0px var(--accent); }
 }
 .tilt-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
 .section__text { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-#profile .section__text__p1 {
-      font-family: "Gotham Book", sans-serif; font-size: 1.2rem; color: var(--accent); 
-      letter-spacing: 0.3rem; text-transform: uppercase; margin-bottom: -1rem; font-weight: bold; text-align: left; width: 100%; display: block;
+#profile .section__text__p1 { font-family: "Gotham Book", sans-serif; font-size: 1.2rem; color: var(--accent); letter-spacing: 0.3rem; text-transform: uppercase; margin-bottom: -1rem; font-weight: bold; text-align: left; width: 100%; display: block; }
+#profile .title { 
+      font-size: clamp(2.5rem, 4.5vw, 5.5rem); 
+      line-height: 1.1; 
+      text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); 
+      margin-bottom: 0.5rem; 
+      text-align: left; 
+      white-space: nowrap; /* Forces it back to one line */
+      color: var(--paper);
+      text-transform: uppercase;
 }
-#profile .title { font-size: clamp(2.5rem, 4.5vw, 5.5rem); line-height: 1.1; text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); margin-bottom: 0.5rem; text-align: left; white-space: nowrap; }
-#profile .section__text__p2 { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; color: #cccccc; letter-spacing: 0.15rem; text-transform: uppercase; margin-bottom: 2.5rem; }
+#profile .section__text__p2 { font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2rem; color: #cccccc; letter-spacing: 0.15rem; text-transform: uppercase; margin-bottom: 2.5rem; }
 
-#profile .btn-container { display: flex; justify-content: flex-start; gap: 2rem; margin-bottom: 2rem; }
+.btn-container { display: flex; justify-content: flex-start; gap: 2rem; margin-bottom: 2rem; }
 .socials-container { display: flex; gap: 1.5rem; margin-top: 1rem; }
-#socials-container .icon { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease; }
-#socials-container .icon:hover { transform: translateY(-8px) scale(1.15); filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); }
-
-/* Buttons */
-.btn {
-      font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2.25rem; font-weight: 600; padding: 1.2rem 2rem; 
-      width: auto; min-width: 16rem; border-radius: 0; text-transform: uppercase; letter-spacing: 0.1rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+.socials-container .icon { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease; }
+.socials-container .icon:hover { transform: translateY(-8px) scale(1.15); filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); }
+.btn { 
+      font-family: "Tungsten Compressed Medium", sans-serif; 
+      font-size: 2.25rem; 
+      font-weight: 600; 
+      padding: 1.2rem 2rem; 
+      width: auto; 
+      min-width: 16rem; 
+      
+      border-radius: 0; /* Razor sharp corners */
+      border: 1px solid var(--paper); /* Thin, strict border */
+      
+      text-transform: uppercase; 
+      letter-spacing: 0.1rem; 
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.btn-color-2 { 
+      background: var(--paper); 
+      color: #050505; 
+      /* The Off-White hard block shadow */
+      box-shadow: 8px 8px 0px var(--accent); 
+}
+.btn-color-2:hover { 
+      transform: translate(-4px, -4px); 
+      box-shadow: 12px 12px 0px var(--accent); 
 }
 .btn::after { content: ' \2197'; margin-left: 0.8rem; font-family: "Gotham Book", sans-serif; font-weight: bold; }
-
-.btn-color-2 { background: var(--paper); color: #050505; border: 2px solid var(--paper); box-shadow: 6px 6px 0px var(--accent); }
-.btn-color-2:hover { background: var(--paper); color: #050505; transform: translate(-4px, -4px); box-shadow: 10px 10px 0px var(--accent); }
 .btn-color-1 { background: transparent; color: var(--paper); border: 2px solid var(--accent); box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); }
 .btn-color-1:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); transform: translate(-4px, -4px); box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2); }
 
 /* =========================================
-   6. GLOBAL SECTION LAYOUTS & NUMERALS
+   6. GLOBAL SECTION LAYOUTS
    ========================================= */
-section { padding-top: 4vh; min-height: 100vh; height: auto; box-sizing: border-box; position: relative; z-index: 1; overflow: hidden; }
-.section-container { display: flex; }
+/* =========================================
+   6. GLOBAL SECTION LAYOUTS (RESTORED)
+   ========================================= */
 
 #about, #experience, #contact { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
-.section__text__p1 { text-align: center; width: 100%; color: var(--accent); font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; letter-spacing: 0.15rem; margin-bottom: 0.5rem; }
-.title { margin-bottom: 3rem; }
-
+.section__text__p1 { 
+      text-align: center; 
+      width: 100%; 
+      color: var(--accent); 
+      font-family: "Gotham Book", sans-serif !important; /* Update this font-family line */
+      font-size: 2rem; 
+      letter-spacing: 0.15rem; 
+      margin-bottom: 0.5rem; 
+}
 /* =========================================
-   7. ABOUT ME SECTION
+   7. ABOUT ME: ASYMMETRIC BENTO GRID
    ========================================= */
-.about-containers { display: flex; gap: 2rem; margin-bottom: 2rem; margin-top: 2rem; max-width: 1100px; margin: 2rem auto !important; }
-.about-details-container { display: flex; justify-content: center; flex-direction: column; }
-.section__pic-container { height: 400px; width: 400px; margin: auto 0; }
-.about-pic { border-radius: 2rem; }
-.arrow { position: absolute; right: -5rem; bottom: 2.5rem; }
+.bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 1.5rem; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
 
-/* Extracted Inline Styles */
-.about-text-container { text-align: left; max-width: 800px; margin: 0 auto; }
-.about-text-container h3 { font-family: "Sequel 85", sans-serif; font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; }
-.about-text-container p { font-size: 1.25rem; line-height: 1.8; margin-bottom: 2rem; }
-.about-text-container p.sub-text { color: #cccccc; margin-bottom: 0; }
+.bento-tile { background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; padding: 2.5rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease; display: flex; flex-direction: column; justify-content: center; }
+.bento-tile:hover { transform: translateY(-5px); border-color: rgba(0, 68, 255, 0.4); opacity: 1 !important; filter: blur(0px) !important; z-index: 10; }
+
+.bento-heading { font-family: 'Sequel 85', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 1rem; }
+.bento-text { font-family: 'Gotham Book', sans-serif; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--paper); }
+.secondary-text { color: #cccccc; margin-bottom: 0; }
+
+.bento-label { 
+      display: block; 
+      /* Swaps out Tungsten for your geometric heavy font style */
+      font-family: "Gotham Black", sans-serif; 
+      /* Slightly shrinks the font-ceiling size so it maps neatly on small laptop screens */
+      font-size: clamp(0.7rem, 1.1vw, 0.85rem); 
+      color: var(--accent); 
+      /* Increases tracking for that clean, premium modern dashboard finish */
+      letter-spacing: 0.15rem; 
+      margin-bottom: 0.5rem; 
+      text-transform: uppercase;
+}
+.bento-value { 
+      display: block; /* Forces this to take up its own line */
+      font-family: "Gotham Book", sans-serif; 
+      font-size: 1rem; 
+      color: #cccccc; 
+      line-height: 1.4; 
+}
+.bio-tile { grid-column: span 2; justify-content: flex-start; }
+.music-tile { grid-column: span 1; align-items: center; text-align: center; }
+.project-tile { grid-column: span 1; text-align: left; }
+.trivia-tile { grid-column: span 2; }
+
+.vinyl-container { width: 100px; height: 100px; margin-bottom: 1.5rem; position: relative; }
+.vinyl-record { width: 100%; height: 100%; background: linear-gradient(45deg, #111, #333, #111, #333); border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); animation: spinVinyl 4s linear infinite; }
+.vinyl-label { width: 35%; height: 35%; background: var(--accent); border-radius: 50%; border: 2px solid #111; }
+@keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+
+.bento-icon { font-size: 2.5rem; color: rgba(255,255,255,0.2); margin-bottom: 1rem; }
+.trivia-list { list-style: none; display: flex; justify-content: space-between; width: 100%; }
+.trivia-list li { display: flex; flex-direction: column; }
 
 /* =========================================
    8. GLASSMORPHISM CARDS (EXPERIENCE & CONTACT)
    ========================================= */
+/* =========================================
+   FIX: PERFECT HORIZONTAL EDGE ALIGNMENT
+   ========================================= */
+/* =========================================
+   FIX: FIXED ROWS + FLUID RESPONSIVE WIDTHS
+   ========================================= */
+/* =========================================
+   FIX: FORCED 2x2 STRUCTURAL GRID LOCK
+   ========================================= */
+.about-containers {
+      display: grid !important;
+      /* Hard-locks the container into EXACTLY 2 equal columns */
+      grid-template-columns: repeat(2, 1fr) !important; 
+      gap: 2.5rem !important;
+      width: 100% !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+}
+
+.details-container {
+      width: 100% !important;
+      min-width: 0 !important; /* Disables Flexbox sizing overrides */
+      box-sizing: border-box !important;
+      
+      /* Keeps layout content starting clean from the top down */
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+}
 .details-container, .contact-info-upper-container {
       background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); 
       border-radius: 1rem; padding: 2.5rem; color: var(--paper); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); 
       transition: transform 0.3s ease, border-color 0.3s ease; text-align: center;
+      overflow: hidden; position: relative;
+      animation: pulseGlow 6s infinite alternate ease-in-out;
 }
 .details-container:hover, .contact-info-upper-container:hover { transform: translateY(-5px); border-color: rgba(0, 68, 255, 0.5); }
+.details-container:nth-child(even) { animation-delay: 3s; }
+.details-container.clickable { cursor: pointer; }
 
-/* Experience Grid Specifics */
-/* WIDENED the grid so there is less empty space on the sides */
-.details-container { flex: 1 1 45% !important; min-width: 450px !important; }
-.experience-sub-title { color: var(--accent); font-weight: 600; font-size: 1.4rem !important; margin-bottom: 2rem; }
+.experience-sub-title { color: var(--accent); font-weight: 600; font-size: 1.4rem; margin-bottom: 2rem; }
 .promotion-text { font-size: 0.85rem; color: #888; margin-bottom: 1.2rem; letter-spacing: 0.1rem; text-transform: uppercase; font-family: 'Gotham Book', sans-serif; }
 
-/* Keep ONLY headers on one line */
-.details-container h2, .details-container h3 {
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; margin-top: 1rem; margin-bottom: 0.5rem;
-}
-.details-container h3 { text-transform: uppercase; font-size: 1.5rem !important; }
-
-/* LET THE PARAGRAPHS WRAP SO YOU CAN WRITE MORE! */
+.details-container h2, .details-container h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; margin-bottom: 0.5rem; }
+.details-container h3 { text-transform: uppercase; font-size: 1.5rem; margin-bottom: 0.2rem; }
+/* Update your description text rules inside your bento/experience tiles */
 .details-container p {
-      white-space: normal !important; 
+      font-family: "Gotham Book", sans-serif;
+      white-space: normal;
       line-height: 1.6;
       margin-top: 1rem;
       color: #cccccc;
+      
+      /* THE MAGIC BULLET FOR WIDOWS */
+      text-wrap: pretty !important;
+}
+.contact-info-upper-container { display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 3rem; padding: 1.5rem 4rem; border-radius: 50px; }
+.contact-info-container { display: flex; align-items: center; justify-content: center; gap: .5rem; margin: 1rem; }
+.contact-text { font-family: 'Gotham Book', sans-serif; color: #cccccc; line-height: 1.5; }
+.contact-text a { color: #cccccc; transition: color 0.3s ease; }
+.contact-text a:hover { color: var(--accent); }
+.details-container .icon, .contact-info-upper-container .icon { filter: invert(1); margin-bottom: 0.5rem; height: 2.5rem; }
+
+@keyframes pulseGlow {
+      0% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0); }
+      50% { box-shadow: 0 15px 50px rgba(0, 68, 255, 0.15), inset 0 0 15px rgba(0, 68, 255, 0.1); }
+      100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0); }
 }
 
-/* Make the overall container wider to eat up the dead space */
-.about-containers { max-width: 1400px !important; }
-/* Contact Container Specifics */
-.contact-info-upper-container { display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 3rem; padding: 1.5rem 4rem; border-radius: 50px; }
-.contact-info-upper-container p, .contact-info-upper-container a { color: #cccccc; text-decoration: none; line-height: 1.5; }
-.contact-info-upper-container a:hover { color: var(--accent); }
-.details-container .icon, .contact-info-upper-container .icon { filter: invert(1); margin-bottom: 0.5rem; height: 2.5rem; }
-.contact-info-container { display: flex; align-items: center; justify-content: center; gap: .5rem; margin: 1rem; }
+.details-container::after, .contact-info-upper-container::after {
+      content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg); animation: glassSweep 8s infinite cubic-bezier(0.25, 1, 0.5, 1); pointer-events: none; z-index: 10;
+}
+.details-container:nth-child(2)::after { animation-delay: 2s; }
+.details-container:nth-child(3)::after { animation-delay: 4s; }
+.details-container:nth-child(4)::after { animation-delay: 6s; }
+@keyframes glassSweep { 0% { left: -150%; } 20% { left: 200%; } 100% { left: 200%; } }
 
 /* =========================================
    9. PROJECTS & CAROUSEL
    ========================================= */
 #projects { position: relative; padding-top: 15vh; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-/* THE FIX: Overrides the global title margin just for this section */
-/* THE FIX: Restored breathing room under the title */
-#projects .title {
-      margin-bottom: 2rem; 
-}
+#projects .title { margin-bottom: 2rem; }
 
-.project-filters { 
-      display: flex; 
-      justify-content: center; 
-      gap: 2rem; 
-      margin-top: 0; 
-      
-      /* THE FIX: Added 3rem of bottom margin to push the giant images away from the text! */
-      margin-bottom: 3rem; 
-      
-      flex-wrap: wrap; 
-      z-index: 20; 
-}
+.project-filters { display: flex; justify-content: center; gap: 2rem; margin-top: 0; margin-bottom: 3rem; flex-wrap: wrap; z-index: 20; }
 .desktop-filters { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; }
 .mobile-filters { display: none; width: 100%; justify-content: center; margin-bottom: 2rem; }
-#mobile-project-dropdown { 
-      width: 80%; max-width: 350px; padding: 0.8rem 1rem; 
-      font-family: "Tunstent Compressed Medium", sans-serif; font-size: 1.8rem; letter-spacing: 0.1rem; 
-      background: rgba(15, 15, 15, 0.9); color: var(--accent); 
-      border: 2px solid var(--accent); border-radius: 6px; outline: none; text-align: center; cursor: pointer;
-}
-.filter-btn { background: transparent; border: none; color: #f0f0f0; font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2.5rem; letter-spacing: 0.15rem; transition: color 0.3s ease, transform 0.3s ease; padding-bottom: 0.2rem; }
+#mobile-project-dropdown { width: 80%; max-width: 350px; padding: 0.8rem 1rem; font-family: "Tungsten Compressed Medium", sans-serif; font-size: 1.8rem; letter-spacing: 0.1rem; background: rgba(15, 15, 15, 0.9); color: var(--accent); border: 2px solid var(--accent); border-radius: 6px; outline: none; text-align: center; cursor: pointer; }
+
+.filter-btn { background: transparent; border: none; color: #f0f0f0; font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2.5rem; letter-spacing: 0.15rem; transition: color 0.3s ease, transform 0.3s ease; padding-bottom: 0.2rem; }
 .filter-btn:hover { color: var(--paper); }
 .filter-btn.active-filter { color: var(--accent); border-bottom: 2px solid var(--accent); }
 .hidden-project { display: none !important; }
 
-.carousel-container { 
-      position: relative; 
-      width: 100%; 
-      
-      /* THE FIX: Gave the container a safe 48vh height */
-      height: 48vh; 
-      
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      overflow: visible; 
-      margin-top: 0; 
-}
+.carousel-container { position: relative; width: 100%; height: 48vh; display: flex; align-items: center; justify-content: center; overflow: visible; margin-top: 0; }
+.carousel-gallery { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
 
-.carousel-img { 
-      /* THE FIX: Set the image slightly smaller (45vh) so it fits safely inside the container */
-      height: 45vh; 
-      width: auto; 
-      max-width: 48vw; 
-      
-      object-fit: contain; 
-      box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); 
-      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
-}.carousel-gallery { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+.carousel-img { height: 45vh; width: auto; max-width: 48vw; object-fit: contain; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
 
 .carousel-item { position: absolute; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; opacity: 0; transform: translateX(0) scale(0.5); z-index: 0; pointer-events: none; display: block; }
 .carousel-item.active { opacity: 1; transform: translateX(0) scale(1); z-index: 10; pointer-events: auto; }
 .carousel-item.active:hover .carousel-img { transform: scale(1.08) !important; cursor: none; }
-/* THE FIX: Pulled all values closer to the center (e.g. from 32vw down to 22vw) */
 .carousel-item.prev { opacity: 1; transform: translateX(-22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
 .carousel-item.next { opacity: 1; transform: translateX(22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
 .carousel-item.prev-2 { opacity: 1; transform: translateX(-40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }
-.carousel-item.next-2 { opacity: 1; transform: translateX(40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }.carousel-item.prev:hover, .carousel-item.next:hover { filter: brightness(0.9); }
+.carousel-item.next-2 { opacity: 1; transform: translateX(40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }
+.carousel-item.prev:hover, .carousel-item.next:hover { filter: brightness(0.9); }
 .carousel-item.prev-2:hover, .carousel-item.next-2:hover { filter: brightness(0.7); }
 
-.carousel-caption { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 2rem; color: var(--paper); text-align: center; margin-top: 1.5rem; letter-spacing: 0.1rem; opacity: 0; transition: opacity 0.3s; }
+.carousel-caption { font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2rem; color: var(--paper); text-align: center; margin-top: 1.5rem; letter-spacing: 0.1rem; opacity: 0; transition: opacity 0.3s; }
 .carousel-item.active .carousel-caption::after { content: "CLICK TO EXPLORE"; display: block; font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); margin-top: 0.8rem; letter-spacing: 0.15rem; opacity: 0; animation: pulseText 2s infinite ease-in-out; }
-@keyframes pulseText { 0% { opacity: 0.3; } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.3; } }
 
 .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--paper); font-size: 4rem; z-index: 20; transition: color 0.3s ease, transform 0.3s ease; }
 .carousel-arrow:hover { color: var(--accent); transform: translateY(-50%) scale(1.1); }
 .left-arrow { left: 5%; }
 .right-arrow { right: 5%; }
 
-/* 1. Base Container (Default for non-Top Ten) */
+/* THUMBNAIL SYSTEM (Standard & Top Ten) */
+/* =========================================
+   THE HORIZONTAL SCROLLING TRACK CONTAINER
+   ========================================= */
 .carousel-thumbnails { 
       display: flex; 
-      justify-content: center; 
+      justify-content: flex-start; 
       align-items: center; 
-      gap: 1.5rem; 
+      flex-wrap: nowrap !important; 
+      overflow-x: auto !important; 
       
-      /* THE FIX: Changed top margin to 0 so it snaps up under the images */
+      /* THE CEILING FIX: Keeps scrollbars on a single row but lets assets breathe */
+      overflow-y: visible !important; 
+      
+      width: 100%;
+      max-width: 85vw !important; 
+      gap: 1.5rem; 
       margin: 0 auto 3rem auto; 
       
-      /* THE FIX: Shaved down the top padding */
-      padding: 0.5rem 1vw 4rem 1vw !important; 
+      /* THE FIX: Raised top padding from 0.5rem to 1.5rem to create a visual ceiling safety zone */
+      padding: 1.5rem 1rem 2rem 1rem; 
       
       z-index: 20; 
-      width: 100%; 
-      max-width: 95vw; 
-      overflow: visible; 
-      counter-reset: topTenCounter;
-}
-.thumbnail-wrapper:has(.active-thumb)::before {
-      color: var(--accent); /* FIX: Fills the active number with solid blue */
-      -webkit-text-stroke: 0; /* Removes the stroke on the active number */
-      transform: scale(1.1) translate(-5px, -5px); 
+      counter-reset: topTenCounter; 
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
 }
 
-/* ... keep your existing .carousel-thumbnails::-webkit-scrollbar, .thumbnail-wrapper, and .thumbnail-dot rules here ... */
-
-/* 3. The Proportional Foreground Numbers */
-.thumbnail-wrapper::before {
-      content: counter(topTenCounter); 
-      position: absolute;
-      
-      /* THE FIX: Pulled the numbers much tighter to the bottom-left corner */
-      bottom: -10px; 
-      left: -30px; 
-      
-      font-family: "Sequel 85", sans-serif;
-      
-      /* THE FIX: Scaled the numbers down from 10rem to 6.5rem */
-      font-size: 6.5rem; 
-      line-height: 0.75;
-      
-      color: #050505; 
-      -webkit-text-stroke: 3px rgba(255, 255, 255, 0.2); 
-      
-      z-index: 5; 
-      pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+.carousel-thumbnails::-webkit-scrollbar {
+      height: 4px; 
 }
-/* 2. Hides the ugly thumbnail scrollbar but keeps it scrollable! */
-.carousel-thumbnails::-webkit-scrollbar { display: none; }
-.thumbnail-dot { height: 75px; width: auto; flex-shrink: 0; border-radius: 4px; opacity: 0.35; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.carousel-thumbnails::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+}
+.carousel-thumbnails::-webkit-scrollbar-thumb {
+      background: rgba(0, 68, 255, 0.3); 
+      border-radius: 10px;
+      transition: background 0.3s ease;
+}
+.carousel-thumbnails::-webkit-scrollbar-thumb:hover {
+      background: var(--accent); 
+}
+
+.carousel-thumbnails.top-ten-mode {
+      justify-content: center !important;
+      overflow-x: visible !important;
+}
+
+/* =========================================
+   THE THUMBNAIL WRAPPERS & DOT IMAGES (KEEP THESE!)
+   ========================================= */
+.thumbnail-wrapper { position: relative; cursor: none; z-index: 1; }
+
+.thumbnail-dot { height: 75px; width: auto; object-fit: contain; border-radius: 4px; opacity: 0.35; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(0%); }
 .thumbnail-dot:hover { opacity: 0.8; transform: translateY(-3px); }
 .thumbnail-dot.active-thumb { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); }
+.thumbnail-wrapper::before { display: none; }
 
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper { 
+      counter-increment: topTenCounter; 
+      flex-shrink: 0; 
+}
+
+/* Fluid dimensions: No fixed heights. Relies on aspect-ratio for perfect card shapes */
+.carousel-thumbnails.top-ten-mode .thumbnail-dot { 
+      width: clamp(45px, 5.5vw, 85px) !important; 
+      height: auto !important; 
+      aspect-ratio: 2 / 3 !important; 
+      
+      opacity: 0.4; 
+      filter: grayscale(100%); 
+      object-fit: cover; 
+      border-radius: 4px; /* Slight softening to catch the glow */
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot:hover { 
+      opacity: 0.8; 
+      transform: translateY(-5px); 
+}
+
+/* THE FIX: Massive Electric Blue Prizm Glow */
+.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb { 
+      opacity: 1; 
+      filter: grayscale(0%); 
+      transform: scale(1.15) translateY(-8px); 
+      
+      border: 2px solid var(--accent) !important; 
+      box-shadow: 0 15px 35px rgba(0, 68, 255, 0.5), 
+                  0 0 25px rgba(0, 68, 255, 0.8),
+                  inset 0 0 15px rgba(0, 68, 255, 0.4) !important; 
+}
+
+/* THE FIX: Expanded Gap for Breathing Room */
+.carousel-thumbnails.top-ten-mode { 
+      max-width: 85vw !important; 
+      margin: 0 auto 3rem auto !important;
+      
+      /* Increased the preferred gap to 3vw to push the cards further apart */
+      gap: clamp(1rem, 3vw, 3.5rem) !important; 
+}
+
+/* THE FIX: Restored the Corner Overlap */
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
+      display: block; 
+      content: counter(topTenCounter); 
+      position: absolute; 
+      
+      /* Restores the physical overlap on the bottom-left corner */
+      bottom: -8%; 
+      left: -25%; 
+      
+      font-family: "Sequel 85", sans-serif; 
+      
+      /* THE MATH: Maxes out at 3vw. Since the gap is also 3vw, the number physically cannot hit the next card. */
+      font-size: clamp(1.8rem, 3vw, 3rem) !important; 
+      line-height: 0.75; 
+      letter-spacing: -0.05em; 
+      
+      color: rgba(255, 255, 255, 0.2); 
+      -webkit-text-stroke: 0; 
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      
+      z-index: 5; 
+      pointer-events: none; 
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* THE FIX: Active Number Glow */
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before { 
+      color: var(--accent); 
+      text-shadow: 0 0 20px rgba(0, 68, 255, 0.6); 
+      transform: scale(1.1) translate(-2px, -2px); 
+}
 /* --- Deep Dive Modal --- */
-.modal-overlay { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.98); z-index: 99999 !important; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; overflow-x: hidden; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.98); z-index: 99999; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; overflow-x: hidden; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
 .modal-overlay.show-modal { opacity: 1; pointer-events: auto; }
-.modal-content { position: relative; width: 90%; max-width: 1000px; margin: 5vh auto; background: #0a0a0a !important; border: 1px solid rgba(255, 255, 255, 0.1); padding: 4rem; color: var(--paper); z-index: 100000 !important; box-shadow: 0px 20px 50px rgba(0,0,0,0.8); }
-.modal-close { position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; color: var(--paper); font-size: 2rem; transition: color 0.3s ease, transform 0.3s ease; }
+.modal-content { position: relative; width: 90%; max-width: 1000px; margin: 5vh auto; background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 4rem; color: var(--paper); z-index: 100000; box-shadow: 0px 20px 50px rgba(0,0,0,0.8); }
+.modal-close { position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; color: var(--paper); font-size: 2rem; transition: color 0.3s ease, transform 0.3s ease; z-index: 999999; cursor: pointer; pointer-events: auto; }
 .modal-close:hover { color: var(--accent); transform: scale(1.2); }
 .modal-hero-img { width: 100%; height: auto; max-height: 70vh; object-fit: contain; margin-bottom: 2rem; }
 #modal-body-content h2 { font-family: "Sequel 85", sans-serif; font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
@@ -489,157 +560,753 @@ section { padding-top: 4vh; min-height: 100vh; height: auto; box-sizing: border-
 .modal-slide-arrow.left-arrow { left: -2rem; }
 .modal-slide-arrow.right-arrow { right: -2rem; }
 
+/* THE FLUID SINGLE-LINE FIX */
+body section#writing h1.title {
+      /* Min size: 1.2rem (safe for tiny phones). Preferred: 4vw (scales with screen). Max: 3.5rem */
+      font-size: clamp(1.2rem, 4vw, 3.5rem) !important; 
+      
+      /* Physically forces the browser to keep it on one line */
+      white-space: nowrap !important; 
+      
+      margin-bottom: 2rem !important;
+}
 /* =========================================
    10. STILLMAN EXCHANGE: EDITORIAL INDEX
    ========================================= */
 #writing { display: flex; flex-direction: column; align-items: center; min-height: auto; padding-bottom: 10vh; }
-.editorial-index-container { width: 96%; max-width: 1900px; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.15); border-bottom: 1px solid rgba(255, 255, 255, 0.15); z-index: 10; max-height: 70vh; overflow-y: auto; overflow-x: hidden; padding-right: 1rem; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 3rem; align-content: start; }
+
+.editorial-header-controls { width: 96%; max-width: 1900px; display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.article-sort-select { background: transparent; color: var(--accent); border: 1px solid rgba(255, 255, 255, 0.2); font-family: 'Gotham Book', sans-serif; padding: 0.5rem 1rem; font-size: 1rem; outline: none; }
+.article-sort-select option { color: black; }
+
+.editorial-index-container {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+      width: 96%; 
+      max-width: 1900px; 
+      margin-top: 2rem; 
+      border-top: 1px solid rgba(255, 255, 255, 0.15); 
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
+      z-index: 10; 
+      max-height: 70vh; 
+      overflow-y: auto; 
+      overflow-x: hidden; 
+      padding-right: 1rem; 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      
+      /* THE FIX: Replaces column-gap to apply space everywhere */
+      gap: 3rem; 
+      align-content: start; 
+}
 .editorial-index-container::-webkit-scrollbar { width: 4px; }
 .editorial-index-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
-.editorial-index-container::-webkit-scrollbar-thumb { background: var(--accent); }
+.editorial-row { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start; 
+      justify-content: flex-start; 
+      gap: 0.8rem; 
+      
+      /* THE FIX: Restores the original minimal padding */
+      padding: 2rem 0.5rem; 
+      
+      /* THE FIX: Kills the full box border and restores the bottom line */
+      border: none; 
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
+      border-radius: 0; 
+      
+      background: transparent; 
+      color: var(--paper); 
+      text-decoration: none; 
+      
+      /* THE FIX: Restores the smooth padding slide */
+      transition: background 0.4s ease, padding-left 0.4s ease; 
+      height: auto; 
+}
 
-.editorial-row { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 0.8rem; padding: 2rem 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.15); background: transparent; color: var(--paper); text-decoration: none; transition: background 0.4s ease, padding-left 0.4s ease; }
-.editorial-row:hover { background: rgba(0, 68, 255, 0.05); padding-left: 1.5rem; }
-.editorial-meta { font-family: "Gotham Book", sans-serif; font-size: 0.85rem; letter-spacing: 0.15rem; color: var(--accent); width: 100%; }
-.editorial-title { font-family: "Sequel 85", sans-serif; font-size: 1.25rem; color: var(--paper); text-transform: uppercase; margin: 0; width: 100%; transition: color 0.3s ease; line-height: 1.3; }
+.editorial-row:hover { 
+      background: rgba(0, 68, 255, 0.05); 
+      
+      /* THE FIX: Restores the rightward slide effect */
+      padding-left: 1.5rem; 
+      transform: none; 
+      
+      /* THE FIX: Keeps the bottom border static so it doesn't flash */
+      border-color: rgba(255, 255, 255, 0.15) !important; 
+      box-shadow: none;
+                  
+      opacity: 1 !important; 
+      filter: blur(0px) !important; 
+      z-index: 10; 
+}
+
+.editorial-action { 
+      font-family: "Tungsten Compressed Medium", sans-serif; 
+      font-size: 1.3rem; 
+      letter-spacing: 0.1rem; 
+      color: #666666; 
+      transition: color 0.3s ease; 
+      
+      /* THE FIX: Restores the tight spacing to the text above it */
+      margin-top: 0.5rem; 
+}
+.editorial-meta { font-family: "Gotham Book", sans-serif; font-size: 0.85rem; letter-spacing: 0.15rem; color: var(--accent); width: 100%; display: flex; justify-content: space-between; }
+.editorial-title { 
+      /* Swaps out Sequel 85 for geometric Gotham Black */
+      font-family: "Gotham Black", sans-serif !important; 
+      
+      /* Keeps the title punchy and crisp inside the 3-column rows */
+      font-size: clamp(1.1rem, 1.4vw, 1.35rem) !important; 
+      color: var(--paper); 
+      text-transform: uppercase; 
+      margin: 0; 
+      width: 100%; 
+      transition: color 0.3s ease; 
+      line-height: 1.3; 
+      
+      /* THE MAGIC ENGINE: Automatically prevents lonely single-word widows */
+      text-wrap: pretty !important;
+}
 .editorial-row:hover .editorial-title { color: var(--accent); }
 
 .editorial-excerpt { font-family: "Gotham Book", sans-serif; font-size: 0.95rem; color: #999999; line-height: 1.6; margin: 0.5rem 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s ease; }
 .editorial-row:hover .editorial-excerpt { color: #cccccc; }
-.editorial-action { font-family: "Tunstent Compressed Medium", sans-serif; font-size: 1.3rem; letter-spacing: 0.1rem; color: #666666; transition: color 0.3s ease; margin-top: 0.5rem; }
+
 .editorial-row:hover .editorial-action { color: var(--paper); }
 
 /* =========================================
    11. FOOTER
    ========================================= */
-footer { height: auto; min-height: fit-content; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding-bottom: 2rem; margin: 0 1rem; }
-footer nav { height: auto; }
-footer p { text-align: center; }
-
-/* =========================================
-   STATIC EDITORIAL: ARCHITECTURAL SPINES & LIGHTING
-   ========================================= */
-
-/* 1. Ambient Studio Lighting (Deep, faint glows in the corners) */
-body::before {
-      content: '';
-      position: fixed;
-      top: -20vh; left: -10vw;
-      width: 60vw; height: 60vw;
-      background: radial-gradient(circle, rgba(0, 68, 255, 0.08) 0%, transparent 60%);
-      z-index: -2;
-      pointer-events: none;
-}
-body::after {
-      content: '';
-      position: fixed;
-      bottom: -20vh; right: -10vw;
-      width: 70vw; height: 70vw;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
-      z-index: -2;
-      pointer-events: none;
-}
-
-/* 2. Architectural Spines (Breaks up the empty space permanently) */
-.scroll-progress-bar::before, .scroll-progress-bar::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      width: 1px;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.04); /* Razor thin, barely visible */
-      z-index: -1;
-      pointer-events: none;
-}
-.scroll-progress-bar::before { left: 20%; }
-.scroll-progress-bar::after { right: 20%; }
-/* =========================================
-/* =========================================
-   THUMBNAIL SYSTEMS (STANDARD & TOP TEN)
-   ========================================= */
-
-/* 1. Base Container (Default for non-Top Ten) */
-.carousel-thumbnails { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 1.5rem; 
-      margin: 1rem auto 3rem auto; 
-      padding: 1rem 1vw 4rem 1vw !important; 
-      z-index: 20; 
+footer { 
+      margin-top: 4vh !important; /* Reduced from 10vh to pull it up closer */
+      border-top: 1px solid rgba(255,255,255,0.1); 
+      padding-top: 5vh; 
+      padding-bottom: 2vh; 
       width: 100%; 
-      max-width: 95vw; 
-      overflow: visible; 
-      counter-reset: topTenCounter;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 2rem; 
+      margin-bottom: 0; 
 }
-.carousel-thumbnails::-webkit-scrollbar { display: none; }
+.footer-logo { font-family: 'Sequel 85', sans-serif; font-size: 10vw; color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.1); line-height: 0.8; margin-bottom: -1rem; margin-top: 0; }
+.footer-tagline { font-family: 'Gotham Book', sans-serif; letter-spacing: 0.3rem; color: var(--accent); margin-bottom: 3rem; text-align: center; }
+.footer-copyright { font-family: 'Gotham Book', sans-serif; color: #666; font-size: 0.8rem; letter-spacing: 0.1rem; text-transform: uppercase; text-align: center; }
 
-.thumbnail-wrapper {
+/* =========================================
+   12. ATMOSPHERIC OPTICAL GLARE
+   ========================================= */
+.light-stream { position: fixed; pointer-events: none; z-index: 9998; mix-blend-mode: screen; border-radius: 50%; filter: none; background-repeat: no-repeat; will-change: transform, opacity; }
+.stream-1 { width: 150vw; height: 150vw; background: radial-gradient(circle at center, rgba(0, 68, 255, 0.08) 0%, transparent 60%); top: 50%; left: 50%; margin-top: -75vw; margin-left: -75vw; animation: driftLight 20s infinite alternate ease-in-out; }
+.stream-2 { width: 120vw; height: 120vw; background: radial-gradient(circle at center, rgba(0, 229, 255, 0.06) 0%, transparent 60%); top: 50%; left: 50%; margin-top: -60vw; margin-left: -60vw; animation: driftLight 25s infinite alternate-reverse ease-in-out; }
+.stream-3 { width: 150vw; height: 35vh; background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 229, 255, 0.07) 30%, transparent 70%); top: 50%; left: 50%; margin-top: -17.5vh; margin-left: -75vw; animation: sweepGlare 8s infinite linear; }
+@keyframes driftLight { 0% { transform: translate(-15vw, -15vh) scale(1); } 50% { transform: translate(15vw, 10vh) scale(1.1); } 100% { transform: translate(-10vw, 20vh) scale(0.9); } }
+@keyframes sweepGlare { 0% { transform: translate(-100vw, 100vh) rotate(-35deg); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translate(100vw, -100vh) rotate(-35deg); opacity: 0; } }
+/* =========================================
+   PREMIUM GLASS FINISH (Vercel / Apple Aesthetic)
+   ========================================= */
+.bento-tile, .details-container, .contact-info-upper-container {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(5, 5, 5, 0.95)) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      
+      /* The magic 1px border that catches the light */
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 1.5rem !important;
+      
+      /* Deep shadow for depth, plus an inner highlight for the "glass" rim */
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+                  
+      overflow: hidden !important;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
+}
+/* Premium Hover State */
+.bento-tile:hover, .details-container:hover {
+      transform: translateY(-8px) scale(1.01) !important;
+      
+      /* Solid electric blue border */
+      border-color: var(--accent) !important; 
+      
+      /* Deep shadow underneath, strong blue glow outside, and an inner blue rim light */
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 
+                  0 0 40px rgba(0, 68, 255, 0.4), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                  inset 0 0 20px rgba(0, 68, 255, 0.2) !important; 
+}
+
+/* Elegant Button Restoration */
+.btn { 
+      border-radius: 8px !important; /* Softens the harsh corners */
+      border: 1px solid rgba(255,255,255,0.2) !important;
+}
+.btn-color-2 {
+      background: var(--paper);
+      color: #050505;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1) !important;
+}
+.btn-color-2:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Only targets "THE HUMAN ELEMENT" inside the About section */
+section#about .section__text__p1 {
+    font-family: "Gotham Book", sans-serif !important; 
+}
+
+/* =========================================
+   6. GLOBAL SECTION LAYOUTS (RESTORED)
+   ========================================= */
+section { 
+      padding-top: 4vh; 
+      min-height: 100vh; 
+      height: auto; 
+      box-sizing: border-box; 
+      position: relative; 
+      z-index: 1; 
+      overflow: hidden; 
+}
+section:not(#profile) { scroll-margin-top: 12vh; }
+section:not(#profile) .title { font-size: clamp(4rem, 10vw, 7rem); margin-bottom: 3rem; }
+
+/* THE FIX: Safely shrink contact without breaking global properties */
+#contact {
+      min-height: auto !important;
+      padding-bottom: 6vh !important;
+}
+
+/* THE FIX: Give the bottom of your site breathing room */
+footer { 
+      margin-top: 4vh !important; 
+      border-top: 1px solid rgba(255,255,255,0.1); 
+      padding-top: 6vh !important; 
+      padding-bottom: 10vh !important; /* Pushes content away from screen baseline */
+      width: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 2rem; 
+      margin-bottom: 0; 
+}
+
+/* =========================================
+   PREMIUM EDITORIAL CAROUSEL UPGRADE
+   ========================================= */
+#projects .section__text__p1 {
+      font-family: "Gotham Book", sans-serif !important;
+      letter-spacing: 0.4rem !important;
+      font-size: 1.1rem !important;
+      font-weight: bold;
+      opacity: 0.8;
+}
+
+/* =========================================
+   CLEAN MINIMAL ONE-LINE FILTER UPGRADE
+   ========================================= */
+.project-filters {
+      /* Strips away the background box and border lines */
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      
+      /* Forces all elements to stay strictly on one line across laptop viewports */
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important; 
+      justify-content: center !important;
+      align-items: center !important;
+      gap: clamp(1rem, 2vw, 3rem) !important; /* Dynamically pulls buttons closer together on smaller screens */
+      
+      width: 100% !important;
+      max-width: 1400px !important;
+      margin: 1rem auto 5rem auto !important;
+}
+
+.filter-btn {
+      font-family: "Gotham Book", sans-serif !important;
+      font-size: 0.9rem !important;
+      font-weight: bold !important;
+      letter-spacing: 0.2rem !important;
+      text-transform: uppercase;
+      color: rgba(244, 244, 240, 0.4) !important; /* Subtle minimal resting state */
+      padding: 0.5rem 0.2rem !important; /* Pulls side padding tight for line alignment */
+      background: transparent !important;
+      border: none !important;
+      white-space: nowrap !important; /* Physically prevents single buttons from breaking internally */
+      transition: all 0.3s ease !important;
+      position: relative !important;
+}
+
+.filter-btn:hover {
+      color: var(--paper) !important;
+}
+
+/* THE UPGRADE: Swaps the thick glowing block for a sharp, sleek editorial line accent */
+.filter-btn.active-filter {
+      color: var(--accent) !important; /* Highlights the active category text in your signature blue */
+      background: transparent !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      
+      /* Clean, precise underline marker */
+      border-bottom: 2px solid var(--accent) !important;
+}
+
+/* =========================================
+   CAROUSEL HEADER PROP-RATIO BALANCING (SPECIFIC LOCK)
+   ========================================= */
+body section#projects {
+      padding-top: 18vh !important; 
+}
+
+/* Stacking "body section#projects" beats the global "!important" higher up */
+body section#projects .title {
+      font-size: clamp(3rem, 7.5vw, 5.2rem) !important; /* Visibly brings the header size down */
+      letter-spacing: -0.02em !important; 
+      margin-bottom: 1rem !important; 
+}
+
+body section#projects .section__text__p1 {
+      font-family: "Gotham Book", sans-serif !important;
+      letter-spacing: 0.35rem !important;
+      font-size: 1rem !important;
+      margin-bottom: 0 !important;
+      text-transform: uppercase;
+      opacity: 0.75;
+}
+
+.project-filters {
+      margin: 2rem auto 5.5rem auto !important; 
+}
+
+/* =========================================
+   UNIVERSAL SECTION HEADER GROW ANIMATIONS
+   ========================================= */
+@keyframes growLineLeft {
+      0% { transform: scaleX(0); opacity: 0; }
+      15% { opacity: 1; } 
+      100% { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes growLineRight {
+      0% { transform: scaleX(0); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: scaleX(1); opacity: 1; }
+}
+
+/* This will now apply to ANY section header container that gains the .start-reveal class */
+.start-reveal .projects-line-left {
+      transform-origin: left !important; 
+      animation: growLineLeft 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      animation-delay: 0.1s !important;
+}
+
+.start-reveal .projects-line-right {
+      transform-origin: right !important;  
+      animation: growLineRight 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      animation-delay: 0.1s !important;
+}
+
+/* =========================================
+   GLOBAL SYSTEMIC SECTION HEADER BALANCING
+   ========================================= */
+.section-header-trigger {
+      margin-bottom: 4.5rem !important; /* Standardizes clean spacing before card blocks start */
+}
+
+/* THE FIX: Hard-locks the titles inside your triggers to Gotham Black across the whole site */
+.section-header-trigger .title {
+      font-family: 'Gotham Black', sans-serif !important;
+      font-size: clamp(2.5rem, 6vw, 4rem) !important;
+      letter-spacing: -0.01em !important;
+      line-height: 1 !important;
+      text-transform: uppercase !important;
+      white-space: nowrap !important;
+}
+
+/* Formats "THE HUMAN ELEMENT", "EXPLORE MY", etc. into luxury tags */
+section .section__text__p1 {
+      font-family: 'Gotham Book', sans-serif !important; 
+      letter-spacing: 0.4rem !important; 
+      font-size: 0.85rem !important; 
+      margin-top: 14vh !important; /* Gives breathing room from top section */
+      margin-bottom: 1.2rem !important; 
+      text-transform: uppercase !important; 
+      color: #ffffff !important; 
+      opacity: 0.4 !important;
+      text-align: center !important;
+}
+
+/* =========================================
+   STILLMAN WRITING SECTION HEADER BALANCING
+   ========================================= */
+body section#writing .section-header-trigger .title {
+      font-family: 'Gotham Black', sans-serif !important;
+      /* Drops the ceiling max-size slightly from 4rem to 2.8rem to guarantee a beautiful single line fit */
+      font-size: clamp(1.4rem, 4.5vw, 2.8rem) !important;
+      letter-spacing: -0.01em !important;
+      line-height: 1.1 !important;
+      text-transform: uppercase !important;
+      white-space: nowrap !important;
+}
+
+/* =========================================
+   EXPERIENCE CARD ROLE TYPOGRAPHY UPGRADE
+   ========================================= */
+.details-container h3 {
+      /* Hard-locks the role subheads into clean geometric Gotham Black */
+      font-family: "Gotham Black", sans-serif !important;
+      
+      /* Safely scales the text down slightly so long titles stay on one clean line */
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem) !important;
+      
+      /* Sharp, premium letter-spacing to balance the thick weight */
+      letter-spacing: -0.01em !important;
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.3rem !important;
+}
+
+/* =========================================
+   PREMIUM EDITORIAL TELEMETRY DECK RECONSTRUCT
+   ========================================= */
+.telemetry-strip-container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto 3rem auto;
+      
+      /* Smooth high-end frosted glass styling */
+      background: linear-gradient(145deg, rgba(15, 15, 15, 0.4), rgba(5, 5, 5, 0.7));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
       position: relative;
-      cursor: none;
+}
+
+/* Base structural rules for flanking wings */
+.telemetry-flank {
+      display: flex;
+      align-items: center;
+      flex: 1;
+}
+
+.telemetry-left {
+      justify-content: flex-start;
+      gap: 2rem;
+}
+
+.telemetry-right {
+      justify-content: flex-end;
+      gap: 2rem;
+}
+
+/* Metrics Elements */
+.telemetry-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+}
+
+.stat-divider {
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      padding-left: 2rem;
+}
+
+.telemetry-label-muted {
+      font-family: 'Gotham Black', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08rem;
+      color: #ffffff;
+      opacity: 0.35;
+      text-transform: uppercase;
+}
+
+.telemetry-number {
+      font-family: 'Gotham Black', sans-serif;
+      font-size: 1.35rem;
+      color: #ffffff;
+      line-height: 1;
+}
+
+.telemetry-unit {
+      font-family: 'Gotham Book', sans-serif;
+      font-size: 0.7rem;
+      color: #ffffff;
+      opacity: 0.4;
+      text-transform: uppercase;
+}
+
+/* Center Core Hero Focus */
+.telemetry-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.2rem;
+      padding: 0 1rem;
+}
+
+.telemetry-center-title {
+      font-family: 'Gotham Black', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.18rem;
+      color: var(--accent);
+      text-transform: uppercase;
+}
+
+.telemetry-center-display {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+}
+
+.telemetry-glow-number {
+      font-family: 'Gotham Black', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      text-shadow: 0 0 25px rgba(0, 68, 255, 0.35);
+}
+
+.telemetry-center-unit {
+      font-family: 'Gotham Book', sans-serif;
+      font-size: 0.85rem;
+      color: #ffffff;
+      opacity: 0.4;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+}
+
+/* Right Side Utilities */
+.telemetry-timestamp {
+      font-family: 'Gotham Book', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.08rem;
+      color: #ffffff;
+      opacity: 0.3;
+      text-transform: uppercase;
+      white-space: nowrap;
+}
+
+/* Custom interactive drop-down indicator wrap */
+.sort-dropdown-wrapper {
+      position: relative;
+}
+
+.sort-dropdown-wrapper::after {
+      content: '▾';
+      font-size: 0.65rem;
+      color: var(--accent);
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0.8;
+}
+
+.sort-dropdown-wrapper select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: rgba(5, 5, 5, 0.75);
+      color: var(--accent);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'Gotham Book', sans-serif;
+      padding: 0.5rem 2.2rem 0.5rem 1rem;
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.05rem;
+      border-radius: 6px;
+      outline: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.sort-dropdown-wrapper select:hover {
+      border-color: var(--accent);
+      background: rgba(0, 68, 255, 0.05);
+      box-shadow: 0 0 15px rgba(0, 68, 255, 0.15);
+}
+
+/* Responsive adjustment for mid-sized tablets/screens */
+@media (max-width: 900px) {
+      .telemetry-strip-container {
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            text-align: center;
+      }
+      .telemetry-flank {
+            width: 100%;
+            justify-content: center;
+      }
+      .telemetry-left {
+            gap: 1.5rem;
+      }
+      .telemetry-right {
+            flex-direction: column-reverse;
+            gap: 0.8rem;
+      }
+}
+
+/* Keep the deep glass finish base style for both containers */
+.bento-tile, .details-container, .contact-info-upper-container {
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(5, 5, 5, 0.95)) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 1.5rem !important;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+      overflow: hidden !important;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
+}
+
+/* INTERACTIVE: Keep the intense electric blue hover glow for experience blocks */
+.details-container:hover {
+      transform: translateY(-8px) scale(1.01) !important;
+      border-color: var(--accent) !important; 
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 
+                  0 0 40px rgba(0, 68, 255, 0.4), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                  inset 0 0 20px rgba(0, 68, 255, 0.2) !important; 
+}
+
+/* STATIC: Neutralize the Bento tiles completely so they do not react on hover */
+.bento-tile:hover {
+      transform: none !important; /* Prevents the card from lifting up */
+      border-color: rgba(255, 255, 255, 0.08) !important; /* Keeps the resting thin border */
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important; /* Matches resting shadow state */
+      opacity: 1 !important;
+      filter: blur(0px) !important;
       z-index: 1;
 }
 
-/* 2. Standard Dots (Restored Original Style - NO CROPPING) */
-.thumbnail-dot { 
-      height: 75px !important; 
-      width: auto !important; 
-      
-      /* THE FIX: Forces the image to keep its natural dimensions, stopping the "card" look */
-      object-fit: contain !important; 
-      
-      border-radius: 4px; 
-      opacity: 0.35; 
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-      filter: grayscale(0%);
+/* =========================================
+   HERO TYPOGRAPHY PERFECT BALANCE
+   ========================================= */
+#profile .section__text__p1 { 
+      font-family: "Gotham Black", sans-serif !important; 
+      font-size: 0.85rem !important; 
+      color: var(--accent) !important; 
+      /* Increases space between letters to match the width of the main title */
+      letter-spacing: 0.4rem !important; 
+      text-transform: uppercase !important; 
+      margin-bottom: 0.6rem !important; /* Fixed tight overlap gap */
+      font-weight: normal !important; 
+      text-align: left !important; 
+      width: 100%; 
+      display: block;
+      opacity: 0.9;
 }
-.thumbnail-dot:hover { opacity: 0.8; transform: translateY(-3px); }
-.thumbnail-dot.active-thumb { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); }
-.thumbnail-wrapper::before { display: none; } /* Hides numbers on standard dots */
+
+#profile .title { 
+      font-family: "Sequel 85", sans-serif !important;
+      font-size: clamp(2.5rem, 5.2vw, 6rem) !important; 
+      line-height: 0.95 !important; /* Pulls line-height tight for block styling */
+      
+      /* Refined Prizm block shadow: slightly smaller offset with a tight ambient backdrop glow */
+      text-shadow: 3px 3px 0px var(--accent), 
+                   0px 0px 20px rgba(0, 68, 255, 0.35) !important; 
+                   
+      margin-bottom: 1.2rem !important; /* Gives the compressed subtitle room to breathe */
+      text-align: left !important; 
+      white-space: nowrap !important; 
+      color: var(--paper) !important;
+      text-transform: uppercase !important;
+      letter-spacing: -0.01em !important;
+}
+
+#profile .section__text__p2 { 
+      font-family: "Tungsten Compressed Medium", sans-serif !important; 
+      font-size: 2.2rem !important; /* Boosted scale for premium presence */
+      color: #a0a0a0 !important; 
+      
+      /* THE KEY FIX: Massive tracking expansion transforms this from "squished" to luxury minimalist */
+      letter-spacing: 0.35rem !important; 
+      
+      text-transform: uppercase !important; 
+      margin-bottom: 3rem !important; 
+      text-align: left !important;
+      display: block;
+}
+
+#profile .section__text__p1 { 
+      font-family: "Gotham Black", sans-serif !important; 
+      font-size: 0.8rem !important; 
+      
+      /* THE FIX: Switch to crisp white for readability, keeping a hint of transparency */
+      color: #ffffff !important; 
+      opacity: 0.9 !important;
+      
+      /* THE DESIGN: Adds a clean blue terminal indicator line on the left */
+      border-left: 2px solid var(--accent) !important;
+      padding-left: 0.6rem !important;
+      
+      letter-spacing: 0.35rem !important; 
+      text-transform: uppercase !important; 
+      margin-bottom: 0.8rem !important; 
+      text-align: left !important; 
+      width: 100%; 
+      display: block;
+}
 
 /* =========================================
-   3. TOP TEN MODE OVERRIDES
+   PROJECTS SECTION WIP BADGE DESIGN
    ========================================= */
-
-/* Expands the gap specifically for the Top Ten layout */
-.carousel-thumbnails.top-ten-mode { gap: 3.5vw; }
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper { counter-increment: topTenCounter; flex-shrink: 0; }
-
-/* Converts dots into Trading Cards */
-/* Converts dots into Trading Cards */
-.carousel-thumbnails.top-ten-mode .thumbnail-dot { 
-      width: 5vw !important; 
-      height: 7.5vw !important; 
-      min-width: 45px !important; 
-      min-height: 65px !important; 
-      opacity: 0.4; 
-      filter: grayscale(100%);
-      
-      /* THE FIX: Forces the Top Ten images to crop and fill the entire box perfectly */
-      object-fit: cover !important; 
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-dot:hover { opacity: 0.8; transform: translateY(-5px); }
-.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb { 
-      opacity: 1; 
-      filter: grayscale(0%); 
-      transform: scale(1.15) translateY(-8px); 
-      box-shadow: 0 10px 20px rgba(0, 68, 255, 0.5); 
-      
-      /* THE FIX: Shaved the chunky 2px border down to a razor-thin 1px line */
-      border: 2px solid var(--accent);
+/* =========================================
+   PROJECTS SECTION WIP BADGE DESIGN (CENTERED)
+   ========================================= */
+.project-wip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 68, 255, 0.08);
+      border: 1px solid rgba(0, 68, 255, 0.3);
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      margin-top: 0; /* Reset previous negative alignment offset */
+      box-shadow: 0 0 15px rgba(0, 68, 255, 0.1);
 }
 
-/* Turns on the Massive Background Numbers */
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
-      display: block; 
-      content: counter(topTenCounter); 
-      position: absolute;
-      bottom: -0.5vw; left: -2.5vw; 
-      font-family: "Sequel 85", sans-serif;
-      font-size: 5vw; line-height: 0.75;
-      color: #050505; -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2); 
-      z-index: 5; pointer-events: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+.wip-badge-text {
+      font-family: 'Gotham Black', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.08rem;
+      color: #ffffff;
+      opacity: 0.8;
+      white-space: nowrap;
 }
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before {
-      color: var(--accent); -webkit-text-stroke: 0; transform: scale(1.1) translate(-2px, -2px); 
+
+.pulse-glow-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulseGlowIndicator 2s infinite ease-in-out;
 }
+
+@keyframes pulseGlowIndicator {
+      0% { transform: scale(0.9); opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 68, 255, 0.7); }
+      50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 8px 3px rgba(0, 68, 255, 0.4); }
+      100% { transform: scale(0.9); opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 68, 255, 0); }
+}
+
