@@ -54,47 +54,49 @@
       section { padding-top: 8vh; min-height: auto; }
       #profile { padding-top: 14vh; min-height: auto; }
       
-      /* Force Text-Variant Mode for ALL Unicode Icons on Mobile Screens */
-      .btn::after, 
-      .editorial-action, 
-      .editorial-action::after, 
-      .editorial-meta span,
-      .editorial-row span {
+      /* Text Variant Force Safeguard */
+      .btn::after {
             font-variant-emoji: text !important;
       }
       
-      /* --- Vault Preloader Sizing Fixes --- */
+      /* --- Vault Preloader Sizing & Edge Overflow Fixes --- */
       #vault-preloader {
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
             align-items: center !important;
             text-align: center !important;
-            width: 100% !important;
+            width: 100vw !important;
             height: 100vh !important;
+            overflow: hidden !important;
       }
-      .vault-content {
+.vault-content {
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
             text-align: center !important;
             width: 100% !important;
-            padding: 0 1rem !important;
+            max-width: 100vw !important;
+            padding: 0 1.5rem !important; /* Hard-locks a clean protective side gutter safety zone */
+            box-sizing: border-box !important;
       }
-      .vault-title { 
-            font-size: clamp(1.8rem, 7.5vw, 2.8rem) !important; 
-            letter-spacing: 0.1rem !important; 
-            white-space: nowrap !important; /* Prevents text breaking into 2 lines */
+  .vault-title { 
+            /* THE DYNAMIC OVERFLOW FIX: Locks the font tighter on screens under 380px while using standard padding */
+            font-size: clamp(1.3rem, 6.2vw, 2.4rem) !important; 
+            letter-spacing: normal !important; /* Strips away desktop character gaps completely so letters don't push each other off-screen */
+            white-space: nowrap !important; 
             text-align: center !important;
-            margin-bottom: 0.8rem !important;
+            margin-bottom: 0.6rem !important;
             width: 100% !important;
+            display: block !important;
       }
       .vault-sub { 
-            font-size: clamp(0.65rem, 2.5vw, 0.85rem) !important; 
-            letter-spacing: 0.25rem !important; 
+            font-size: clamp(0.6rem, 2.2vw, 0.8rem) !important; 
+            letter-spacing: 0.18rem !important; 
             text-align: center !important;
             width: 100% !important;
+            display: block !important;
       }
       
       /* --- Hero Profile Fixes --- */
@@ -233,13 +235,25 @@
 }
 
 /* --- 5. STANDARD SMARTPHONES (Max 600px) --- */
+/* --- 5. STANDARD SMARTPHONES (Max 600px) --- */
 @media screen and (max-width: 600px) {
       #main-header { height: 10vh; }
       nav { height: 10vh; padding: 0 1rem; }
       .logo-img { height: 3.5rem; }
       
-      .vault-title { font-size: 2.5rem !important; }
-      .vault-sub { font-size: 0.75rem !important; letter-spacing: 0.2rem !important; }
+      /* THE HARD FIX: Safely downscales the font for standard phone widths */
+      .vault-title { 
+            font-size: clamp(1.2rem, 6.8vw, 1.9rem) !important; 
+            letter-spacing: normal !important;
+            white-space: nowrap !important;
+      }
+      .vault-sub { 
+            font-size: 0.65rem !important; 
+            letter-spacing: 0.12rem !important; 
+      }
+      
+      .btn-container { flex-direction: column; align-items: center; width: 100%; }
+      .btn { width: 100%; max-width: 20rem; text-align: center; }
       
       .carousel-container { height: 32vh; }
       .carousel-img { height: 26vh; max-width: 85vw; }

@@ -1358,3 +1358,52 @@ body section#writing .section-header-trigger .title {
 .contact-info-container a {
       font-variant-emoji: text !important;
 }
+
+/* ==========================================================================
+   VECTOR GRAPHIC DECK ENGINE (CLEAN RENDER CONTROLS)
+   ========================================================================== */
+
+/* Sizes and formats the inline vector eye graphics */
+.view-icon-svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: var(--accent); /* Matches your signature deep blue color exactly */
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+      margin-top: -2px;
+}
+
+/* Formatting for the editorial index navigation arrow vector */
+.arrow-icon-svg {
+      width: 11px;
+      height: 11px;
+      fill: none;
+      stroke: currentColor; /* Matches the parent text color state dynamically */
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 6px;
+      transition: transform 0.3s ease;
+}
+
+.editorial-row:hover .arrow-icon-svg {
+      transform: translate(3px, -3px); /* Interactive accent slide animation */
+}
+
+.editorial-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+}
+
+.editorial-meta span {
+      display: inline-flex;
+      align-items: center;
+}
