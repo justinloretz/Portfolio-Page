@@ -247,43 +247,51 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel();
       }
 
-   // --- SMART SCROLL-ACTIVATED AUTOPLAY ---
-      let carouselAutoplay;
-      const carouselArea = document.querySelector('.carousel-container');
+// --- 5. SMART SCROLL-ACTIVATED AUTOPLAY (PERFECTED) ---
+let carouselAutoplay;
+let isCarouselInView = false; // Track section visibility state globally
+const carouselArea = document.querySelector('.carousel-container');
 
-      function startAutoplay() {
-            // THE TIME FIX: Increased from 4500 to 5500 (5.5 seconds) to give a smidge more reading time
-            if (visibleCarouselItems.length > 1 && !carouselAutoplay) {
-                  carouselAutoplay = setInterval(() => window.moveCarousel(1), 5500);
-            }
+function startAutoplay() {
+      // Only trigger the math loops if there is more than 1 item and it is visibly on screen
+      if (visibleCarouselItems.length > 1 && !carouselAutoplay && isCarouselInView) {
+            carouselAutoplay = setInterval(() => window.moveCarousel(1), 5500);
       }
+}
 
-      function stopAutoplay() { 
-            clearInterval(carouselAutoplay); 
-            carouselAutoplay = null; 
-      }
+function stopAutoplay() { 
+      clearInterval(carouselAutoplay); 
+      carouselAutoplay = null; 
+}
 
-      if (carouselArea) {
-            // THE PERFORMANCE FIX: Only activates the timer loop when the user is actively looking at the carousel
-            const carouselObserver = new IntersectionObserver((entries) => {
-                  entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                              startAutoplay(); 
-                        } else {
-                              stopAutoplay();  // Shuts down the math loops completely when off-screen
-                        }
-                  });
-            }, { 
-                  threshold: 0.15 // Fires when at least 15% of the carousel is visible
+if (carouselArea) {
+      const carouselObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                        isCarouselInView = true;
+                        startAutoplay(); 
+                  } else {
+                        isCarouselInView = false;
+                        stopAutoplay();  // Shuts down background execution loops immediately when off-screen
+                  }
             });
+      }, { 
+            threshold: 0.15 
+      });
 
-            carouselObserver.observe(carouselArea);
+      carouselObserver.observe(carouselArea);
 
-            // Keeps mouse hover controls safe
-            carouselArea.addEventListener('mouseenter', stopAutoplay); 
-            carouselArea.addEventListener('touchstart', stopAutoplay); 
-            carouselArea.addEventListener('mouseleave', startAutoplay); 
-      }
+      // Safe hover controls: Only restart loops on leave IF it's actually still on screen
+      carouselArea.addEventListener('mouseenter', stopAutoplay); 
+      carouselArea.addEventListener('touchstart', stopAutoplay, { passive: true }); 
+      
+      carouselArea.addEventListener('mouseleave', () => {
+            if (isCarouselInView) startAutoplay();
+      }); 
+      carouselArea.addEventListener('touchend', () => {
+            if (isCarouselInView) startAutoplay();
+      }, { passive: true }); 
+}
 
       // --- 6. Custom Brutalist Cursor ---
       const cursor = document.getElementById('custom-cursor');
