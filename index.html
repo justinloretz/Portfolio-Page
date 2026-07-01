@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
       <title>My Portfolio</title>
       <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="mediaqueries.css">
@@ -64,7 +64,6 @@
       <p class="section__text__p1">Hello, My Name Is</p>
       <h1 class="title">JUSTIN LORETZ</h1>
       
-      <!-- SUBTITLE STACK WITH GPA ACQUISITION -->
       <p class="section__text__p2" style="margin-bottom: 2.5rem !important;">
           Rising Junior at Seton Hall (4.0 GPA)</p>
                         <div class="btn-container">
@@ -87,7 +86,6 @@
 <section id="about">
       <p class="section__text__p1" id="about-subtitle">THE HUMAN ELEMENT</p>
       
-      <!-- ADD THE TRACK LAYER HERE -->
       <div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
             <div class="projects-line-left" style="flex: 1; height: 3px; background: linear-gradient(to left, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
             <h1 class="title" style="margin-bottom: 0px !important;">ABOUT ME</h1>
@@ -137,7 +135,6 @@
 <section id="experience">
       <p class="section__text__p1">EXPLORE MY</p>
       
-      <!-- ADD THE TRACK LAYER HERE -->
       <div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
             <div class="projects-line-left" style="flex: 1; height: 3px; background: linear-gradient(to left, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
             <h1 class="title" style="margin-bottom: 0px !important;">EXPERIENCE</h1>
@@ -183,19 +180,15 @@
 </div>
 </section>
 
-<!-- Replace your project section header lines with this exact animated version -->
 <section id="projects" style="padding-top: 18vh !important;">
       <p class="section__text__p1" style="font-family: 'Gotham Book', sans-serif !important; letter-spacing: 0.4rem !important; font-size: 0.85rem !important; margin-bottom: 1.5rem !important; text-transform: uppercase; color: #ffffff !important; opacity: 0.4 !important;">CHECK OUT MY</p>
 
-<!-- PROJECTS HEADER LAYER (PERFECT CENTERING MECHANISM) -->
-      <div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
+<div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
             <div class="projects-line-left" style="flex: 1; height: 3px; background: linear-gradient(to left, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
             
-            <!-- STACKS THE WORD AND BADGE VERTICALLY WITHOUT UNCENTERING -->
             <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
                   <h1 class="title" style="font-family: 'Gotham Black', sans-serif !important; font-size: clamp(2.5rem, 6vw, 4rem) !important; letter-spacing: -0.01em !important; margin-bottom: 0px !important; line-height: 1 !important; text-transform: uppercase !important; white-space: nowrap;">PROJECTS</h1>
                   
-                  <!-- SYSTEM STATUS DEPLOYMENT BADGE PUSHED LOWER -->
                   <div class="project-wip-badge">
                         <span class="pulse-glow-dot"></span>
                         <span class="wip-badge-text">WORK IN PROGRESS</span>
@@ -203,7 +196,6 @@
             </div>
             
             <div class="projects-line-right" style="flex: 1; height: 3px; background: linear-gradient(to right, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
-      </div>
       </div>
 <div class="project-filters">
                   <div class="desktop-filters">
@@ -230,10 +222,10 @@
                   
                   <div class="carousel-gallery">
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img">
+                              <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">WNBA POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/WNBApoll - Copy.png" class="modal-hero-img">
+                                    <img src="./assets/WNBApoll - Copy.png" class="modal-hero-img" loading="lazy">
                                     <h2>WNBA POLL OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -241,10 +233,10 @@
                         </div>
                                    
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/KayvonThibodeauxProg4X5 (1).png" alt="Kayvon Thibodeaux Poster" class="carousel-img">
+                              <img src="./assets/KayvonThibodeauxProg4X5 (1).png" alt="Kayvon Thibodeaux Poster" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">KAYVON THIBODEAUX</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/KayvonThibodeauxProg4X5 (1).png" class="modal-hero-img">
+                                    <img src="./assets/KayvonThibodeauxProg4X5 (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>KAYVON THIBODEAUX POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -252,60 +244,60 @@
                         </div>
 
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/j10veproject (1).png" alt="Jordan Love Poster" class="carousel-img">
+                              <img src="./assets/j10veproject (1).png" alt="Jordan Love Poster" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">JORDAN LOVE</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/j10veproject (1).png" class="modal-hero-img">
+                                    <img src="./assets/j10veproject (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>JORDAN LOVE POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div> 
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/ak41.png" alt="ALVIN KAMARA (AK) Poster" class="carousel-img">
+                              <img src="./assets/ak41.png" alt="ALVIN KAMARA (AK) Poster" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">ALVIN KAMARA (AK)</div>
                               <div class="case-study-data" style="display: none;"> 
-                                    <img src="./assets/ak41.png" class="modal-hero-img">
+                                    <img src="./assets/ak41.png" class="modal-hero-img" loading="lazy">
                                     <h2>ALVIN KAMARA (AK) POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div> 
                         <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/La Liga Poster.png" alt="La Liga Event" class="carousel-img">
+                              <img src="./assets/La Liga Poster.png" alt="La Liga Event" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">LA LIGA EVENT</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/La Liga Poster.png" class="modal-hero-img">
+                                    <img src="./assets/La Liga Poster.png" class="modal-hero-img" loading="lazy">
                                     <h2>LA LIGA EVENT OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/PurduePosterDad.png" alt="Purdue Poster" class="carousel-img">
+                              <img src="./assets/PurduePosterDad.png" alt="Purdue Poster" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">PURDUE POSTER</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/PurduePosterDad.png" class="modal-hero-img">
+                                    <img src="./assets/PurduePosterDad.png" class="modal-hero-img" loading="lazy">
                                     <h2>PURDUE POSTER OVERVIEW</h2>
                                     <p><strong>Category:</strong> Gift for Father</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/CWC25 (1).png" alt="2025 Club World Cup Poll" class="carousel-img">
+                              <img src="./assets/CWC25 (1).png" alt="2025 Club World Cup Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2025 CLUB WORLD CUP POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/CWC25 (1).png" class="modal-hero-img">
+                                    <img src="./assets/CWC25 (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 CLUB WORLD CUP POLL OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="hempfield" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/TOWNSHIPVHEMPFIELD.png" alt="2022 HS FOOTBALL MANHEIM TOWNSHIP v. HEMPFIELD" class="carousel-img">
+                              <img src="./assets/TOWNSHIPVHEMPFIELD.png" alt="2022 HS FOOTBALL MANHEIM TOWNSHIP v. HEMPFIELD" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2022 HS FOOTBALL MANHEIM TOWNSHIP v. HEMPFIELD</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/TOWNSHIPVHEMPFIELD.png" class="modal-hero-img">
+                                    <img src="./assets/TOWNSHIPVHEMPFIELD.png" class="modal-hero-img" loading="lazy">
                                     <h2>2022 HS FOOTBALL MANHEIM TOWNSHIP v. HEMPFIELD OVERVIEW</h2>
                                     <p><strong>Category:</strong> Hempfield Athletics</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -313,10 +305,10 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/WorldCupTix.png" alt="World Cup Poll" class="carousel-img">
+                              <img src="./assets/WorldCupTix.png" alt="World Cup Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">WORLD CUP POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/WorldCupTix.png" class="modal-hero-img">
+                                    <img src="./assets/WorldCupTix.png" class="modal-hero-img" loading="lazy">
                                     <h2>WORLD CUP TICKETING</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -324,10 +316,10 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/SHSP-NBAASG.png" alt="NBA ASG Poll" class="carousel-img">
+                              <img src="./assets/SHSP-NBAASG.png" alt="NBA ASG Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2026 USA v. WORLD ASG</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/SHSP-NBAASG.png" class="modal-hero-img">
+                                    <img src="./assets/SHSP-NBAASG.png" class="modal-hero-img" loading="lazy">
                                     <h2>2026 USA v. WORLD ASG</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -335,10 +327,10 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/PopeLeoGraphic.png" alt="Religion in Sport Poll" class="carousel-img">
+                              <img src="./assets/PopeLeoGraphic.png" alt="Religion in Sport Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">RELIGION IN SPORT</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/PopeLeoGraphic.png" class="modal-hero-img">
+                                    <img src="./assets/PopeLeoGraphic.png" class="modal-hero-img" loading="lazy">
                                     <h2>RELIGION IN SPORT</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -346,10 +338,10 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/thanksgivingevev2.png" alt="Thanksgiving Eve" class="carousel-img">
+                              <img src="./assets/thanksgivingevev2.png" alt="Thanksgiving Eve" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">THANKSGIVING EVE POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/thanksgivingevev2.png" class="modal-hero-img">
+                                    <img src="./assets/thanksgivingevev2.png" class="modal-hero-img" loading="lazy">
                                     <h2>THANKSGIVING EVE NFL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -357,10 +349,10 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/USAvInternationalFinal.png" alt="USA v. World ASG Poll" class="carousel-img">
+                              <img src="./assets/USAvInternationalFinal.png" alt="USA v. World ASG Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2025 USA v. WORLD ASG</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/USAvInternationalFinal.png" class="modal-hero-img">
+                                    <img src="./assets/USAvInternationalFinal.png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 USA v. WORLD ASG</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                                     <p>Write your detailed design process, software used, and layout strategy here.</p>
@@ -368,7 +360,7 @@
                         </div>
 
                         <div class="carousel-item" data-category="shsp" onclick="handleProjectClick(this)">
-                              <img src="./assets/BAL x SHSP/Slide1.PNG" alt="Presentation Cover" class="carousel-img">
+                              <img src="./assets/BAL x SHSP/Slide1.PNG" alt="Presentation Cover" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">BASKETBALL AFRICA LEAGUE DECK</div>
                               <div class="case-study-data" style="display: none;">
                                     <div class="presentation-stack">
@@ -378,7 +370,7 @@
                               </div>
                         </div>
                         <div class="carousel-item" data-category="shsp" onclick="handleProjectClick(this)">
-                              <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Presentation Cover" class="carousel-img">
+                              <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Presentation Cover" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">BURKE MAGNUS DECK</div>
                               <div class="case-study-data" style="display: none;">
                                     <div class="presentation-stack">
@@ -389,166 +381,166 @@
                         </div>
 
                         <div class="carousel-item" data-category="smac" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/SetonHallvNovaWP.png" alt="Project Thumbnail" class="carousel-img">
+                              <img src="./assets/SetonHallvNovaWP.png" alt="Project Thumbnail" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">SETON HALL v. VILLANOVA WATCH PARTY</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/SetonHallvNovaWP.png" class="modal-hero-img">
+                                    <img src="./assets/SetonHallvNovaWP.png" class="modal-hero-img" loading="lazy">
                                     <h2>SETON HALL v. VILLANOVA WATCH PARTY</h2>
                                     <p><strong>Category:</strong> SMAC Graphic</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="independent" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/maxeywallpaper.png" alt="Tyrese Maxey Wallpaper" class="carousel-img">
+                              <img src="./assets/maxeywallpaper.png" alt="Tyrese Maxey Wallpaper" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">TYRESE MAXEY WALLPAPER</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/maxeywallpaper.png" class="modal-hero-img">
+                                    <img src="./assets/maxeywallpaper.png" class="modal-hero-img" loading="lazy">
                                     <h2>TYRESE MAXEY WALLPAPER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/HOF Pete Rose - Copy.png" alt="Pete Rose Hall of Fame Poll" class="carousel-img">
+                              <img src="./assets/HOF Pete Rose - Copy.png" alt="Pete Rose Hall of Fame Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">PETE ROSE HALL OF FAME POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/HOF Pete Rose - Copy.png" class="modal-hero-img">
+                                    <img src="./assets/HOF Pete Rose - Copy.png" class="modal-hero-img" loading="lazy">
                                     <h2>PETE ROSE HALL OF FAME POLL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="hempfield" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/UpdatedJOY.png" alt="JOY BANNER FOR HEMPFIELD GIRL'S BASKETBALL" class="carousel-img">
+                              <img src="./assets/UpdatedJOY.png" alt="JOY BANNER FOR HEMPFIELD GIRL'S BASKETBALL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">JOY BANNER FOR HEMPFIELD GIRL'S BASKETBALL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/UpdatedJOY.png" class="modal-hero-img">
+                                    <img src="./assets/UpdatedJOY.png" class="modal-hero-img" loading="lazy">
                                     <h2>JOY BANNER FOR HEMPFIELD GIRL'S BASKETBALL</h2>
                                     <p><strong>Category:</strong> Hempfield Athletics</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/Most-Rec-NCAABB.png" alt="2025 MOST RECOGNIZED NCAABB ATHLETES" class="carousel-img">
+                              <img src="./assets/Most-Rec-NCAABB.png" alt="2025 MOST RECOGNIZED NCAABB ATHLETES" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">MOST RECOGNIZED NCAABB ATHLETES</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/Most-Rec-NCAABB.png" class="modal-hero-img">
+                                    <img src="./assets/Most-Rec-NCAABB.png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 MOST RECOGNIZED NCAABB ATHLETES</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/ABS-March-Call-Back.png" alt="2025 ABS MARCH CALL BACK" class="carousel-img">
+                              <img src="./assets/ABS-March-Call-Back.png" alt="2025 ABS MARCH CALL BACK" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">ABS MARCH CALL BACK</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/ABS-March-Call-Back.png" class="modal-hero-img">
+                                    <img src="./assets/ABS-March-Call-Back.png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 ABS MARCH CALL BACK</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="hempfield" data-featured="fasle" onclick="handleProjectClick(this)">
-                              <img src="./assets/BEARCATSVBK.png" alt="HEMPFIELD v. YORK" class="carousel-img">
+                              <img src="./assets/BEARCATSVBK.png" alt="HEMPFIELD v. YORK" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">HEMPFIELD v. YORK</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/BEARCATSVBK.png" class="modal-hero-img">
+                                    <img src="./assets/BEARCATSVBK.png" class="modal-hero-img" loading="lazy">
                                     <h2>HEMPFIELD v. YORK</h2>
                                     <p><strong>Category:</strong> Hempfield Athletics</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="independent" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/BryceYoungFinal.png" alt="BRYCE YOUNG POSTER" class="carousel-img">
+                              <img src="./assets/BryceYoungFinal.png" alt="BRYCE YOUNG POSTER" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">BRYCE YOUNG POSTER</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/BryceYoungFinal.png" class="modal-hero-img">
+                                    <img src="./assets/BryceYoungFinal.png" class="modal-hero-img" loading="lazy">
                                     <h2>BRYCE YOUNG POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="smac" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/EBOARD-UPDATE.png" alt="MEET THE SMAC E-BOARD" class="carousel-img">
+                              <img src="./assets/EBOARD-UPDATE.png" alt="MEET THE SMAC E-BOARD" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">MEET THE SMAC E-BOARD</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/EBOARD-UPDATE.png" class="modal-hero-img">
+                                    <img src="./assets/EBOARD-UPDATE.png" class="modal-hero-img" loading="lazy">
                                     <h2>MEET THE SMAC E-BOARD</h2>
                                     <p><strong>Category:</strong> SMAC Graphic</p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/eaglesvchiefs2.png" alt="SB LIX - EAGLES v. CHIEFS POLL" class="carousel-img">
+                              <img src="./assets/eaglesvchiefs2.png" alt="SB LIX - EAGLES v. CHIEFS POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">SB LIX - EAGLES v. CHIEFS POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/eaglesvchiefs2.png" class="modal-hero-img">
+                                    <img src="./assets/eaglesvchiefs2.png" class="modal-hero-img" loading="lazy">
                                     <h2>SB LIX - EAGLES v. CHIEFS POLL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="hempfield" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/HEMPFIELDVREADING.png" alt="2022 HS FOOTBALL HEMPFIELD v. READING" class="carousel-img">
+                              <img src="./assets/HEMPFIELDVREADING.png" alt="2022 HS FOOTBALL HEMPFIELD v. READING" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2022 HS FOOTBALL HEMPFIELD v. READING</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/HEMPFIELDVREADING.png" class="modal-hero-img">
+                                    <img src="./assets/HEMPFIELDVREADING.png" class="modal-hero-img" loading="lazy">
                                     <h2>2022 HS FOOTBALL HEMPFIELD v. READING</h2>
                                     <p><strong>Category:</strong> Hempfield Athletics</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/jimmybutlerlayout.png" alt="JIMMY BUTLER CARD DESIGN" class="carousel-img">
+                              <img src="./assets/jimmybutlerlayout.png" alt="JIMMY BUTLER CARD DESIGN" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">JIMMY BUTLER CARD DESIGN</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/jimmybutlerlayout.png" class="modal-hero-img">
+                                    <img src="./assets/jimmybutlerlayout.png" class="modal-hero-img" loading="lazy">
                                     <h2>JIMMY BUTLER CARD DESIGN</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/NFL Draft 8 Heads (1).png" alt="NFL DRAFT PREVIEW POLL" class="carousel-img">
+                              <img src="./assets/NFL Draft 8 Heads (1).png" alt="NFL DRAFT PREVIEW POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">NFL DRAFT PREVIEW POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/NFL Draft 8 Heads (1).png" class="modal-hero-img">
+                                    <img src="./assets/NFL Draft 8 Heads (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>NFL DRAFT PREVIEW POLL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/psuschedule-portfolioallwd.png" alt="2024 PORTLAND STATE FOOTBALL SCHEDULE" class="carousel-img">
+                              <img src="./assets/psuschedule-portfolioallwd.png" alt="2024 PORTLAND STATE FOOTBALL SCHEDULE" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2024 PORTLAND STATE FOOTBALL SCHEDULE</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/psuschedule-portfolioallwd.png" class="modal-hero-img">
+                                    <img src="./assets/psuschedule-portfolioallwd.png" class="modal-hero-img" loading="lazy">
                                     <h2>2024 PORTLAND STATE FOOTBALL SCHEDULE</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="independent" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/SCOTTIEFINAL.png" alt="SCOTTIE BARNES POSTER" class="carousel-img">
+                              <img src="./assets/SCOTTIEFINAL.png" alt="SCOTTIE BARNES POSTER" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">SCOTTIE BARNES POSTER</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/SCOTTIEFINAL.png" class="modal-hero-img">
+                                    <img src="./assets/SCOTTIEFINAL.png" class="modal-hero-img" loading="lazy">
                                     <h2>SCOTTIE BARNES POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
-                              <img src="./assets/sportspoll12-9design-final.png" alt="2024 CFB PLAYOFF POLL" class="carousel-img">
+                              <img src="./assets/sportspoll12-9design-final.png" alt="2024 CFB PLAYOFF POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2024 CFB PLAYOFF POLL</div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/sportspoll12-9design-final.png" class="modal-hero-img">
+                                    <img src="./assets/sportspoll12-9design-final.png" class="modal-hero-img" loading="lazy">
                                     <h2>2024 CFB PLAYOFF POLL RESULTS</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
 
                         <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
-                              <img src="./assets/StephenALastTake.png" alt="2026 STEPHEN A. SMITH STEPS IN THE HALL " class="carousel-img">
+                              <img src="./assets/StephenALastTake.png" alt="2026 STEPHEN A. SMITH STEPS IN THE HALL " class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2026 STEPHEN A. SMITH STEPS IN THE HALL </div>
                               <div class="case-study-data" style="display: none;">
-                                    <img src="./assets/StephenALastTake.png" class="modal-hero-img">
+                                    <img src="./assets/StephenALastTake.png" class="modal-hero-img" loading="lazy">
                                     <h2>2026 STEPHEN A. SMITH STEPS IN THE HALL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
@@ -576,12 +568,9 @@
             <div class="projects-line-right" style="flex: 1; height: 3px; background: linear-gradient(to right, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
       </div>
 
-<!-- PREMIUM EDITORIAL TELEMETRY DECK (ULTRA-BALANCED REWRITE) -->
 <div style="width: 100%; max-width: 1150px; margin: 2rem auto 4rem auto; background: linear-gradient(145deg, rgba(15, 15, 15, 0.5), rgba(5, 5, 5, 0.8)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 1.5rem 2.5rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
       
-      <!-- LEFT WING: CORE METRICS -->
       <div style="display: flex; align-items: center; gap: 2.5rem; justify-content: flex-start;">
-            <!-- AUTHORED COUNTER -->
             <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem;">
                   <span style="font-family: 'Gotham Black', sans-serif; font-size: 0.7rem; letter-spacing: 0.12rem; color: #ffffff; opacity: 0.35; text-transform: uppercase;">Authored</span>
                   <div style="display: flex; align-items: baseline; gap: 0.3rem;">
@@ -590,10 +579,8 @@
                   </div>
             </div>
 
-            <!-- VERTICAL DIVIDER SPINE -->
             <div style="width: 1px; height: 35px; background: rgba(255, 255, 255, 0.1);"></div>
 
-            <!-- EDITED COUNTER -->
             <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem;">
                   <span style="font-family: 'Gotham Black', sans-serif; font-size: 0.7rem; letter-spacing: 0.12rem; color: #ffffff; opacity: 0.35; text-transform: uppercase;">Edited</span>
                   <div style="display: flex; align-items: baseline; gap: 0.3rem;">
@@ -603,7 +590,6 @@
             </div>
       </div>
 
-      <!-- CENTER HUB: HIGH-ILLUMINATION IMPACT REACH -->
       <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 0.3rem; padding: 0 2rem; border-left: 1px solid rgba(255, 255, 255, 0.05); border-right: 1px solid rgba(255, 255, 255, 0.05);">
             <span style="font-family: 'Gotham Black', sans-serif; font-size: 0.65rem; letter-spacing: 0.22rem; color: var(--accent); text-transform: uppercase; opacity: 0.9;">Total Editorial Views</span>
             <div style="display: flex; align-items: baseline; gap: 0.5rem; justify-content: center;">
@@ -611,14 +597,10 @@
             </div>
       </div>
 
-      <!-- RIGHT WING: CONTROLS & TIMESTAMPS -->
       <div style="display: flex; align-items: center; gap: 2rem; justify-content: flex-end;">
-            <!-- DATA TIME VERIFICATION -->
             <span style="font-family: 'Gotham Book', sans-serif; font-size: 0.68rem; letter-spacing: 0.08rem; color: #ffffff; opacity: 0.25; text-transform: uppercase; white-space: nowrap;">As of June 30, 2026</span>
             
-            <!-- PREMIUM FILTER DROPDOWN CONTAINER -->
             <div style="position: relative; display: flex; align-items: center;">
-                  <!-- Custom arrow icon overlaid on custom box -->
                   <span style="position: absolute; right: 1.1rem; color: var(--accent); font-size: 0.7rem; pointer-events: none; opacity: 0.85;">▼</span>
                   <select id="article-sort" onchange="sortArticles()" style="appearance: none; -webkit-appearance: none; background: rgba(5, 5, 5, 0.85); color: var(--accent); border: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Gotham Book', sans-serif; padding: 0.6rem 2.5rem 0.6rem 1.2rem; font-size: 0.72rem; font-weight: bold; letter-spacing: 0.06rem; border-radius: 6px; outline: none; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);" onmouseover="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 0 15px rgba(0, 68, 255, 0.25)'" onmouseout="this.style.borderColor='rgba(255, 255, 255, 0.08)'; this.style.boxShadow='none'">
                         <option value="newest" style="color: black; background: #ffffff;">Sort: Newest First</option>
@@ -629,13 +611,12 @@
       </div>
 
 </div>
-      <!-- START OF THE ARTICLE GRID CONTAINER -->
       <div class="editorial-index-container">
                  
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/05/11/seventy-six-problems-and-every-bracket-is-one/" target="_blank" class="editorial-row" data-date="2026-05-11" data-views="124">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>MAY 11, 2026</span>
-                              <span>👁 124 VIEWS</span></div>
+                              <span>👁&#xFE0E; 124 VIEWS</span></div>
                         <h2 class="editorial-title">Seventy-Six Problems and Every Bracket is One</h2>
                         <p class="editorial-excerpt">As the NCAA Tournament expands to 76 teams in 2027, the addition of a 24-team opening round fundamentally reshapes the road to the Final Four while making the odds of a perfect bracket nearly impossible. This shift aims to increase tournament access for a changing collegiate landscape, though it remains a point of contention among coaches regarding the potential dilution of the “Big Dance.”</p>
                                           <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -643,7 +624,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/04/28/portal-of-entry-recapping-another-chaotic-college-basketball-transfer-portal/" target="_blank" class="editorial-row" data-date="2026-04-28" data-views="182">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>APRIL 28, 2026</span>
-                              <span>👁 182 VIEWS</span></div>
+                              <span>👁&#xFE0E; 182 VIEWS</span></div>
                         <h2 class="editorial-title">“Portal” of Entry: Recapping Another Chaotic College Basketball Transfer Portal</h2>
                         <p class="editorial-excerpt">Another two weeks of high-stakes chaos and seven-figure NIL deals has officially concluded, leaving the landscape of the upcoming college basketball season fundamentally reshaped again by a transfer portal cycle that felt more like an NBA expansion draft than a collegiate off-season.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -651,7 +632,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/04/28/no-gambling-in-vegas-fernando-mendoza-and-the-2026-nfl-draft/" target="_blank" class="editorial-row" data-date="2026-04-28" data-views="186">
                          <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">      
                         <span>APRIL 28, 2026</span>
-                              <span>👁 186 VIEWS</span></div>
+                              <span>👁&#xFE0E; 186 VIEWS</span></div>
                         <h2 class="editorial-title">No Gambling in Vegas: Fernando Mendoza and the 2026 NFL Draft</h2>
                         <p class="editorial-excerpt">Las Vegas refused to gamble this time around, while the Arizona Cardinals proved there is “dice in the desert” rolling them with a high-stakes wager that bucked every analytical trend in the book.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -659,7 +640,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/04/12/may-hem-in-march-for-michigan/" target="_blank" class="editorial-row" data-date="2026-04-12" data-views="7293">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>APRIL 12, 2026</span>
-                              <span>👁 7,293 VIEWS</span></div>
+                              <span>👁&#xFE0E; 7,293 VIEWS</span></div>
                         <h2 class="editorial-title">May-Hem in March for Michigan</h2>
                         <p class="editorial-excerpt">Thirty-seven years after the phantom foul that started the clock, Michigan finally stopped it with a 2026 masterclass that returned a rebuilding brand to glory.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -667,7 +648,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/04/12/jaden-ivey-the-ivey-league-dropout/" target="_blank" class="editorial-row" data-date="2026-04-12" data-views="7698">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>APRIL 12, 2026</span>
-                              <span>👁 7,698 VIEWS</span></div>
+                              <span>👁&#xFE0E; 7,698 VIEWS</span></div>
                         <h2 class="editorial-title">Jaden Ivey: "The Ivey League Dropout"</h2>
                         <p class="editorial-excerpt">The NBA walked out on Jaden Ivey the moment he started playing for an audience of One.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -675,7 +656,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/03/08/the-slim-tweeter/" target="_blank" class="editorial-row" data-date="2026-03-08" data-views="8851">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>MARCH 8, 2026</span>
-                              <span>👁 8,851 VIEWS</span></div>
+                              <span>👁&#xFE0E; 8,851 VIEWS</span></div>
                         <h2 class="editorial-title">The Slim Tweeter</h2>
                         <p class="editorial-excerpt">From secret burner accounts to explosive All-Star leaks, Kevin Durant’s “KD Files” saga blurs the line between superstar dominance and late-night digital warfare in the NBA’s most uniquely modern scandal.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -683,7 +664,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2026/02/16/the-nba-all-star-weekends-main-event/" target="_blank" class="editorial-row" data-date="2026-02-16" data-views="8112">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>FEBRUARY 16, 2026</span>
-                              <span>👁 8,112 VIEWS</span></div>
+                              <span>👁&#xFE0E; 8,112 VIEWS</span></div>
                         <h2 class="editorial-title">The NBA All-Star Weekend's Main Event</h2>
                         <p class="editorial-excerpt">The NBA might have finally found a formula that could tap into something more powerful than conference loyalty: national pride.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -691,7 +672,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/12/08/the-2025-2026-college-football-playoffs-are-here/" target="_blank" class="editorial-row" data-date="2025-12-08" data-views="7455">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>DECEMBER 8, 2025</span>
-                              <span>👁 7,455 VIEWS</span></div>
+                              <span>👁&#xFE0E; 7,455 VIEWS</span></div>
                         <h2 class="editorial-title">The 2025–2026 College Football Playoffs Are Here</h2>
                         <p class="editorial-excerpt">The 2025–2026 College Football Playoff bracket has arrived, revealing a landscape where dynastic powers, surprise contenders, and ambitious mid-majors all collide in a high-stakes race to Hard Rock.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -699,7 +680,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/12/08/2026-fifa-world-cup-draw/" target="_blank" class="editorial-row" data-date="2025-12-08" data-views="12865">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>DECEMBER 8, 2025</span>
-                              <span>👁 12,865 VIEWS</span></div>
+                              <span>👁&#xFE0E; 12,865 VIEWS</span></div>
                         <h2 class="editorial-title">The 2026 FIFA World Cup Draw</h2>
                         <p class="editorial-excerpt">With the 2026 FIFA World Cup draw expanding the field to 48 teams across North and Latin America, the bracket sets up a minefield of blockbuster clashes, long-distance travel, and golden chances for dark horses. This tournament is promising to be as volatile as it is historic.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -707,7 +688,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/11/16/college-basketball-is-back/" target="_blank" class="editorial-row" data-date="2025-11-16" data-views="498">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>NOVEMBER 16, 2025</span>
-                              <span>👁 498 VIEWS</span></div>
+                              <span>👁&#xFE0E; 498 VIEWS</span></div>
                         <h2 class="editorial-title">College Basketball Is BACK</h2>
                         <p class="editorial-excerpt">Every year begins with unpredictability, but in today’s college basketball climate, it feels impossible to foresee anything</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -715,7 +696,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/11/16/the-dodgers-and-their-repeat-offense/" target="_blank" class="editorial-row" data-date="2025-11-16" data-views="4848">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>NOVEMBER 16, 2025</span>
-                              <span>👁 4,848 VIEWS</span></div>
+                              <span>👁&#xFE0E; 4,848 VIEWS</span></div>
                         <h2 class="editorial-title">The Dodgers and Their Repeat "Offense"</h2>
                         <p class="editorial-excerpt">For the first time in decades, an MLB franchise has solidified themselves as a true dynasty.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -723,7 +704,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/10/19/baseball-is-bleeding-blue/" target="_blank" class="editorial-row" data-date="2025-10-19" data-views="394">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>OCTOBER 19, 2025</span>
-                              <span>👁 394 VIEWS</span></div>
+                              <span>👁&#xFE0E; 394 VIEWS</span></div>
                         <h2 class="editorial-title">Baseball Is Bleeding Blue in October</h2>
                         <p class="editorial-excerpt">As the MLB season nears its end, three stories remain. Will there be a dynasty, a first time champion, or a spoiler? The clashes of the Championship Series bleed blue as America (and Canada) waits to see either a first, next, or repeat champion.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -731,7 +712,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/10/05/will-the-whistle-always-be-there-to-blame/" target="_blank" class="editorial-row" data-date="2025-10-05" data-views="9140">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>OCTOBER 5, 2025</span>
-                              <span>👁 9,140 VIEWS</span></div>
+                              <span>👁&#xFE0E; 9,140 VIEWS</span></div>
                         <h2 class="editorial-title">Will the Whistle Always Be There to Blame?</h2>
                         <p class="editorial-excerpt">Major League Baseball has confirmed the arrival of the automated ball-strike challenge system in the 2026 regular season. With this now in place, right after the National Football League began using their virtual measurement program, is the time when officials will no longer be the scapegoats of the sports world fast approaching?</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -739,7 +720,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/10/05/ncaa-division-i-football-to-move-to-one-transfer-window/" target="_blank" class="editorial-row" data-date="2025-10-05" data-views="705">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>OCTOBER 5, 2025</span>
-                              <span>👁 705 VIEWS</span></div>
+                              <span>👁&#xFE0E; 705 VIEWS</span></div>
                         <h2 class="editorial-title">NCAA Division I Football to Move to One Transfer Window</h2>
                         <p class="editorial-excerpt">The NCAA has decided to eliminate one of the transfer portal windows in Division I college football, but what does this entail? Is this mutually beneficial or is it in the best interest of the league itself?</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -747,7 +728,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/09/21/the-leaguewide-message-from-wnba-players-pay-us-what-you-owe-us/" target="_blank" class="editorial-row" data-date="2025-09-21" data-views="25047">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>SEPTEMBER 21, 2025</span>
-                              <span>👁 25,047 VIEWS</span></div>
+                              <span>👁&#xFE0E; 25,047 VIEWS</span></div>
                         <h2 class="editorial-title">The Leaguewide Message from WNBA Players: Pay Us What You Owe Us</h2>
                         <p class="editorial-excerpt">There is a good chance of a lockout or strike happening in the WNBA next season, so be prepared for a potential basketball drought in Summer 2026.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -755,14 +736,14 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/04/18/evolving-madness-the-effects-of-nil-and-the-transfer-portal-on-college-basketball/" target="_blank" class="editorial-row" data-date="2025-04-18" data-views="1694">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>APRIL 18, 2025</span>
-                              <span>👁 1,694 VIEWS</span></div>
+                              <span>👁&#xFE0E; 1,694 VIEWS</span></div>
                         <h2 class="editorial-title">Evolving Madness: The Effects of NIL and the Transfer Portal on College Basketball</h2>
                        <p class="editorial-excerpt">The traditional boundaries of collegiate athletics are dissolving fast. Between million-dollar NIL bidding wars and unrestricted transfer window cycles, student-athletes have more leverage than ever—leaving coaching staffs scrambing to adapt to a landscape built entirely on commercial incentives.</p><div class="editorial-action">READ ARTICLE &#8599;</div>
                   </a>
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/02/23/nba-trade-deadline/" target="_blank" class="editorial-row" data-date="2025-02-23" data-views="516">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>FEBRUARY 23, 2025</span>
-                              <span>👁 516 VIEWS</span></div>
+                              <span>👁&#xFE0E; 516 VIEWS</span></div>
                         <h2 class="editorial-title">NBA Trade Deadline</h2>
                         <p class="editorial-excerpt">As the final horn sounds on the high-stakes trade window, a flurry of last-minute roster moves leaves standard league contenders completely reshaped. We break down the winners, the losers, and the massive financial gambles that will define the upcoming run to the NBA Finals.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -770,7 +751,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2025/02/08/the-rematch/" target="_blank" class="editorial-row" data-date="2024-11-18" data-views="1175">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>FEBRUARY 8, 2025</span>
-                              <span>👁 1,175 VIEWS</span></div>
+                              <span>👁&#xFE0E; 1,175 VIEWS</span></div>
                         <h2 class="editorial-title">The Rematch</h2>
                        <p class="editorial-excerpt">Redemption is on the line as the Philadelphia Eagles gear up for a historic, high-stakes showdown against the reigning champions. With tactical adjustments, roster shifts, and legacy implications hanging in the balance, this rematch is primed to settle the ultimate football score.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -778,7 +759,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2024/11/18/heisman-race/" target="_blank" class="editorial-row" data-date="2024-10-15" data-views="353">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>NOVEMBER 18, 2024</span>
-                              <span>👁 353 VIEWS</span></div>
+                              <span>👁&#xFE0E; 353 VIEWS</span></div>
                         <h2 class="editorial-title">The Heisman Race</h2><p class="editorial-excerpt">A gridiron race defined by signature highlights, clutch standard drives, and razor-thin voting margins down to the final weekend. We analyze the final dark-horse candidates, key performance metrics, and the absolute moments that turned a collegiate standout into college football’s next immortal.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
                   </a>
@@ -786,7 +767,7 @@
  <a href="https://blogs.shu.edu/stillmanexchange/2024/11/02/nike-and-new-ceo-elliott-hill/" target="_blank" class="editorial-row" data-date="2024-11-02" data-views="1950">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>NOVEMBER 2, 2024</span>
-                              <span>👁 1,950 VIEWS</span></div>
+                              <span>👁&#xFE0E; 1,950 VIEWS</span></div>
                         <h2 class="editorial-title">Nike and New CEO Elliott Hill</h2>
                         <p class="editorial-excerpt">Returning to the campus bounds where his retail journey began, veteran insider Elliott Hill steps in to steer the sportswear giant through turbulent corporate waters. Facing aggressive upstart competitors and declining market share, Nike bets its long-term future on product authenticity and brand heritage.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -794,7 +775,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2024/10/15/the-pac-12-revival/" target="_blank" class="editorial-row" data-date="2024-09-30" data-views="329">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>OCTOBER 15, 2024</span>
-                              <span>👁 329 VIEWS</span></div>
+                              <span>👁&#xFE0E; 329 VIEWS</span></div>
                         <h2 class="editorial-title">The PAC-12 Revival</h2>
                         <p class="editorial-excerpt">Just when the sports world declared conference realignment completely final, the PAC-12 pulls off an aggressive western expansion raid. By poaching top-tier competitive programs from the Mountain West, a legendary athletic brand initiates a bold survival strategy to reclaim its place in college sports power structures.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -802,7 +783,7 @@
                   <a href="https://blogs.shu.edu/stillmanexchange/2024/09/30/ncaa-settlement-signals-new-era-in-college-sports-compensation/" target="_blank" class="editorial-row" data-date="2025-09-21" data-views="1094">
                         <div class="editorial-meta"style="display: flex; justify-content: space-between; width: 100%;">
                               <span>SEPTEMBER 30, 2024</span>
-                              <span>👁 1,094 VIEWS</span></div>
+                              <span>👁&#xFE0E; 1,094 VIEWS</span></div>
                         <h2 class="editorial-title">NCAA Settlement Signals New Era in College Sports Compensation</h2>
                         <p class="editorial-excerpt">The historic legal firewall blocking direct athlete revenue shares has officially collapsed. This baseline analysis dissects the multi-billion dollar judicial settlement framework that transforms athletic programs into direct revenue-paying franchises, permanently shifting collegiate business models.</p>
                         <div class="editorial-action">READ ARTICLE &#8599;</div>
@@ -815,7 +796,6 @@
 <section id="contact">
       <p class="section__text__p1">GET IN TOUCH</p>
       
-      <!-- ADD THE TRACK LAYER HERE -->
       <div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
             <div class="projects-line-left" style="flex: 1; height: 3px; background: linear-gradient(to left, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
             <h1 class="title" style="margin-bottom: 0px !important;">CONTACT ME</h1>
@@ -846,7 +826,7 @@
       <footer style="margin-top: 10vh; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5vh; padding-bottom: 2vh; width: 100%; display: flex; flex-direction: column; align-items: center;">
            <p style="font-family: 'Gotham Book', sans-serif; letter-spacing: 0.3rem; color: var(--accent); margin-bottom: 3rem;">AVAILABLE FOR HIRE // 2026</p>
             
-            <p style="font-family: 'Gotham Book', sans-serif; color: #666; font-size: 0.8rem; letter-spacing: 0.1rem; text-transform: uppercase;">COPYRIGHT &#169; 2026 Justin Loretz. All Rights Reserved.</p>
+            <p style="font-family: 'Gotham Book', sans-serif; color: #cccccc; font-size: 0.8rem; letter-spacing: 0.1rem; text-transform: uppercase;">COPYRIGHT &#169; 2026 Justin Loretz. All Rights Reserved.</p>
       </footer>
       
      <div class="menu-links">

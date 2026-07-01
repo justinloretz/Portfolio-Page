@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
       }
 
-      // --- 4. Ambient Star Particles ---
+      // --- 4. Ambient Star Particles (350 STABLE COUNT SAVED) ---
       function createStars() {
             const container = document.getElementById('particle-canvas');
             if (!container) return; 
@@ -247,19 +247,42 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel();
       }
 
-      // --- AUTOPLAY CAROUSEL ---
+   // --- SMART SCROLL-ACTIVATED AUTOPLAY ---
       let carouselAutoplay;
-      function startAutoplay() {
-            if (visibleCarouselItems.length > 1) carouselAutoplay = setInterval(() => window.moveCarousel(1), 4500);
-      }
-      function stopAutoplay() { clearInterval(carouselAutoplay); }
-
-      startAutoplay();
       const carouselArea = document.querySelector('.carousel-container');
+
+      function startAutoplay() {
+            // THE TIME FIX: Increased from 4500 to 5500 (5.5 seconds) to give a smidge more reading time
+            if (visibleCarouselItems.length > 1 && !carouselAutoplay) {
+                  carouselAutoplay = setInterval(() => window.moveCarousel(1), 5500);
+            }
+      }
+
+      function stopAutoplay() { 
+            clearInterval(carouselAutoplay); 
+            carouselAutoplay = null; 
+      }
+
       if (carouselArea) {
-            carouselArea.addEventListener('mouseenter', stopAutoplay);
-            carouselArea.addEventListener('mouseleave', startAutoplay);
-            carouselArea.addEventListener('touchstart', stopAutoplay);
+            // THE PERFORMANCE FIX: Only activates the timer loop when the user is actively looking at the carousel
+            const carouselObserver = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                              startAutoplay(); 
+                        } else {
+                              stopAutoplay();  // Shuts down the math loops completely when off-screen
+                        }
+                  });
+            }, { 
+                  threshold: 0.15 // Fires when at least 15% of the carousel is visible
+            });
+
+            carouselObserver.observe(carouselArea);
+
+            // Keeps mouse hover controls safe
+            carouselArea.addEventListener('mouseenter', stopAutoplay); 
+            carouselArea.addEventListener('touchstart', stopAutoplay); 
+            carouselArea.addEventListener('mouseleave', startAutoplay); 
       }
 
       // --- 6. Custom Brutalist Cursor ---
@@ -365,9 +388,7 @@ const thumbnailObserver = new MutationObserver((mutations) => {
             if (mutation.target.classList.contains('active-thumb')) {
                   mutation.target.scrollIntoView({
                         behavior: 'smooth',
-                        /* THE FIX: Changing 'nearest' to 'none' stops the browser from 
-                           forcing your vertical screen window to jump down to the projects section. */
-                        block: 'none',
+                        block: 'none', // HARD FIX: Explicitly prevents vertical page snapping
                         inline: 'center'
                   });
             }
@@ -385,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
       }
 });
+
 // --- 14. The Vault Preloader (MOVED TO ROOT TO BYPASS DOM LOCKOUT) ---
 setTimeout(() => {
       document.body.classList.add('vault-open');

@@ -1,6 +1,6 @@
-/* =========================================
-   MASTER MEDIA QUERIES (Fully Optimized)
-   ========================================= */
+/* ==========================================================================
+   MASTER MEDIA QUERIES - OPTIMIZED FOR THE PRIZM DESIGN ENGINE
+   ========================================================================== */
 
 /* --- 1. LARGE DESKTOPS / ULTRAWIDE (1600px and up) --- */
 @media screen and (min-width: 1600px) {
@@ -9,155 +9,217 @@
 
 /* --- 2. STANDARD LAPTOPS (Max 1400px) --- */
 @media screen and (max-width: 1400px) {
-      #profile { min-height: 85vh; margin-bottom: 3rem; }
-      .tilt-card { width: 400px; height: 520px; }
-      .section__text .title { font-size: clamp(2.5rem, 5vw, 4.5rem); }
-      .profile-content { gap: 5vw; }
-      .editorial-index-container { column-gap: 2rem; }
+      #profile { min-height: 85vh; padding-top: 15vh; }
+      .tilt-card { width: 380px; height: 490px; }
+      #profile .title { font-size: clamp(2.5rem, 4.8vw, 5rem) !important; }
+      .profile-content { gap: 4vw; }
+      .editorial-index-container { gap: 2rem; }
 }
 
 /* --- 3. TABLETS / SMALL LAPTOPS (Max 1200px) --- */
 @media screen and (max-width: 1200px) {
       #desktop-nav { display: none; }
       #hamburger-nav { display: flex; }
-      .tilt-card { width: 320px; height: 420px; }
-      .btn { font-size: 1.75rem; width: 14rem; padding: 1rem 1.5rem; }
-      .arrow { display: none; }
-      .section__pic-container { height: 275px; width: 275px; margin: 0 auto 2rem; }
-      .editorial-index-container { grid-template-columns: repeat(2, 1fr); }
-      .details-container { min-width: 350px !important; }
+      
+      .profile-content { gap: 3vw; }
+      .tilt-card { width: 320px; height: 410px; }
+      
+      /* Bento Grid Adaptability */
+      .bento-grid { 
+            grid-template-columns: repeat(2, 1fr) !important; 
+            padding: 0 1.5rem;
+      }
+      .bio-tile { grid-column: span 2 !important; }
+      .music-tile { grid-column: span 1 !important; }
+      .project-tile { grid-column: span 1 !important; }
+      .trivia-tile { grid-column: span 2 !important; }
+      
+      /* Experience Layout Shift */
+      .about-containers {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 2rem !important;
+            padding: 0 1.5rem !important;
+      }
+      
+      .editorial-index-container { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem; }
 }
 
-/* --- 4. TABLET PORTRAIT / LARGE PHONES (Max 800px) --- */
+/* --- 4. MASTER MOBILE BLOCK: TABLET PORTRAIT / ALL PHONES (Max 800px) --- */
 @media screen and (max-width: 800px) {
-      section, #profile, #contact, footer {
-            height: auto; min-height: fit-content; padding-bottom: 3rem; margin: 0;
-            width: 100%; overflow-x: hidden; box-sizing: border-box;
-      }
-
-      .vault-title { font-size: 8vw !important; letter-spacing: 0 !important; white-space: nowrap; }
-      .vault-sub { font-size: 3vw !important; letter-spacing: 0.2rem !important; }
-
-      #profile .section__text__p1 { text-align: center !important; font-size: 3.5vw !important; white-space: nowrap !important; letter-spacing: 0.15rem !important; }
-      #profile .title { font-size: clamp(3rem, 10vw, 4.5rem) !important; white-space: normal !important; line-height: 0.9 !important; text-align: center; }
-      .profile-content { flex-direction: column; gap: 3rem; text-align: center; width: 100%; padding: 0 1.5rem; box-sizing: border-box; }
-      .tilt-card { width: 100%; max-width: 320px; height: auto; aspect-ratio: 4 / 5; margin: 0 auto; }
-      .section__text { align-items: center; width: 100%; }
-      .section__text .btn-container { justify-content: center; flex-wrap: wrap; width: 100%; }
-
-      /* The PFP Fix */
-      .section-container { flex-direction: column !important; align-items: center !important; width: 100% !important; gap: 2rem !important; }
-      .section__pic-container {
-            display: block !important; width: 80vw !important; max-width: 320px !important;
-            height: 100vw !important; max-height: 400px !important; margin: 0 auto !important;
-            border-radius: 1.5rem !important; overflow: hidden !important;
-      }
-      .about-pic { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center top !important; }
       
-      .about-details-container { width: 100% !important; padding: 0 !important; box-sizing: border-box; }
-      .text-container { width: 90% !important; max-width: 90% !important; margin: 0 auto !important; text-align: center !important; }
-      .text-container h3 { font-size: 1.8rem !important; white-space: normal !important; line-height: 1.2 !important; word-wrap: break-word !important; }
-      .text-container p { font-size: 1.1rem !important; white-space: normal !important; word-wrap: break-word !important; text-align: center !important; }
-
-      .desktop-filters { display: none !important; }
-      .mobile-filters { display: flex !important; margin-bottom: 1rem; width: 100%; padding: 0 1.5rem; box-sizing: border-box; }
-
-      /* Experience Cards */
-      .about-containers { display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      /* Global Mobile Safety Tweaks */
+      body, a, button, .icon, .thumbnail-dot, .carousel-item { cursor: default !important; }
+      .custom-cursor { display: none !important; }
+      
+      section { padding-top: 8vh; min-height: auto; }
+      #profile { padding-top: 14vh; min-height: auto; }
+      
+      /* --- Hero Profile Fixes --- */
+      .profile-content { 
+            flex-direction: column !important; 
+            gap: 2.5rem; 
+            text-align: center; 
+            padding: 0 1.5rem; 
+      }
+      .tilt-card { 
+            width: 280px; 
+            height: 360px; 
+            margin: 0 auto; 
+            box-shadow: 10px 10px 0px var(--accent);
+            animation: none !important; 
+      }
+      .section__text { align-items: center; text-align: center; width: 100%; }
+      #profile .section__text__p1 { border-left: none !important; padding-left: 0 !important; text-align: center !important; justify-content: center; }
+      #profile .title { font-size: clamp(2.2rem, 8vw, 3.8rem) !important; text-align: center !important; white-space: normal !important; line-height: 1.1 !important; }
+      #profile .section__text__p2 { text-align: center !important; margin-bottom: 2rem !important; font-size: 1.6rem !important; letter-spacing: 0.2rem !important; }
+      .btn-container { justify-content: center; width: 100%; gap: 1rem; }
+      #socials-container { justify-content: center; }
+      
+      /* --- Bento Grid Fixes --- */
+      .bento-grid { 
+            grid-template-columns: 1fr !important; 
+            gap: 1.2rem !important; 
+      }
+      .bio-tile, .music-tile, .project-tile, .trivia-tile { grid-column: span 1 !important; }
+      .trivia-list { flex-direction: column; gap: 1rem; text-align: left; }
+      
+      /* --- Experience Grid Fixes --- */
+      .about-containers { 
+            grid-template-columns: 1fr !important; 
+            gap: 1.5rem !important; 
+      }
       .details-container { 
-            display: block !important; width: 85% !important; max-width: 400px !important; min-width: 0 !important;
-            margin: 0 auto 2rem auto !important; padding: 2rem !important; box-sizing: border-box !important; 
+            padding: 2rem !important; 
+            align-items: center !important; 
+            text-align: center !important;
       }
-      
-      /* THE ONE-LINE TITLE FIX: Forces text to stay on one line and dynamically shrinks the font! */
-/* In the 800px section: */
       .details-container h2, .details-container h3, .experience-sub-title { 
-            white-space: nowrap !important; overflow: hidden !important; text-overflow: clip !important; 
-            font-size: clamp(0.9rem, 3.5vw, 1.25rem) !important; /* Dropped size slightly */
-            line-height: 1.2 !important; margin-bottom: 0.5rem !important;
-            padding-right: 5px !important; /* THE FIX: Gives the 'L' room to hang over the edge! */
-      }
-
-      /* "Promoted from" text */
-      .details-container p[style*="888"] {
-            white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-            font-size: 0.75rem !important; letter-spacing: 0.05rem !important;
+            white-space: normal !important; 
+            overflow: visible !important;
+            font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+            text-align: center !important;
       }
       
-      /* Description text */
-      .details-container p:last-of-type { 
-            white-space: normal !important; word-wrap: break-word !important; overflow: visible !important;
-            font-size: 1rem !important; line-height: 1.6 !important;
+      /* --- Projects Carousel & Filters Fixes --- */
+      .desktop-filters { display: none !important; }
+      .mobile-filters { display: flex !important; margin-bottom: 2.5rem; }
+      .carousel-container { height: 35vh; }
+      .carousel-img { height: 30vh; max-width: 75vw; }
+      .carousel-item.prev { transform: translateX(-30vw) scale(0.75); }
+      .carousel-item.next { transform: translateX(30vw) scale(0.75); }
+      .carousel-item.prev-2, .carousel-item.next-2 { opacity: 0 !important; pointer-events: none; }
+
+      /* --- Carousel Top Ten Thumbnail Track Fixes --- */
+      .carousel-thumbnails.top-ten-mode {
+            justify-content: flex-start !important; 
+            overflow-x: auto !important; 
+            width: 90% !important;
+            max-width: 90vw !important;
+            gap: 1.75rem !important; 
+            padding: 1.5rem 1rem 2rem 1.5rem !important;
+            margin: 2rem auto !important;
       }
-
-      .editorial-index-container { grid-template-columns: 1fr; max-height: 60vh; padding: 0 1.5rem; box-sizing: border-box; }
-
-      .carousel-container { height: 40vh; margin-top: 0.5rem; width: 100%; }
-      .carousel-img { height: 35vh; max-width: 70vw; }
-      .carousel-item.prev { transform: translateX(-35vw) scale(0.7); }
-      .carousel-item.next { transform: translateX(35vw) scale(0.7); }
-      .carousel-item.prev-2, .carousel-item.next-2 { opacity: 0; pointer-events: none; }
-
-      .carousel-thumbnails.top-ten-mode { justify-content: center !important; gap: 2.5vw !important; padding: 2rem 2vw 4rem 2vw !important; margin-top: 1.5rem !important; width: 100%; box-sizing: border-box; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-dot { width: 6.5vw !important; height: 9vw !important; min-width: 0 !important; min-height: 0 !important; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before { font-size: 5vw !important; left: -2vw !important; bottom: -1vw !important; }
-
-      .modal-content { padding: 2rem; width: 90%; margin: 5vh auto; box-sizing: border-box; }
+      .carousel-thumbnails.top-ten-mode .thumbnail-dot {
+            width: 65px !important;
+            height: auto !important;
+            aspect-ratio: 2 / 3 !important;
+            filter: grayscale(0%) !important; 
+            opacity: 0.6 !important;
+      }
+      .carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb {
+            opacity: 1 !important;
+            transform: scale(1.08) translateY(-4px) !important;
+      }
+      .carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
+            font-size: 2rem !important;
+            left: -12px !important;
+            bottom: -6px !important;
+            z-index: 10 !important;
+      }
+      
+      /* --- Stillman Writing Dropdown & Counter Strip Fixes --- */
+      section#writing > div[style*="grid-template-columns"] {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 1.5rem !important;
+            padding: 1.5rem !important;
+            width: 90% !important;
+            margin: 1.5rem auto 3rem auto !important;
+      }
+      section#writing > div[style*="grid-template-columns"] > div {
+            border: none !important;
+            padding: 0 !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            gap: 0.5rem !important;
+      }
+      section#writing > div[style*="grid-template-columns"] > div:last-child {
+            flex-direction: column-reverse !important;
+      }
+      .editorial-index-container { grid-template-columns: 1fr; gap: 1.5rem; max-height: 55vh; }
+      .editorial-row { padding: 1.5rem 0.5rem; }
+      .editorial-row:hover { padding-left: 0.5rem; } 
+      
+      /* --- Contact Cards & Footer Fixes --- */
+      .contact-info-upper-container {
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 1.2rem !important;
+            padding: 2rem 1.5rem !important; 
+            border-radius: 16px !important; 
+            width: 85% !important;
+            margin: 0 auto !important;
+      }
+      .contact-info-container {
+            margin: 0 !important;
+            gap: 0.5rem !important;
+            word-break: break-all !important; 
+      }
+      .contact-text, .contact-text a { font-size: 1rem !important; }
+      footer { padding-top: 4vh !important; padding-bottom: 4vh !important; gap: 1.5rem !important; }
+      footer p[style*="letter-spacing"] { font-size: 0.85rem !important; letter-spacing: 0.15rem !important; margin-bottom: 1.5rem !important; text-align: center !important; }
+      .footer-copyright { font-size: 0.72rem !important; line-height: 1.4 !important; padding: 0 1rem !important; }
 }
 
-/* --- 5. STANDARD MOBILE PHONES (Max 600px) --- */
+/* --- 5. STANDARD SMARTPHONES (Max 600px) --- */
 @media screen and (max-width: 600px) {
-      .vault-title { font-size: 8vw !important; }
-      .vault-sub { font-size: 2.5vw !important; }
-      #profile .section__text__p1 { font-size: 4vw !important; }
-      .text-container h3 { font-size: 1.6rem !important; }
-      .text-container p { font-size: 1rem !important; }
+      #main-header { height: 10vh; }
+      nav { height: 10vh; padding: 0 1rem; }
+      .logo-img { height: 3.5rem; }
       
-      .section__pic-container { width: 85vw !important; max-width: 280px !important; height: 106vw !important; max-height: 350px !important; }
-      .details-container { width: 88% !important; padding: 1.5rem !important; }
+      .vault-title { font-size: 2.5rem !important; }
+      .vault-sub { font-size: 0.75rem !important; letter-spacing: 0.2rem !important; }
       
-      /* Continues shrinking titles for standard phones */
-      .details-container h2, .details-container h3, .experience-sub-title { 
-            font-size: clamp(0.85rem, 4.5vw, 1.15rem) !important; 
-      }
-      .details-container p[style*="888"] { font-size: 0.65rem !important; }
-
-      .btn-container { flex-direction: column; width: 100%; }
-      .btn { width: 100%; } 
-
-      .carousel-container { height: 35vh; }
-      .carousel-img { height: 30vh; max-width: 80vw; }
-
-      .carousel-thumbnails.top-ten-mode { gap: 2vw !important; padding: 2rem 1vw 4rem 1vw !important; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-dot { width: 7vw !important; height: 10vw !important; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before { font-size: 6vw !important; left: -2vw !important; bottom: -1vw !important; }
+      .btn-container { flex-direction: column; align-items: center; width: 100%; }
+      .btn { width: 100%; max-width: 20rem; text-align: center; }
+      
+      .carousel-container { height: 32vh; }
+      .carousel-img { height: 26vh; max-width: 85vw; }
+      .carousel-arrow { font-size: 2.5rem; }
+      .left-arrow { left: 2%; }
+      .right-arrow { right: 2%; }
+      
+      .carousel-thumbnails.top-ten-mode { gap: 1rem !important; padding: 1rem !important; }
+      .carousel-thumbnails.top-ten-mode .thumbnail-dot { width: 55px !important; }
 }
 
 /* --- 6. TINY PHONES (iPhone SE / Max 380px) --- */
 @media screen and (max-width: 380px) {
-      .vault-title { font-size: 7.5vw !important; letter-spacing: 0 !important; }
-      #profile .title { font-size: 2.2rem !important; }
-      .logo-img { height: 3rem; }
-      .btn { width: 100%; font-size: 1.5rem; }
-
-      .details-container { width: 90% !important; padding: 1.25rem !important; margin-bottom: 1.5rem !important; }
+      #profile .title { font-size: 1.85rem !important; }
+      #profile .section__text__p2 { font-size: 1.15rem !important; letter-spacing: 0.15rem !important; }
       
-      /* Final mathematical shrink to guarantee 1 line on the 375px SE display */
-     /* THE FINAL ONE-LINE FIX for 380px: Forces nowrap, stops the cutoff, and shrinks to fit */
-      .details-container h2, .details-container h3, .experience-sub-title { 
-            white-space: nowrap !important; 
-            overflow: visible !important; 
-            font-size: clamp(0.65rem, 4vw, 0.9rem) !important; 
-            padding-right: 5px !important; 
-            line-height: 1.2 !important; 
-            margin-bottom: 0.5rem !important;
-      }
-      .details-container p[style*="888"] { font-size: 0.6rem !important; letter-spacing: 0 !important; }
-
-      .carousel-thumbnails.top-ten-mode { gap: 1.5vw !important; padding: 1rem 1vw 3rem 1vw !important; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-dot { width: 7.5vw !important; height: 11vw !important; }
-      .carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before { font-size: 6.5vw !important; left: -1.5vw !important; bottom: -1vw !important; }
-
-      .editorial-header-controls { flex-direction: column; align-items: flex-start; }
-      #article-sort { width: 100%; margin-bottom: 1rem; }
+      .bento-tile, .details-container { padding: 1.5rem !important; }
+      
+      .carousel-container { height: 28vh; }
+      .carousel-img { height: 22vh; }
+      
+      .telemetry-strip-container { padding: 1rem; }
+      .telemetry-number { font-size: 1.1rem; }
+      .telemetry-glow-number { font-size: 1.8rem; }
 }

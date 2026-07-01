@@ -221,8 +221,13 @@ nav { align-items: center; justify-content: space-between; height: 12vh; width: 
       transform: translate(-4px, -4px); 
       box-shadow: 12px 12px 0px var(--accent); 
 }
-.btn::after { content: ' \2197'; margin-left: 0.8rem; font-family: "Gotham Book", sans-serif; font-weight: bold; }
-.btn-color-1 { background: transparent; color: var(--paper); border: 2px solid var(--accent); box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); }
+/* Locate and change this block in style.css */
+.btn::after { 
+      content: ' \2197\FE0E'; /* Adds the text variation flag to the arrow */
+      margin-left: 0.8rem; 
+      font-family: "Gotham Book", sans-serif; 
+      font-weight: bold; 
+}.btn-color-1 { background: transparent; color: var(--paper); border: 2px solid var(--accent); box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); }
 .btn-color-1:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); transform: translate(-4px, -4px); box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2); }
 
 /* =========================================
@@ -299,16 +304,15 @@ nav { align-items: center; justify-content: space-between; height: 12vh; width: 
 /* =========================================
    FIX: FORCED 2x2 STRUCTURAL GRID LOCK
    ========================================= */
+/* Find your .about-containers rule inside style.css and ensure it looks clean like this: */
 .about-containers {
-      display: grid !important;
-      /* Hard-locks the container into EXACTLY 2 equal columns */
-      grid-template-columns: repeat(2, 1fr) !important; 
-      gap: 2.5rem !important;
-      width: 100% !important;
-      max-width: 1400px !important;
-      margin: 0 auto !important;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 2.5rem;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
 }
-
 .details-container {
       width: 100% !important;
       min-width: 0 !important; /* Disables Flexbox sizing overrides */
@@ -1310,3 +1314,12 @@ body section#writing .section-header-trigger .title {
       100% { transform: scale(0.9); opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 68, 255, 0); }
 }
 
+/* Forces the diagonal arrows in buttons to stay flat text on iPhones */
+.btn::after, .editorial-action::after {
+    font-variant-emoji: text !important;
+}
+
+/* Forces the eye symbols in your article index rows to match your exact CSS color */
+.editorial-meta span {
+    font-variant-emoji: text !important;
+}
