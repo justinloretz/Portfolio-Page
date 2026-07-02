@@ -1877,3 +1877,15 @@ body section#writing .section-header-trigger .title {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* =========================================
+   MODAL DEEP-DIVE TYPOGRAPHY OVERRIDE
+   ========================================= */
+#modal-body-content h2 {
+    font-family: "Gotham Black", sans-serif !important; /* Swaps from wide Sequel 85 */
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem) !important; /* Dynamically balances font ceiling scale */
+    font-weight: 900 !important;
+    letter-spacing: -0.01em !important;                /* Compresses letter spaces tightly */
+    line-height: 1.15 !important;
+    text-transform: uppercase !important;
+    text-wrap: pretty !important;                      /* Prevents single-word orphans/widows */
+}
