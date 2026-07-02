@@ -2596,3 +2596,11 @@ body #project-modal .modal-content {
     width: 100% !important;
     display: block !important;
 }
+
+body section#projects {
+      padding-top: 18vh !important; 
+}
+
+body section#projects {
+      padding-top: 4vh !important; 
+}
