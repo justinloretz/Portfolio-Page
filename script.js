@@ -104,7 +104,190 @@ window.closeModal = function() {
       currentModalSlideIndex = 0;
 }
 
+// --- 4. Global Carousel Engine & Sub-Filtering Logic ---
+let currentCarouselIndex = 0;
+let allCarouselItems = [];
+let visibleCarouselItems = []; 
+
+window.generateThumbnails = function() {
+      const thumbContainer = document.getElementById('carousel-thumbnails');
+      if (!thumbContainer) return;
+      thumbContainer.innerHTML = ''; 
+
+      visibleCarouselItems.forEach((item, index) => {
+            const imgElement = item.querySelector('.carousel-img');
+            if(!imgElement) return;
+
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('thumbnail-wrapper');
+
+            const thumb = document.createElement('img');
+            thumb.classList.add('thumbnail-dot');
+            thumb.src = imgElement.src; 
+
+            wrapper.onclick = () => { 
+                  currentCarouselIndex = index; 
+                  window.updateCarousel(); 
+            };
+            wrapper.appendChild(thumb);
+            thumbContainer.appendChild(wrapper);
+      });
+}
+
+window.filterProjects = function(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (!btn.classList.contains('shsp-sub-btn')) {
+                  btn.classList.remove('active-filter');
+                  if (btn.getAttribute('onclick').includes(category)) btn.classList.add('active-filter');
+            }
+      });
+
+      const mobileDropdown = document.getElementById('mobile-project-dropdown');
+      if (mobileDropdown && mobileDropdown.value !== category) mobileDropdown.value = category;
+
+      const thumbContainer = document.getElementById('carousel-thumbnails');
+      if (thumbContainer) {
+            if (category === 'featured') thumbContainer.classList.add('top-ten-mode');
+            else thumbContainer.classList.remove('top-ten-mode');
+      }
+
+      // STRICT FIX: Forces the sub-filters layout to absolute 'none' unless 'shsp' is explicitly selected
+      const subFilterContainer = document.getElementById('shsp-sub-filters');
+      if (subFilterContainer) {
+            if (category === 'shsp') {
+                  subFilterContainer.style.setProperty('display', 'flex', 'important');
+                  document.querySelectorAll('.shsp-sub-btn').forEach(btn => btn.classList.remove('active-filter'));
+                  const defaultSubBtn = document.querySelector('.shsp-sub-btn[onclick*="all"]');
+                  if (defaultSubBtn) defaultSubBtn.classList.add('active-filter');
+            } else {
+                  subFilterContainer.style.setProperty('display', 'none', 'important');
+            }
+      }
+
+      visibleCarouselItems = [];
+    
+      allCarouselItems.forEach(item => {
+            item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2'); 
+            const isFeaturedMode = (category === 'featured' && item.getAttribute('data-featured') === 'true');
+            const isCategoryMatch = (item.getAttribute('data-category') === category);
+
+            if (isFeaturedMode || isCategoryMatch) {
+                  item.classList.remove('hidden-project');
+                  visibleCarouselItems.push(item);
+            } else {
+                  item.classList.add('hidden-project');
+            }
+      });
+
+      currentCarouselIndex = 0;
+      if (visibleCarouselItems.length > 0) {
+            window.generateThumbnails(); 
+            window.updateCarousel();
+      } else {
+            if (thumbContainer) thumbContainer.innerHTML = '';
+      }
+}
+
+window.filterSHSPSub = function(subCategory) {
+      document.querySelectorAll('.shsp-sub-btn').forEach(btn => {
+            btn.classList.remove('active-filter');
+            if (btn.getAttribute('onclick').includes(subCategory)) btn.classList.add('active-filter');
+      });
+
+      visibleCarouselItems = [];
+
+      allCarouselItems.forEach(item => {
+            item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2');
+            
+            const isSHSP = item.getAttribute('data-category') === 'shsp';
+            const isSubMatch = subCategory === 'all' || item.getAttribute('data-sub') === subCategory;
+
+            if (isSHSP && isSubMatch) {
+                  item.classList.remove('hidden-project');
+                  visibleCarouselItems.push(item);
+            } else {
+                  item.classList.add('hidden-project');
+            }
+      });
+
+      currentCarouselIndex = 0;
+      if (visibleCarouselItems.length > 0) {
+            window.generateThumbnails(); 
+            window.updateCarousel();
+      } else {
+            const thumbContainer = document.getElementById('carousel-thumbnails');
+            if (thumbContainer) thumbContainer.innerHTML = '';
+      }
+}
+
+window.handleProjectClick = function(clickedElement) {
+      const clickedIndex = visibleCarouselItems.indexOf(clickedElement);
+      if (clickedIndex === currentCarouselIndex) window.openModal(clickedElement);
+      else { currentCarouselIndex = clickedIndex; window.updateCarousel(); }
+}
+
+window.moveCarousel = function(direction) {
+      const totalItems = visibleCarouselItems.length;
+      if (totalItems === 0) return;
+      currentCarouselIndex = (currentCarouselIndex + direction + totalItems) % totalItems;
+      window.updateCarousel();
+}
+
+window.updateCarousel = function() {
+      const totalItems = visibleCarouselItems.length;
+      if (totalItems === 0) return;
+
+      const thumbContainer = document.getElementById('carousel-thumbnails');
+      const activeFilter = document.querySelector('.filter-btn.active-filter');
+      const isTopTen = activeFilter ? activeFilter.innerText.includes('TOP TEN') : false;
+
+      // Update Main Large Carousel Items
+      visibleCarouselItems.forEach((item, index) => {
+            item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2');
+
+            if (index === currentCarouselIndex) item.classList.add('active');
+            else if (index === currentCarouselIndex - 1 || (!isTopTen && totalItems >= 3 && index === (currentCarouselIndex - 1 + totalItems) % totalItems)) item.classList.add('prev'); 
+            else if (index === currentCarouselIndex + 1 || (!isTopTen && totalItems >= 2 && index === (currentCarouselIndex + 1) % totalItems)) item.classList.add('next'); 
+            else if (index === currentCarouselIndex - 2 || (!isTopTen && totalItems >= 5 && index === (currentCarouselIndex - 2 + totalItems) % totalItems)) item.classList.add('prev-2');
+            else if (index === currentCarouselIndex + 2 || (!isTopTen && totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems)) item.classList.add('next-2');
+      });
+
+      // Clear Active States from Thumbnails and Highlight Current Index
+      const thumbs = document.querySelectorAll('.thumbnail-dot');
+      thumbs.forEach((thumb, index) => {
+            thumb.classList.remove('active-thumb');
+            if (index === currentCarouselIndex) {
+                  thumb.classList.add('active-thumb');
+            }
+      });
+
+      // Slider Engine: Continuous center tracking logic with loop virtualization
+      if (thumbContainer) {
+            if (isTopTen) {
+                  thumbContainer.style.transform = 'none';
+            } else {
+                  const wrappers = Array.from(thumbContainer.querySelectorAll('.thumbnail-wrapper'));
+                  const currentActiveWrapper = wrappers[currentCarouselIndex];
+
+                  if (currentActiveWrapper) {
+                        const wrapperOffsetLeft = currentActiveWrapper.offsetLeft;
+                        const wrapperWidth = currentActiveWrapper.offsetWidth;
+                        
+                        const viewContainerWidth = thumbContainer.parentElement ? thumbContainer.parentElement.offsetWidth : window.innerWidth;
+                        const centerXDist = (viewContainerWidth / 2) - (wrapperWidth / 2);
+                        
+                        let translateX = centerXDist - wrapperOffsetLeft;
+                        thumbContainer.style.transform = `translateX(${translateX}px)`;
+                  }
+            }
+      }
+}
+
+// --- 5. DOM Ready Execution & Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
+      // Initialize global elements arrays
+      allCarouselItems = Array.from(document.querySelectorAll('.carousel-item'));
+
       const modalOverlay = document.getElementById('project-modal');
       if (modalOverlay) {
             modalOverlay.addEventListener('click', function(e) {
@@ -112,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
       }
 
-      // --- 4. Ambient Star Particles (350 STABLE COUNT SAVED) ---
+      // Ambient Star Particles (350 STABLE COUNT)
       function createStars() {
             const container = document.getElementById('particle-canvas');
             if (!container) return; 
@@ -134,166 +317,64 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       createStars();
 
-      // --- 5. Carousel & Filter Logic ---
-      let currentCarouselIndex = 0;
-      let allCarouselItems = Array.from(document.querySelectorAll('.carousel-item'));
-      let visibleCarouselItems = []; 
+      // Trigger initial filtering state
+      if (allCarouselItems.length > 0) window.filterProjects('featured'); 
 
-      function generateThumbnails() {
-            const thumbContainer = document.getElementById('carousel-thumbnails');
-            if (!thumbContainer) return;
-            thumbContainer.innerHTML = ''; 
+      // --- 6. CLICK-RESET CAROUSEL AUTOPLAY ENGINE ---
+      let carouselAutoplay = null;
+      let isCarouselInView = false;
+      let idleTimer = null;
+      
+      const IDLE_TIMEOUT = 3500; 
+      const carouselArea = document.querySelector('.carousel-container');
 
-            visibleCarouselItems.forEach((item, index) => {
-                  const imgElement = item.querySelector('.carousel-img');
-                  if(!imgElement) return;
-
-                  const wrapper = document.createElement('div');
-                  wrapper.classList.add('thumbnail-wrapper');
-
-                  const thumb = document.createElement('img');
-                  thumb.classList.add('thumbnail-dot');
-                  thumb.src = imgElement.src; 
-
-                  wrapper.onclick = () => { currentCarouselIndex = index; updateCarousel(); };
-                  wrapper.appendChild(thumb);
-                  thumbContainer.appendChild(wrapper);
-            });
-      }
-
-      window.filterProjects = function(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                  btn.classList.remove('active-filter');
-                  if (btn.getAttribute('onclick').includes(category)) btn.classList.add('active-filter');
-            });
-
-            const mobileDropdown = document.getElementById('mobile-project-dropdown');
-            if (mobileDropdown && mobileDropdown.value !== category) mobileDropdown.value = category;
-
-            const thumbContainer = document.getElementById('carousel-thumbnails');
-            if (thumbContainer) {
-                  if (category === 'featured') thumbContainer.classList.add('top-ten-mode');
-                  else thumbContainer.classList.remove('top-ten-mode');
-            }
-
-            visibleCarouselItems = [];
-          
-            allCarouselItems.forEach(item => {
-                  item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2'); 
-                  const isFeaturedMode = (category === 'featured' && item.getAttribute('data-featured') === 'true');
-                  const isCategoryMatch = (item.getAttribute('data-category') === category);
-
-                  if (isFeaturedMode || isCategoryMatch) {
-                        item.classList.remove('hidden-project');
-                        visibleCarouselItems.push(item);
-                  } else {
-                        item.classList.add('hidden-project');
-                  }
-            });
-
-            currentCarouselIndex = 0;
-            if (visibleCarouselItems.length > 0) {
-                  generateThumbnails(); 
-                  updateCarousel();
-            } else {
-                  if (thumbContainer) thumbContainer.innerHTML = '';
+      function startAutoplay() {
+            if (visibleCarouselItems.length > 1 && !carouselAutoplay && isCarouselInView) {
+                  carouselAutoplay = setInterval(() => window.moveCarousel(1), 4000);
             }
       }
-      
-      if (allCarouselItems.length > 0) filterProjects('featured'); 
-      
-      window.handleProjectClick = function(clickedElement) {
-            const clickedIndex = visibleCarouselItems.indexOf(clickedElement);
-            if (clickedIndex === currentCarouselIndex) openModal(clickedElement);
-            else { currentCarouselIndex = clickedIndex; updateCarousel(); }
+
+      function stopAutoplay() { 
+            if (carouselAutoplay) {
+                  clearInterval(carouselAutoplay); 
+                  carouselAutoplay = null; 
+            }
       }
 
-      function updateCarousel() {
-            const totalItems = visibleCarouselItems.length;
-            const activeFilter = document.querySelector('.filter-btn.active-filter');
-            const isTopTen = activeFilter ? activeFilter.innerText.includes('TOP TEN') : false;
-
-            visibleCarouselItems.forEach((item, index) => {
-                  item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2');
-
-                  if (index === currentCarouselIndex) item.classList.add('active');
-                  else if (index === currentCarouselIndex - 1 || (!isTopTen && totalItems >= 3 && index === (currentCarouselIndex - 1 + totalItems) % totalItems)) item.classList.add('prev'); 
-                  else if (index === currentCarouselIndex + 1 || (!isTopTen && totalItems >= 2 && index === (currentCarouselIndex + 1) % totalItems)) item.classList.add('next'); 
-                  else if (index === currentCarouselIndex - 2 || (!isTopTen && totalItems >= 5 && index === (currentCarouselIndex - 2 + totalItems) % totalItems)) item.classList.add('prev-2');
-                  else if (index === currentCarouselIndex + 2 || (!isTopTen && totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems)) item.classList.add('next-2');
-            });
-
-            const thumbs = document.querySelectorAll('.thumbnail-dot');
-            thumbs.forEach((thumb, index) => {
-                  if (index === currentCarouselIndex) thumb.classList.add('active-thumb');
-                  else thumb.classList.remove('active-thumb');
-            });
-      }
-
-      window.moveCarousel = function(direction) {
-            if (visibleCarouselItems.length === 0) return;
-            const totalItems = visibleCarouselItems.length;
-            const activeFilter = document.querySelector('.filter-btn.active-filter');
-            const isTopTen = activeFilter ? activeFilter.innerText.includes('TOP TEN') : false;
+      function resetIdleTimer() {
+            stopAutoplay(); 
+            clearTimeout(idleTimer);
             
-            let newIndex = currentCarouselIndex + direction;
-            
-            if (isTopTen) {
-                  if (newIndex < 0 || newIndex >= totalItems) return; 
-                  currentCarouselIndex = newIndex;
-            } else {
-                  currentCarouselIndex = (newIndex + totalItems) % totalItems;
+            if (isCarouselInView) {
+                  idleTimer = setTimeout(() => {
+                        startAutoplay();
+                  }, IDLE_TIMEOUT);
             }
-            updateCarousel();
       }
 
-// --- 5. SMART SCROLL-ACTIVATED AUTOPLAY (PERFECTED) ---
-let carouselAutoplay;
-let isCarouselInView = false; // Track section visibility state globally
-const carouselArea = document.querySelector('.carousel-container');
-
-function startAutoplay() {
-      // Only trigger the math loops if there is more than 1 item and it is visibly on screen
-      if (visibleCarouselItems.length > 1 && !carouselAutoplay && isCarouselInView) {
-            carouselAutoplay = setInterval(() => window.moveCarousel(1), 5500);
-      }
-}
-
-function stopAutoplay() { 
-      clearInterval(carouselAutoplay); 
-      carouselAutoplay = null; 
-}
-
-if (carouselArea) {
-      const carouselObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                  if (entry.isIntersecting) {
-                        isCarouselInView = true;
-                        startAutoplay(); 
-                  } else {
-                        isCarouselInView = false;
-                        stopAutoplay();  // Shuts down background execution loops immediately when off-screen
-                  }
+      if (carouselArea) {
+            const carouselObserver = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                              isCarouselInView = true;
+                              resetIdleTimer();
+                        } else {
+                              isCarouselInView = false;
+                              stopAutoplay();
+                              clearTimeout(idleTimer);
+                        }
+                  });
+            }, { 
+                  threshold: 0.15 
             });
-      }, { 
-            threshold: 0.15 
-      });
 
-      carouselObserver.observe(carouselArea);
+            carouselObserver.observe(carouselArea);
 
-      // Safe hover controls: Only restart loops on leave IF it's actually still on screen
-      carouselArea.addEventListener('mouseenter', stopAutoplay); 
-      carouselArea.addEventListener('touchstart', stopAutoplay, { passive: true }); 
-      
-      carouselArea.addEventListener('mouseleave', () => {
-            if (isCarouselInView) startAutoplay();
-      }); 
-      carouselArea.addEventListener('touchend', () => {
-            if (isCarouselInView) startAutoplay();
-      }, { passive: true }); 
-}
+            document.addEventListener('click', resetIdleTimer, { passive: true });
+            document.addEventListener('touchstart', resetIdleTimer, { passive: true });
+      }
 
-      // --- 6. Custom Brutalist Cursor ---
+      // --- 7. Custom Brutalist Cursor ---
       const cursor = document.getElementById('custom-cursor');
       if (cursor) {
             document.addEventListener('mousemove', (e) => {
@@ -307,7 +388,7 @@ if (carouselArea) {
             });
       }
 
-      // --- 7. Bottom Scroll Progress Bar ---
+      // --- 8. Bottom Scroll Progress Bar ---
       const progressBar = document.getElementById('scroll-progress');
       if (progressBar) {
             window.addEventListener('scroll', () => {
@@ -317,7 +398,7 @@ if (carouselArea) {
             });
       }
 
-      // --- 8. Cinematic Scroll Reveals ---
+      // --- 9. Cinematic Scroll Reveals ---
       const cardsToReveal = document.querySelectorAll('.details-container, .contact-info-upper-container, .about-pic, .experience-sub-title');
       cardsToReveal.forEach(card => card.classList.add('reveal-on-scroll'));
 
@@ -328,13 +409,14 @@ if (carouselArea) {
                         revealObserver.unobserve(entry.target); 
                   }
             });
-      }, { threshold: 0.15 });
+          }, { threshold: 0.15 });
 
       cardsToReveal.forEach(card => revealObserver.observe(card));
 
       // --- 10. Article Sorting Logic ---
       window.sortArticles = function() {
             const container = document.querySelector('.editorial-index-container');
+            if (!container) return;
             const rows = Array.from(container.querySelectorAll('.editorial-row'));
             const sortType = document.getElementById('article-sort').value;
 
@@ -390,32 +472,7 @@ tiltCards.forEach(card => {
       });
 });
 
-// AUTOMATIC ACTIVE THUMBNAIL TRACKER OBSERVER (SNAP-FREE REWRITE)
-const thumbnailObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-            if (mutation.target.classList.contains('active-thumb')) {
-                  mutation.target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'none', // HARD FIX: Explicitly prevents vertical page snapping
-                        inline: 'center'
-                  });
-            }
-      });
-});
-
-// Starts watching the runway container elements dynamically
-document.addEventListener("DOMContentLoaded", () => {
-      const targetContainer = document.getElementById('carousel-thumbnails');
-      if (targetContainer) {
-            thumbnailObserver.observe(targetContainer, {
-                  attributes: true,
-                  subtree: true,
-                  attributeFilter: ['class']
-            });
-      }
-});
-
-// --- 14. The Vault Preloader (MOVED TO ROOT TO BYPASS DOM LOCKOUT) ---
+// --- 13. The Vault Preloader ---
 setTimeout(() => {
       document.body.classList.add('vault-open');
       setTimeout(() => {

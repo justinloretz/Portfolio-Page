@@ -98,7 +98,7 @@
                               NO EXCUSES.
                         </h3>
                         <p style="font-family: 'Gotham Book', sans-serif; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--paper);">
-                              I am a Management and Finance student minoring in Psychology at Seton Hall University. I thrive at the intersection of analytical business strategy, hands-on problem solving, and creative execution. I am not defined by a single medium, a single tool, or a single industry.
+                              I am a Management and Finance student minoring in Psychology at Seton Hall University. I thrive at the intersection of analytical business strategy, hands-on problem solving, and creative execution. I refuse to let myself be defined by a single medium, a single tool, or a single industry. No exceptions. No excuses.
                         </p>
                         <p style="font-family: 'Gotham Book', sans-serif; font-size: 1.15rem; line-height: 1.6; color: #cccccc;">
                               Whether I am directing national media for the Seton Hall Sports Poll, leading editorial teams for The Stillman Exchange, or building systems from the ground up, my objective remains constant: organize chaos into clear, compelling, and highly effective results.
@@ -197,6 +197,7 @@
             <div class="projects-line-right" style="flex: 1; height: 3px; background: linear-gradient(to right, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
       </div>
 <div class="project-filters">
+<!-- Existing Main Project Filters -->
                   <div class="desktop-filters">
                         <button class="filter-btn active-filter" onclick="filterProjects('featured')">THE TOP TEN</button>
                         <button class="filter-btn" onclick="filterProjects('shsp')">SPORTS POLL GRAPHICS</button>
@@ -215,19 +216,39 @@
                         </select>
                   </div>
             </div>
+
+            <!-- NEW: SHSP Sub-Category Sorting (Hidden by Default) -->
+            <div id="shsp-sub-filters" class="project-filters" style="display: none; margin: -3.5rem auto 5rem auto !important;">
+                  <div class="desktop-filters">
+                        <button class="filter-btn active-filter shsp-sub-btn" onclick="filterSHSPSub('all')">ALL GRAPHICS</button>
+                        <button class="filter-btn shsp-sub-btn" onclick="filterSHSPSub('infographics')">INFOGRAPHICS</button>
+                        <button class="filter-btn shsp-sub-btn" onclick="filterSHSPSub('posters')">POSTERS</button>
+                        <button class="filter-btn shsp-sub-btn" onclick="filterSHSPSub('presentations')">PRESENTATIONS</button>
+                  </div>
+            </div>
             
             <div class="carousel-container">
                   <button class="carousel-arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
                   
                   <div class="carousel-gallery">
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">WNBA POLL</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/WNBApoll - Copy.png" class="modal-hero-img" loading="lazy">
                                     <h2>WNBA POLL OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p> </p>
+                              </div>
+                        </div>
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
+                              <img src="./assets/WNBApoll - Copy.png" alt="WNBA Poll" class="carousel-img" loading="lazy">
+                              <div class="carousel-caption">ABS POLL Cllback</div>
+                              <div class="case-study-data" style="display: none;">
+                                    <img src="./assets/ABS March Call Back.png" class="modal-hero-img" loading="lazy">
+                                    <h2>WNBA POLL OVERVIEW</h2>
+                                    <p><strong>Category:</strong> SHSP Graphic</p>
+                                    <p>  </p>
                               </div>
                         </div>
                                    
@@ -238,7 +259,7 @@
                                     <img src="./assets/KayvonThibodeauxProg4X5 (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>KAYVON THIBODEAUX POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>   </p>
                               </div>
                         </div>
 
@@ -249,7 +270,7 @@
                                     <img src="./assets/j10veproject (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>JORDAN LOVE POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>    </p>
                               </div>
                         </div> 
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
@@ -259,17 +280,17 @@
                                     <img src="./assets/ak41.png" class="modal-hero-img" loading="lazy">
                                     <h2>ALVIN KAMARA (AK) POSTER</h2>
                                     <p><strong>Category:</strong> Independent Work</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>     </p>
                               </div>
                         </div> 
-                        <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="posters" data-featured="true" onclick="handleProjectClick(this)">
                               <img src="./assets/La Liga Poster.png" alt="La Liga Event" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">LA LIGA EVENT</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/La Liga Poster.png" class="modal-hero-img" loading="lazy">
                                     <h2>LA LIGA EVENT OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>      </p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="independent" data-featured="true" onclick="handleProjectClick(this)">
@@ -279,17 +300,17 @@
                                     <img src="./assets/PurduePosterDad.png" class="modal-hero-img" loading="lazy">
                                     <h2>PURDUE POSTER OVERVIEW</h2>
                                     <p><strong>Category:</strong> Gift for Father</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>       </p>
                               </div>
                         </div>
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/CWC25 (1).png" alt="2025 Club World Cup Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2025 CLUB WORLD CUP POLL</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/CWC25 (1).png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 CLUB WORLD CUP POLL OVERVIEW</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>        </p>
                               </div>
                         </div>
                         <div class="carousel-item" data-category="hempfield" data-featured="false" onclick="handleProjectClick(this)">
@@ -299,66 +320,66 @@
                                     <img src="./assets/TOWNSHIPVHEMPFIELD.png" class="modal-hero-img" loading="lazy">
                                     <h2>2022 HS FOOTBALL MANHEIM TOWNSHIP v. HEMPFIELD OVERVIEW</h2>
                                     <p><strong>Category:</strong> Hempfield Athletics</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>         </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/WorldCupTix.png" alt="World Cup Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">WORLD CUP POLL</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/WorldCupTix.png" class="modal-hero-img" loading="lazy">
                                     <h2>WORLD CUP TICKETING</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>          </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/SHSP-NBAASG.png" alt="NBA ASG Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2026 USA v. WORLD ASG</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/SHSP-NBAASG.png" class="modal-hero-img" loading="lazy">
                                     <h2>2026 USA v. WORLD ASG</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>           </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/PopeLeoGraphic.png" alt="Religion in Sport Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">RELIGION IN SPORT</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/PopeLeoGraphic.png" class="modal-hero-img" loading="lazy">
                                     <h2>RELIGION IN SPORT</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>            </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="true" onclick="handleProjectClick(this)">
                               <img src="./assets/thanksgivingevev2.png" alt="Thanksgiving Eve" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">THANKSGIVING EVE POLL</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/thanksgivingevev2.png" class="modal-hero-img" loading="lazy">
                                     <h2>THANKSGIVING EVE NFL</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>             </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/USAvInternationalFinal.png" alt="USA v. World ASG Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2025 USA v. WORLD ASG</div>
                               <div class="case-study-data" style="display: none;">
                                     <img src="./assets/USAvInternationalFinal.png" class="modal-hero-img" loading="lazy">
                                     <h2>2025 USA v. WORLD ASG</h2>
                                     <p><strong>Category:</strong> SHSP Graphic</p>
-                                    <p>Write your detailed design process, software used, and layout strategy here.</p>
+                                    <p>              </p>
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="presentations" onclick="handleProjectClick(this)">
                               <img src="./assets/BAL x SHSP/Slide1.PNG" alt="Presentation Cover" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">BASKETBALL AFRICA LEAGUE DECK</div>
                               <div class="case-study-data" style="display: none;">
@@ -368,7 +389,7 @@
                                     <p><strong>Category:</strong> SHSP Graphic</p>
                               </div>
                         </div>
-                        <div class="carousel-item" data-category="shsp" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="presentations" onclick="handleProjectClick(this)">
                               <img src="./assets/Burke Magnus Slide Deck/Slide1.PNG" alt="Presentation Cover" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">BURKE MAGNUS DECK</div>
                               <div class="case-study-data" style="display: none;">
@@ -397,7 +418,7 @@
                                     <p><strong>Category:</strong> Independent Work</p>
                               </div>
                         </div>
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/HOF Pete Rose - Copy.png" alt="Pete Rose Hall of Fame Poll" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">PETE ROSE HALL OF FAME POLL</div>
                               <div class="case-study-data" style="display: none;">
@@ -416,7 +437,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="true" onclick="handleProjectClick(this)">
                               <img src="./assets/Most-Rec-NCAABB.png" alt="2025 MOST RECOGNIZED NCAABB ATHLETES" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">MOST RECOGNIZED NCAABB ATHLETES</div>
                               <div class="case-study-data" style="display: none;">
@@ -426,7 +447,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics" data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/ABS-March-Call-Back.png" alt="2025 ABS MARCH CALL BACK" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">ABS MARCH CALL BACK</div>
                               <div class="case-study-data" style="display: none;">
@@ -465,7 +486,7 @@
                                     <p><strong>Category:</strong> SMAC Graphic</p>
                               </div>
                         </div>
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/eaglesvchiefs2.png" alt="SB LIX - EAGLES v. CHIEFS POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">SB LIX - EAGLES v. CHIEFS POLL</div>
                               <div class="case-study-data" style="display: none;">
@@ -495,7 +516,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/NFL Draft 8 Heads (1).png" alt="NFL DRAFT PREVIEW POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">NFL DRAFT PREVIEW POLL</div>
                               <div class="case-study-data" style="display: none;">
@@ -525,7 +546,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="false" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="infographics"data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/sportspoll12-9design-final.png" alt="2024 CFB PLAYOFF POLL" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2024 CFB PLAYOFF POLL</div>
                               <div class="case-study-data" style="display: none;">
@@ -535,7 +556,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-featured="true" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="posters" data-featured="true" onclick="handleProjectClick(this)">
                               <img src="./assets/StephenALastTake.png" alt="2026 STEPHEN A. SMITH STEPS IN THE HALL " class="carousel-img" loading="lazy">
                               <div class="carousel-caption">2026 STEPHEN A. SMITH STEPS IN THE HALL </div>
                               <div class="case-study-data" style="display: none;">
@@ -559,7 +580,7 @@
       </section>
 
 <section id="writing">
-      <p class="section__text__p1">READ MY WORK</p>
+      <p class="section__text__p1">READ MY WORK IN</p>
       
       <div class="section-header-trigger" style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 95vw; margin: 0 auto; gap: 3rem; overflow: visible !important;">
             <div class="projects-line-left" style="flex: 1; height: 3px; background: linear-gradient(to left, rgba(0, 68, 255, 0.6), rgba(0, 68, 255, 0.1) 70%, transparent); opacity: 0; transform: scaleX(0); will-change: transform, opacity;"></div>
