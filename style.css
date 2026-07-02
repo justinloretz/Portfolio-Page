@@ -1889,3 +1889,710 @@ body section#writing .section-header-trigger .title {
     text-transform: uppercase !important;
     text-wrap: pretty !important;                      /* Prevents single-word orphans/widows */
 }
+
+/* =========================================
+   MODAL FULLSCREEN UTILITY UTILITIES
+   ========================================= */
+.modal-fullscreen-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 5rem; /* Positions it neatly to the left of your 'X' close button */
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-size: 1.3rem; /* Styled box icon look */
+    cursor: none !important;
+    z-index: 999999;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-fullscreen-btn:hover {
+    color: var(--accent);
+    transform: scale(1.15);
+}
+
+/* CUSTOM CURSOR RE-ANCHOR FOR FULLSCREEN LAYER */
+/* When the browser enters full-screen mode on an asset, native rendering changes. 
+   This ensures your backdrop matches your portfolio aesthetic perfectly. */
+.modal-hero-img:fullscreen {
+    object-fit: contain !important;
+    background-color: #050505 !important;
+    padding: 2rem;
+}
+
+/* ==========================================================================
+   FLUID STABILIZATION UPGRADE: OVERFLOW MODAL FIXED RECONSTRUCTION
+   ========================================================================== */
+
+/* 1. THE VIEWPORT HOOK: The overlay now acts as the true scroll container */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(5, 5, 5, 0.96); 
+    z-index: 99999; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; /* Keeps the starting layout at the top ceiling */
+    overflow-y: auto !important; /* ALLOWS SMOOTH SCROLLING WITHIN THE MODAL */
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 2rem 1rem; /* Visual safety margin buffers around all edges */
+}
+
+.modal-overlay.show-modal { 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+/* 2. THE CONTAINER FIX: Strips away screen constraints so content scrolls organically */
+.modal-content { 
+    position: relative; 
+    width: 100%; 
+    max-width: 950px; 
+    margin: 4vh auto !important; /* Visual vertical offset */
+    background: #0a0a0a; 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: clamp(2rem, 5vw, 4rem); /* Adaptive inward safety padding */
+    color: var(--paper); 
+    z-index: 100000; 
+    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
+    height: auto !important; /* Disables restrictive strict vertical clamping loops */
+}
+
+/* 3. PINNED HEADER CONTROL HUD: Prevents the control nodes from flying off-screen */
+.modal-close { 
+    position: absolute; 
+    top: 1rem; 
+    right: 1.5rem; 
+    background: transparent; 
+    border: none; 
+    color: var(--paper); 
+    font-size: 1.5rem; 
+    transition: color 0.3s ease, transform 0.3s ease; 
+    z-index: 999999; 
+    cursor: pointer; 
+    pointer-events: auto; 
+}
+
+.modal-close:hover { 
+    color: var(--accent); 
+    transform: scale(1.15); 
+}
+
+/* 4. MAIN INTERACTIVE preview adjustments */
+.modal-hero-img { 
+    width: 100%; 
+    height: auto; 
+    max-height: 60vh; /* Comfortably brings the image height down so it matches standard device bounds */
+    object-fit: contain; 
+    margin-bottom: 2rem; 
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   MODAL HUD CONTROL SYSTEM FIXES
+   ========================================================================== */
+
+/* 1. THE VIEWPORT OVERLAY BUFFER */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(5, 5, 5, 0.96); 
+    z-index: 99999; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    overflow-y: auto !important; 
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 6vh 1rem 4vh 1rem !important; /* CRITICAL FIX: Increased top cushion from 2rem to 6vh to slide everything down */
+}
+
+/* 2. THE OVERFLOW CONTENT FRAME */
+.modal-content { 
+    position: relative; 
+    width: 100%; 
+    max-width: 950px; 
+    margin: 0 auto !important; /* Grounded centering alignment framework */
+    background: #0a0a0a; 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: clamp(3rem, 5vw, 4rem) !important; /* Raised top padding block inside card to clear utility HUD */
+    color: var(--paper); 
+    z-index: 100000; 
+    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
+    height: auto !important; 
+}
+
+/* 3. CLOSE BUTTON TYPOGRAPHY SANITIZATION */
+.modal-close { 
+    position: absolute; 
+    top: 1.25rem !important; 
+    right: 1.5rem !important; 
+    background: transparent; 
+    border: none; 
+    color: var(--paper); 
+    font-family: "Gotham Black", sans-serif !important; /* Enforces strict geometric face */
+    font-size: 1.2rem !important; 
+    text-transform: none !important; /* STOPS THE 'X' FROM ACCIDENTALLY CONVERTING TO A CARET SYMBOL */
+    font-weight: 900 !important;
+    transition: color 0.3s ease, transform 0.3s ease; 
+    z-index: 999999; 
+    cursor: none !important; 
+    pointer-events: auto; 
+}
+
+.modal-close:hover { 
+    color: var(--accent); 
+    transform: scale(1.15); 
+}
+
+/* 4. FULLSCREEN BADGE HOOK STYLE */
+.modal-fullscreen-btn {
+    position: absolute;
+    top: 1.35rem !important;
+    right: 4.5rem !important; /* Safely anchors element to the left of your close utility */
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-family: "Gotham Black", sans-serif !important;
+    font-size: 0.9rem !important; /* Clean editorial metadata tag appearance */
+    font-weight: bold;
+    letter-spacing: 0.05rem;
+    cursor: none !important;
+    z-index: 999999;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-fullscreen-btn:hover {
+    color: var(--accent);
+    transform: scale(1.1);
+}
+/* ==========================================================================
+   FIXED CONTROL HUD SYSTEM (PREVENTS VIEWPORT CLIPPING)
+   ========================================================================== */
+
+/* 1. THE VIEWPORT OVERLAY SETUP */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(5, 5, 5, 0.97); 
+    z-index: 99999; 
+    overflow-y: scroll !important; /* Forces standard scrollbars to avoid layout shifting */
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 12vh 2rem 6vh 2rem !important; /* Massive top cushion pushes project content well below your navigation header */
+}
+
+.modal-overlay.show-modal { 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+/* 2. THE MOVED CONTROLS LAYER: Pins buttons relative to the entire screen window instead of the card box */
+.modal-close { 
+    position: fixed !important; /* HARD-LOCK: Pinned to browser viewport boundaries */
+    top: 3vh !important; 
+    right: 3vw !important; 
+    background: rgba(10, 10, 10, 0.85) !important; /* Dark solid background plate ensures contrast against background elements */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px;
+    color: #ffffff !important; 
+    font-family: "Gotham Black", sans-serif !important; 
+    font-size: 1rem !important; 
+    padding: 0.5rem 0.8rem !important;
+    text-transform: none !important; 
+    font-weight: 900 !important;
+    transition: all 0.3s ease; 
+    z-index: 1000000 !important; /* Higher stacking index layer beats all other elements on the page */
+    cursor: none !important; 
+    pointer-events: auto; 
+}
+
+.modal-fullscreen-btn {
+    position: fixed !important; /* HARD-LOCK: Pinned next to the close button */
+    top: 3vh !important;
+    right: calc(3vw + 50px) !important; /* Dynamic structural offset aligns items neatly side-by-side */
+    background: rgba(10, 10, 10, 0.85) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px;
+    color: #ffffff !important; 
+    font-family: "Gotham Black", sans-serif !important;
+    font-size: 0.8rem !important; 
+    padding: 0.55rem 0.8rem !important;
+    font-weight: bold;
+    letter-spacing: 0.05rem;
+    cursor: none !important;
+    z-index: 1000000 !important;
+    transition: all 0.3s ease;
+}
+
+/* Hover effects for buttons */
+.modal-close:hover, .modal-fullscreen-btn:hover {
+    color: #ffffff !important;
+    border-color: var(--accent) !important;
+    background: var(--accent) !important;
+    box-shadow: 0 0 15px rgba(0, 68, 255, 0.4);
+}
+
+/* 3. RE-ANCHORED CONTAINER: Content card simply renders beneath the fixed screen controls */
+.modal-content { 
+    position: relative; 
+    width: 100%; 
+    max-width: 900px; 
+    margin: 0 auto !important; 
+    background: #0a0a0a; 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: clamp(2rem, 4vw, 4rem) !important; 
+    color: var(--paper); 
+    z-index: 999999; 
+    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
+    height: auto !important; 
+}
+
+/* ==========================================================================
+   FLUID STABILIZATION FIX: OVERFLOW MODAL FIXED RECONSTRUCTION
+   ========================================================================== */
+
+/* 1. THE VIEWPORT OVERLAY: Acts as the isolated screen boundaries */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(5, 5, 5, 0.98); 
+    z-index: 99999; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    
+    /* THE OVERFLOW FIX: Forces safe, natural page scrolling within the modal backdrop */
+    overflow-y: auto !important; 
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    
+    /* High top-padding acts as a buffer zone preventing any header collision */
+    padding: 14vh 2rem 8vh 2rem !important; 
+}
+
+.modal-overlay.show-modal { 
+    opacity: 1; 
+    pointer-events: auto; 
+}
+
+/* 2. FIXED HUD OVERHEAD LAYER: Anchors control utilities so they stay visible on scroll */
+.modal-hud-layer {
+    position: fixed !important;
+    top: 4vh;
+    right: 4vw;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000001 !important; /* Forces layer above the content layer */
+    pointer-events: auto;
+}
+
+/* 3. CLOSE ACTION CONTROL */
+.modal-close { 
+    position: static !important; /* Strips layout conflict inheritance */
+    background: rgba(15, 15, 15, 0.85) !important; 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px;
+    color: #ffffff !important; 
+    font-family: "Gotham Black", sans-serif !important; 
+    font-size: 1rem !important; 
+    padding: 0.5rem 0.85rem !important;
+    text-transform: none !important; 
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
+    cursor: none !important; 
+}
+
+/* 4. FULLSCREEN ACTION CONTROL */
+.modal-fullscreen-btn {
+    position: static !important; 
+    background: rgba(15, 15, 15, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px;
+    color: #ffffff !important; 
+    font-family: "Gotham Black", sans-serif !important;
+    font-size: 0.85rem !important; 
+    padding: 0.55rem 0.85rem !important;
+    font-weight: bold;
+    line-height: 1 !important;
+    letter-spacing: 0.05rem;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: none !important;
+}
+
+/* Premium Interactive Focus States */
+.modal-close:hover, .modal-fullscreen-btn:hover {
+    color: #ffffff !important;
+    border-color: var(--accent) !important;
+    background: var(--accent) !important;
+    box-shadow: 0 0 20px rgba(0, 68, 255, 0.5);
+}
+
+/* 5. THE CONTENT FRAME: Simply flows down naturally without bounding box limits */
+.modal-content { 
+    position: relative; 
+    width: 100%; 
+    max-width: 900px; 
+    margin: 0 auto !important; 
+    background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(5, 5, 5, 0.98)) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important; 
+    border-radius: 1.5rem !important;
+    padding: clamp(2rem, 5vw, 4rem) !important; 
+    color: var(--paper); 
+    z-index: 999999; 
+    box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.7); 
+    height: auto !important; /* Prevents hard calculations loop crashes */
+}
+
+/* ==========================================================================
+   MODAL CONTROL HUD RE-ANCHOR & VISIBILITY OVERRIDES
+   ========================================================================== */
+
+/* Locks the buttons safely relative to the screen window out of the scroll layer */
+.modal-hud-layer {
+    position: fixed !important;
+    top: 4vh !important;
+    right: 4vw !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    z-index: 2000000000 !important; /* High-level stacking order clears all page contents */
+    pointer-events: auto !important;
+}
+
+/* Close action element styling */
+.modal-close { 
+    position: static !important; 
+    display: inline-block !important;
+    background: rgba(20, 20, 20, 0.85) !important; 
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important; /* Forces high-contrast pure white visual render */
+    font-family: "Gotham Black", sans-serif !important; 
+    font-size: 1.1rem !important; 
+    padding: 0.5rem 0.95rem !important;
+    text-transform: none !important; 
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important; 
+    cursor: pointer !important; /* Swaps the brutalist cursor to standard pointers on interactive nodes */
+    pointer-events: auto !important;
+}
+
+/* Fullscreen zoom action element styling */
+.modal-fullscreen-btn {
+    position: static !important; 
+    display: inline-block !important;
+    background: rgba(20, 20, 20, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important; 
+    font-family: "Gotham Black", sans-serif !important;
+    font-size: 0.9rem !important; 
+    padding: 0.6rem 0.95rem !important;
+    font-weight: bold !important;
+    line-height: 1 !important;
+    letter-spacing: 0.05rem !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* Premium Electric Blue Glow Hover Focus States */
+.modal-close:hover, 
+.modal-fullscreen-btn:hover {
+    color: #ffffff !important;
+    border-color: var(--accent) !important;
+    background: var(--accent) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px rgba(0, 68, 255, 0.45) !important;
+}
+
+/* ==========================================================================
+   STABILIZATION FIX: SOLID ANTI-BLEED OVERLAY SHEET
+   ========================================================================== */
+.modal-overlay { 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    
+    /* THE ANTI-BLEED FIX: 100% Solid true black hex code blocks background visibility completely */
+    background: #050505 !important; 
+    
+    /* Keeps any underlying hardware-accelerated animations from bleeding through */
+    mix-blend-mode: normal !important;
+    backdrop-filter: none !important;
+    
+    z-index: 999999995 !important; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    overflow-y: auto !important; 
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 14vh 2rem 8vh 2rem !important; 
+}
+
+/* ==========================================================================
+   MODAL INTEGRATION: INSIDE-BOX CORNER HUD LAYOUT
+   ========================================================================== */
+
+/* Gives the content container absolute positioning hooks for its child items */
+.modal-content {
+    position: relative !important;
+}
+
+/* Positions the row neatly inside the top right inner corner padding of the card box */
+.modal-content .modal-hud-layer {
+    position: absolute !important;
+    top: 2rem !important;
+    right: 2rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    z-index: 100000 !important;
+    background: transparent !important;
+}
+
+/* Reset button styling to integrate organically inside the layout deck */
+.modal-hud-layer .modal-close,
+.modal-hud-layer .modal-fullscreen-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 6px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    
+    padding: 0.5rem 0.8rem !important;
+    height: 36px !important;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    cursor: pointer !important;
+}
+
+/* Tiny crisp micro-label that instantly explains the action to visitors */
+.modal-fullscreen-btn .fs-label {
+    font-family: "Gotham Black", sans-serif !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.08rem !important;
+    font-weight: 900 !important;
+    display: inline-block !important;
+}
+
+/* Format inline clean SVG graphic sizes */
+.modal-hud-layer .hud-icon-svg {
+    width: 14px !important;
+    height: 14px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* Elegant high-contrast indicator highlight states on mouse-over */
+.modal-close:hover,
+.modal-fullscreen-btn:hover {
+    color: #ffffff !important;
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 8px 20px rgba(0, 68, 255, 0.4) !important;
+}
+
+/* Structural push padding adjustment for main header inside content tray so nothing overlaps */
+#modal-body-content {
+    margin-top: 2rem !important;
+}
+
+/* ==========================================================================
+   FROSTED GLASS MODAL BACKDROP (STATIONARY VIEWPORT SETTING)
+   ========================================================================== */
+.modal-overlay { 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    
+    /* RESTORED: Translucent dark tone let's background structural elements glow through */
+    background: rgba(5, 5, 5, 0.93) !important; 
+    
+    /* RESTORED: Frosted lens blur glass finish */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    
+    z-index: 999999995 !important; 
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    overflow-y: auto !important; 
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 14vh 2rem 8vh 2rem !important; 
+}
+
+/* ==========================================================================
+   STABLE FIX: FROSTED GLASS BACKGROUND LAYER FOR THE BACKDROP
+   ========================================================================== */
+.modal-overlay { 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    
+    /* SUCCESS: Subtle dark translucent overlay reveals your background layout nodes */
+    background: rgba(5, 5, 5, 0.82) !important; 
+    
+    /* SUCCESS: High-fidelity blur effect catches ambient light stream glares */
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    mix-blend-mode: normal !important;
+    
+    /* Brought down below your cursor layer (10000000) so your mouse tracker renders on top */
+    z-index: 9999999 !important; 
+    
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    overflow-y: auto !important; 
+    overflow-x: hidden; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease; 
+    padding: 14vh 2rem 8vh 2rem !important; 
+}
+
+/* ==========================================================================
+   VISIBILITY OVERRIDE: CURSOR ELEVATION DECK
+   ========================================================================== */
+.custom-cursor {
+    /* Pushes your tracking circle past the modal layer ceiling seamlessly */
+    z-index: 10000000 !important; 
+    
+    /* Ensures clicking through the center of the cursor circle triggers the link buttons */
+    pointer-events: none !important; 
+}
+
+/* ==========================================================================
+   CLEAN MODAL GLASS BACKDROP (REMOVED SOLID BLACK BACKGROUND OVERRIDE)
+   ========================================================================== */
+.modal-overlay { 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    
+    /* SUCCESS: Translucent smoky tone lets underlying page elements glow through slightly */
+    background: rgba(5, 5, 5, 0.85) !important; 
+    
+    /* SUCCESS: High-density frost blur lens captures your ambient light streams */
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    mix-blend-mode: normal !important;
+    
+    /* Keeps container stacked cleanly beneath the custom cursor layer */
+    z-index: 9999999 !important; 
+    
+    display: flex !important; 
+    justify-content: center !important; 
+    align-items: flex-start !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden !important; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.4s ease !important; 
+    padding: 14vh 2rem 8vh 2rem !important; 
+}
+
+/* ==========================================================================
+   ULTRA-SPECIFIC ATOMIC OVERRIDE: FORCE BACKDROP TRANSPRENCY 
+   ========================================================================== */
+
+/* This multi-selector chain forces the browser to kill solid black layers */
+body .modal-overlay,
+html body div#project-modal.modal-overlay,
+div#project-modal[class*="modal-overlay"] {
+    /* Forces the smoky dark translucent backing tint */
+    background-color: rgba(5, 5, 5, 0.82) !important;
+    background: rgba(5, 5, 5, 0.82) !important;
+    
+    /* Forces the frosted-glass lens blur directly onto the overlay viewport */
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    
+    /* Structural variables preservation */
+    z-index: 9999999 !important;
+    display: flex !important;
+    mix-blend-mode: normal !important;
+}
+
+/* Diagnostic Safety check: If the content box background itself became pitch black, 
+   this rule guarantees it uses your premium deep bento-tile finish gradient */
+body #project-modal .modal-content {
+    background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 0.98)) !important;
+    box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ==========================================================================
+   MODAL HEADER HARD LOCK: SINGLE-LINE ENFORCEMENT ENGINE
+   ========================================================================== */
+#modal-body-content h2 {
+    /* Physically forces the browser to keep the text on a single line */
+    white-space: nowrap !important; 
+    text-wrap: nowrap !important; 
+
+    /* Safely truncates the line with clean editorial dots (...) on tiny laptop screens */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    
+    /* Slightly brings down the font ceiling scale for better structural proportion */
+    font-size: clamp(1.2rem, 3.2vw, 1.9rem) !important; 
+    
+    width: 100% !important;
+    display: block !important;
+}

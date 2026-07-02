@@ -85,7 +85,10 @@ window.openModal = function(projectElement) {
       }
 
       document.getElementById('project-modal').classList.add('show-modal');
+      
+      // HARD SCROLL LOCK: Freezes underlying viewport scrolling safely
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
 }
 
 window.changeModalSlide = function(direction) {
@@ -99,9 +102,34 @@ window.changeModalSlide = function(direction) {
 window.closeModal = function() {
       const modal = document.getElementById('project-modal');
       if (modal) modal.classList.remove('show-modal');
+      
+      // RESTORE SCROLL: Restores native user scrolling fluidly
       document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+      
       currentModalSlides = [];
       currentModalSlideIndex = 0;
+}
+
+// --- 3b. Native Modal Fullscreen Engine ---
+window.toggleImgFullscreen = function() {
+      const modalImg = document.getElementById('modal-body-content').querySelector('.modal-hero-img');
+      
+      if (!modalImg) return;
+
+      if (!document.fullscreenElement) {
+            if (modalImg.requestFullscreen) {
+                  modalImg.requestFullscreen();
+            } else if (modalImg.webkitRequestFullscreen) {
+                  modalImg.webkitRequestFullscreen();
+            } else if (modalImg.msRequestFullscreen) {
+                  modalImg.msRequestFullscreen();
+            }
+      } else {
+            if (document.exitFullscreen) {
+                  document.exitFullscreen();
+            }
+      }
 }
 
 // --- 4. Global Carousel Engine & Sub-Filtering Logic ---
@@ -151,7 +179,6 @@ window.filterProjects = function(category) {
             else thumbContainer.classList.remove('top-ten-mode');
       }
 
-      // STRICT FIX: Forces the sub-filters layout to absolute 'none' unless 'shsp' is explicitly selected
       const subFilterContainer = document.getElementById('shsp-sub-filters');
       if (subFilterContainer) {
             if (category === 'shsp') {
@@ -241,7 +268,6 @@ window.updateCarousel = function() {
       const activeFilter = document.querySelector('.filter-btn.active-filter');
       const isTopTen = activeFilter ? activeFilter.innerText.includes('TOP TEN') : false;
 
-      // Update Main Large Carousel Items
       visibleCarouselItems.forEach((item, index) => {
             item.classList.remove('active', 'prev', 'next', 'prev-2', 'next-2');
 
@@ -252,7 +278,6 @@ window.updateCarousel = function() {
             else if (index === currentCarouselIndex + 2 || (!isTopTen && totalItems >= 4 && index === (currentCarouselIndex + 2) % totalItems)) item.classList.add('next-2');
       });
 
-      // Clear Active States from Thumbnails and Highlight Current Index
       const thumbs = document.querySelectorAll('.thumbnail-dot');
       thumbs.forEach((thumb, index) => {
             thumb.classList.remove('active-thumb');
@@ -261,7 +286,6 @@ window.updateCarousel = function() {
             }
       });
 
-      // Slider Engine: Continuous center tracking logic with loop virtualization
       if (thumbContainer) {
             if (isTopTen) {
                   thumbContainer.style.transform = 'none';
@@ -285,13 +309,14 @@ window.updateCarousel = function() {
 
 // --- 5. DOM Ready Execution & Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
-      // Initialize global elements arrays
       allCarouselItems = Array.from(document.querySelectorAll('.carousel-item'));
 
       const modalOverlay = document.getElementById('project-modal');
       if (modalOverlay) {
             modalOverlay.addEventListener('click', function(e) {
-                  if (e.target === this) window.closeModal();
+                  if (e.target === this || e.target.classList.contains('modal-hud-layer')) {
+                        window.closeModal();
+                  }
             });
       }
 
@@ -317,7 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       createStars();
 
-      // Trigger initial filtering state
       if (allCarouselItems.length > 0) window.filterProjects('featured'); 
 
       // --- 6. CLICK-RESET CAROUSEL AUTOPLAY ENGINE ---

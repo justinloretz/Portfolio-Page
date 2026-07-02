@@ -617,7 +617,7 @@
                               </div>
                         </div>
 
-                        <div class="carousel-item" data-category="shsp" data-sub="posters" data-featured="true" onclick="handleProjectClick(this)">
+                        <div class="carousel-item" data-category="shsp" data-sub="posters" data-featured="false" onclick="handleProjectClick(this)">
                               <img src="./assets/InsideTheLines Flyer.png" alt="INSIDE THE LINES WORLD CUP EVENT POSTER" class="carousel-img" loading="lazy">
                               <div class="carousel-caption">INSIDE THE LINES WORLD CUP EVENT POSTER</div>
                               <div class="case-study-data" style="display: none;">
@@ -632,12 +632,7 @@
 
             <div id="carousel-thumbnails" class="carousel-thumbnails"></div>
 
-            <div id="project-modal" class="modal-overlay">
-                  <div class="modal-content">
-                        <button class="modal-close" onclick="closeModal()">&#10005;</button>
-                        <div id="modal-body-content"></div>
-                  </div>
-            </div>
+           
       </section>
 
 <section id="writing">
@@ -1026,6 +1021,31 @@
             <li style="--i: 4;"><a href="#contact" onclick="toggleMenu(event)">CONTACT</a></li>
       </div>
 
+<!-- UPDATED: Integrated Container Controls Layout -->
+<div id="project-modal" class="modal-overlay">
+      <div class="modal-content">
+            <!-- HUD controls are now nested inside the box content frame -->
+            <div class="modal-hud-layer">
+                  <!-- Fullscreen Button with Text Label and SVG Icon -->
+                  <button class="modal-fullscreen-btn" onclick="toggleImgFullscreen()" title="View Full Screen">
+                        <span class="fs-label">FULLSCREEN</span>
+                        <svg class="hud-icon-svg" viewBox="0 0 24 24">
+                              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                  </button>
+                  
+                  <!-- Close Button with SVG 'X' -->
+                  <button class="modal-close" onclick="closeModal()" title="Close Modal">
+                        <svg class="hud-icon-svg" viewBox="0 0 24 24">
+                              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></line>
+                              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></line>
+                        </svg>
+                  </button>
+            </div>
+
+            <div id="modal-body-content"></div>
+      </div>
+</div>
       <script src="script.js"></script>
 </body>
 </html>
