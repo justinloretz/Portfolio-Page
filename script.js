@@ -50,6 +50,50 @@ window.sharePortfolio = function() {
       }
 }
 
+// --- 2b. Native File Graphic Share Button ---
+window.shareGraphic = async function() {
+      const modalImg = document.getElementById('modal-body-content').querySelector('.modal-hero-img');
+      if (!modalImg) return;
+      
+      const graphicUrl = modalImg.src; 
+
+      try {
+            // 1. Fetch the image file behind the scenes
+            const response = await fetch(graphicUrl);
+            const blob = await response.blob();
+            
+            // 2. Extract file extension and construct a filename
+            const urlParts = graphicUrl.split('/');
+            const filename = urlParts[urlParts.length - 1] || 'design.png';
+            
+            // 3. Convert the blob data into a real, native file object
+            const file = new File([blob], filename, { type: blob.type });
+            const filesArray = [file];
+
+            // 4. Verify if the user's browser/device supports native file sharing
+            if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+                  await navigator.share({
+                        files: filesArray,
+                        title: 'Justin Loretz | Design Archive',
+                        text: 'Check out this deliverable from Justin Loretz.'
+                  });
+            } else {
+                  // Fallback: If browser blocks file attachments, copy the direct link instead
+                  await navigator.clipboard.writeText(graphicUrl);
+                  alert("File sharing not supported on this browser. Direct image link copied to clipboard instead!");
+            }
+      } catch (err) {
+            console.error("Native file sharing failed:", err);
+            // Secondary Fallback if network blocks binary conversions
+            try {
+                  await navigator.clipboard.writeText(graphicUrl);
+                  alert("Direct image link copied to clipboard!");
+            } catch (fallbackErr) {
+                  console.error(fallbackErr);
+            }
+      }
+}
+
 // --- 3. Modal Global Variables & Logic ---
 let currentModalSlides = [];
 let currentModalSlideIndex = 0;
@@ -405,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   cursor.style.left = e.clientX + 'px';
                   cursor.style.top = e.clientY + 'px';
             });
-            const clickables = document.querySelectorAll('a, button, .icon, .thumbnail-dot, .carousel-img, .carousel-arrow, .clickable');
+            const clickables = document.querySelectorAll('a, button, .icon, .thumbnail-dot, .carousel-img, .carousel-arrow, .clickable, .details-container[onclick]');
             clickables.forEach(el => {
                   el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
                   el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
@@ -469,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- 12. Magnetic 3D Holographic Tilt (The "Prizm" Effect) ---
-const tiltCards = document.querySelectorAll('.bento-tile, .details-container');
+const tiltCards = document.querySelectorAll('.details-container');
 
 tiltCards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
