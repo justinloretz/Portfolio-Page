@@ -58,19 +58,15 @@ window.shareGraphic = async function() {
       const graphicUrl = modalImg.src; 
 
       try {
-            // 1. Fetch the image file behind the scenes
             const response = await fetch(graphicUrl);
             const blob = await response.blob();
             
-            // 2. Extract file extension and construct a filename
             const urlParts = graphicUrl.split('/');
             const filename = urlParts[urlParts.length - 1] || 'design.png';
             
-            // 3. Convert the blob data into a real, native file object
             const file = new File([blob], filename, { type: blob.type });
             const filesArray = [file];
 
-            // 4. Verify if the user's browser/device supports native file sharing
             if (navigator.canShare && navigator.canShare({ files: filesArray })) {
                   await navigator.share({
                         files: filesArray,
@@ -78,13 +74,11 @@ window.shareGraphic = async function() {
                         text: 'Check out this deliverable from Justin Loretz.'
                   });
             } else {
-                  // Fallback: If browser blocks file attachments, copy the direct link instead
                   await navigator.clipboard.writeText(graphicUrl);
                   alert("File sharing not supported on this browser. Direct image link copied to clipboard instead!");
             }
       } catch (err) {
             console.error("Native file sharing failed:", err);
-            // Secondary Fallback if network blocks binary conversions
             try {
                   await navigator.clipboard.writeText(graphicUrl);
                   alert("Direct image link copied to clipboard!");
@@ -97,14 +91,22 @@ window.shareGraphic = async function() {
 // --- 3. Modal Global Variables & Logic ---
 let currentModalSlides = [];
 let currentModalSlideIndex = 0;
+window.isModalOpen = false;
 
 window.openModal = function(projectElement) {
+      window.isModalOpen = true; 
+      if (window.forceStopAutoplay) window.forceStopAutoplay(); 
+
       const caseStudyData = projectElement.querySelector('.case-study-data').innerHTML;
       document.getElementById('modal-body-content').innerHTML = caseStudyData;
 
       const stack = document.getElementById('modal-body-content').querySelector('.presentation-stack');
-      
+      const globalNavArrows = document.querySelectorAll('.modal-nav-arrow');
+
       if (stack) {
+            // Hides the big global circle arrows so they don't interfere
+            if (globalNavArrows) globalNavArrows.forEach(arrow => arrow.style.display = 'none');
+
             currentModalSlides = Array.from(stack.querySelectorAll('.presentation-slide'));
             currentModalSlideIndex = 0;
 
@@ -112,25 +114,45 @@ window.openModal = function(projectElement) {
                   slide.style.display = index === 0 ? 'block' : 'none';
                   slide.style.width = '100%'; 
                   slide.style.margin = '0 auto'; 
+                  slide.removeAttribute('onclick'); // Strips old individual fullscreen commands
             });
 
-            const leftArrow = document.createElement('button');
-            leftArrow.innerHTML = '&#10094;';
-            leftArrow.className = 'modal-slide-arrow left-arrow';
-            leftArrow.onclick = function(e) { e.stopPropagation(); window.changeModalSlide(-1); };
+            const cursor = document.getElementById('custom-cursor');
 
-            const rightArrow = document.createElement('button');
-            rightArrow.innerHTML = '&#10095;';
-            rightArrow.className = 'modal-slide-arrow right-arrow';
-            rightArrow.onclick = function(e) { e.stopPropagation(); window.changeModalSlide(1); };
+            // 1. Build the invisible Left "PREV" Zone
+            const leftZone = document.createElement('div');
+            leftZone.className = 'slide-click-zone left-zone';
+            leftZone.onclick = function(e) { e.stopPropagation(); window.changeModalSlide(-1); };
+            if (cursor) {
+                  leftZone.addEventListener('mouseenter', () => cursor.classList.add('hovering-prev'));
+                  leftZone.addEventListener('mouseleave', () => cursor.classList.remove('hovering-prev'));
+            }
 
-            stack.appendChild(leftArrow);
-            stack.appendChild(rightArrow);
+            // 2. Build the invisible Right "NEXT" Zone
+            const rightZone = document.createElement('div');
+            rightZone.className = 'slide-click-zone right-zone';
+            rightZone.onclick = function(e) { e.stopPropagation(); window.changeModalSlide(1); };
+            if (cursor) {
+                  rightZone.addEventListener('mouseenter', () => cursor.classList.add('hovering-next'));
+                  rightZone.addEventListener('mouseleave', () => cursor.classList.remove('hovering-next'));
+            }
+
+            // 3. Build the Cinematic Numeric Indicator
+            const indicator = document.createElement('div');
+            indicator.className = 'slide-indicator';
+            indicator.id = 'modal-slide-indicator';
+            const totalFormatted = `0${currentModalSlides.length}`.slice(-2);
+            indicator.innerText = `01 / ${totalFormatted}`;
+
+            stack.appendChild(leftZone);
+            stack.appendChild(rightZone);
+            stack.appendChild(indicator);
+      } else {
+            // Brings the big global arrows back for standard posters
+            if (globalNavArrows) globalNavArrows.forEach(arrow => arrow.style.display = 'flex');
       }
 
       document.getElementById('project-modal').classList.add('show-modal');
-      
-      // HARD SCROLL LOCK: Freezes underlying viewport scrolling safely
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
 }
@@ -138,41 +160,75 @@ window.openModal = function(projectElement) {
 window.changeModalSlide = function(direction) {
       if (currentModalSlides.length === 0) return;
       currentModalSlides[currentModalSlideIndex].style.display = 'none';
+      
       const totalSlides = currentModalSlides.length;
       currentModalSlideIndex = (currentModalSlideIndex + direction + totalSlides) % totalSlides;
+      
       currentModalSlides[currentModalSlideIndex].style.display = 'block';
+
+      // Updates the numbers when you click
+      const indicator = document.getElementById('modal-slide-indicator');
+      if (indicator) {
+            const currentFormatted = `0${currentModalSlideIndex + 1}`.slice(-2);
+            const totalFormatted = `0${totalSlides}`.slice(-2);
+            indicator.innerText = `${currentFormatted} / ${totalFormatted}`;
+      }
 }
 
 window.closeModal = function() {
       const modal = document.getElementById('project-modal');
       if (modal) modal.classList.remove('show-modal');
       
-      // RESTORE SCROLL: Restores native user scrolling fluidly
       document.body.style.overflow = "auto";
       document.documentElement.style.overflow = "auto";
       
+      const globalNavArrows = document.querySelectorAll('.modal-nav-arrow');
+      if (globalNavArrows) globalNavArrows.forEach(arrow => arrow.style.display = 'flex');
+
+      // Purges the cursor text safely on close
+      const cursor = document.getElementById('custom-cursor');
+      if (cursor) cursor.classList.remove('hovering-prev', 'hovering-next');
+      
       currentModalSlides = [];
       currentModalSlideIndex = 0;
+      
+      window.isModalOpen = false; 
+      if (window.forceResetAutoplay) window.forceResetAutoplay(); 
 }
 
 // --- 3b. Native Modal Fullscreen Engine ---
 window.toggleImgFullscreen = function() {
+      // THE FIX: Targets the entire interactive stack container first, then falls back to a single image
+      const stack = document.getElementById('modal-body-content').querySelector('.presentation-stack');
       const modalImg = document.getElementById('modal-body-content').querySelector('.modal-hero-img');
       
-      if (!modalImg) return;
+      const target = stack || modalImg;
+      if (!target) return;
 
       if (!document.fullscreenElement) {
-            if (modalImg.requestFullscreen) {
-                  modalImg.requestFullscreen();
-            } else if (modalImg.webkitRequestFullscreen) {
-                  modalImg.webkitRequestFullscreen();
-            } else if (modalImg.msRequestFullscreen) {
-                  modalImg.msRequestFullscreen();
-            }
+            if (target.requestFullscreen) target.requestFullscreen();
+            else if (target.webkitRequestFullscreen) target.webkitRequestFullscreen();
+            else if (target.msRequestFullscreen) target.msRequestFullscreen();
       } else {
-            if (document.exitFullscreen) {
-                  document.exitFullscreen();
-            }
+            if (document.exitFullscreen) document.exitFullscreen();
+      }
+}
+
+// --- 3c. Modal Internal Navigation Engine ---
+window.navigateModal = function(direction, event) {
+      if (event) event.stopPropagation(); 
+      
+      if (visibleCarouselItems.length === 0) return;
+      
+      const totalItems = visibleCarouselItems.length;
+      currentCarouselIndex = (currentCarouselIndex + direction + totalItems) % totalItems;
+      
+      window.updateCarousel();
+      window.openModal(visibleCarouselItems[currentCarouselIndex]);
+      
+      const modalOverlay = document.getElementById('project-modal');
+      if (modalOverlay) {
+            modalOverlay.scrollTo({ top: 0, behavior: 'smooth' });
       }
 }
 
@@ -364,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
       }
 
-      // Ambient Star Particles (350 STABLE COUNT)
       function createStars() {
             const container = document.getElementById('particle-canvas');
             if (!container) return; 
@@ -397,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const carouselArea = document.querySelector('.carousel-container');
 
       function startAutoplay() {
-            if (visibleCarouselItems.length > 1 && !carouselAutoplay && isCarouselInView) {
+            if (visibleCarouselItems.length > 1 && !carouselAutoplay && isCarouselInView && !window.isModalOpen) {
                   carouselAutoplay = setInterval(() => window.moveCarousel(1), 4000);
             }
       }
@@ -413,12 +468,15 @@ document.addEventListener('DOMContentLoaded', () => {
             stopAutoplay(); 
             clearTimeout(idleTimer);
             
-            if (isCarouselInView) {
+            if (isCarouselInView && !window.isModalOpen) {
                   idleTimer = setTimeout(() => {
                         startAutoplay();
                   }, IDLE_TIMEOUT);
             }
       }
+
+      window.forceStopAutoplay = stopAutoplay;
+      window.forceResetAutoplay = resetIdleTimer;
 
       if (carouselArea) {
             const carouselObserver = new IntersectionObserver((entries) => {

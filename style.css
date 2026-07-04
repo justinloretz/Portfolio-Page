@@ -2667,3 +2667,289 @@ body section#projects {
       filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
 }
 
+/* ==========================================================================
+   MODAL TYPOGRAPHY & READABILITY OVERRIDES
+   ========================================================================== */
+
+/* 1. Base Paragraphs: Converts all long description text to your clean reading font */
+#modal-body-content p {
+      font-family: "Gotham Book", sans-serif !important;
+      font-size: 1.15rem !important;
+      line-height: 1.8 !important; /* Adds generous breathing room between lines */
+      color: #cccccc !important; /* Softens the white slightly to reduce eye strain */
+      margin-bottom: 1.5rem !important;
+      letter-spacing: 0.02em !important;
+}
+
+/* 2. The Category Line: Targets ONLY the first paragraph (the category data) */
+#modal-body-content p:first-of-type {
+      font-family: "Gotham Black", sans-serif !important;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.2rem !important;
+      color: #ffffff !important;
+      text-transform: uppercase !important;
+      
+      /* Pushes the long description text further down to create a clean visual break */
+      margin-bottom: 2rem !important; 
+}
+
+/* 3. The Category Label: Turns just the word "CATEGORY :" into your signature blue */
+#modal-body-content p:first-of-type strong {
+      color: var(--accent) !important;
+      font-weight: 900 !important;
+}
+
+/* ==========================================================================
+   MODAL INTERNAL NAVIGATION ARROWS (UPGRADED GLASS CIRCLES)
+   ========================================================================== */
+.modal-nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      
+      /* Sleek dark glass aesthetic */
+      background: rgba(10, 10, 10, 0.65) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      
+      /* THE FIX: Perfect circles instead of clunky rectangles */
+      border-radius: 50% !important; 
+      
+      color: #ffffff !important;
+      font-size: 1.4rem !important;
+      
+      /* Symmetrical dimensions */
+      width: 65px !important;
+      height: 65px !important;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000005 !important;
+      cursor: none !important; 
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      pointer-events: auto !important;
+      
+      /* Adds a deep shadow so they separate from the background */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Pulled slightly further inward so they don't hug the absolute edge */
+.modal-nav-prev {
+      left: 4vw !important; 
+}
+
+.modal-nav-next {
+      right: 4vw !important; 
+}
+
+/* Premium Hover Glow */
+.modal-nav-arrow:hover {
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+      transform: translateY(-50%) scale(1.1) !important;
+      box-shadow: 0 10px 25px rgba(0, 68, 255, 0.45) !important;
+      color: #ffffff !important;
+}
+
+/* Responsive adjustment for laptops/tablets to keep them out of the way */
+@media (max-width: 1300px) {
+      .modal-nav-arrow {
+            width: 50px !important;
+            height: 50px !important;
+            font-size: 1.1rem !important;
+      }
+      .modal-nav-prev { left: 2vw !important; }
+      .modal-nav-next { right: 2vw !important; }
+}
+
+/* ==========================================================================
+   CAROUSEL HOVER INTERACTION BADGE
+   ========================================================================== */
+/* The hidden floating glass pill */
+.carousel-item.active::before {
+      content: 'VIEW PROJECT \2197\FE0E';
+      position: absolute;
+      top: 45%; /* Slightly above dead center so it doesn't block the focal point */
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      
+      /* Premium frosted glass aesthetic */
+      background: rgba(10, 10, 10, 0.75) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      
+      color: #ffffff;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-family: "Gotham Black", sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15rem;
+      
+      opacity: 0;
+      z-index: 100;
+      pointer-events: none; /* Lets the user's click pass cleanly through to the image */
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 68, 255, 0.4);
+}
+
+/* Ignites the pill on hover */
+.carousel-item.active:hover::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+}
+
+/* Dims the active image slightly on hover to guarantee text readability */
+.carousel-item.active:hover .carousel-img {
+      filter: brightness(0.65);
+      transform: scale(1.05); 
+}
+
+/* ==========================================================================
+   CAROUSEL HOVER INTERACTION BADGE (FIXED)
+   ========================================================================== */
+.carousel-item.active::before {
+      content: 'VIEW PROJECT \2197\FE0E';
+      position: absolute;
+      
+      /* Anchors the pill neatly near the bottom so it never covers the main photo */
+      top: auto; 
+      bottom: 8%; 
+      left: 50%;
+      transform: translate(-50%, 10px) scale(0.9);
+      
+      background: rgba(10, 10, 10, 0.85) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      
+      color: #ffffff;
+      padding: 0.6rem 1.6rem;
+      border-radius: 50px;
+      font-family: "Gotham Black", sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15rem;
+      
+      /* THE FIX: Forces the text and arrow to stay perfectly on a single line */
+      white-space: nowrap !important; 
+      
+      opacity: 0;
+      z-index: 100;
+      pointer-events: none; 
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 68, 255, 0.4);
+}
+
+.carousel-item.active:hover::before {
+      opacity: 1;
+      /* Slides up cleanly into place */
+      transform: translate(-50%, 0) scale(1);
+}
+
+.carousel-item.active:hover .carousel-img {
+      /* Softened the dimming so your graphics remain bright and visible */
+      filter: brightness(0.85);
+      transform: scale(1.03); 
+}
+
+/* ==========================================================================
+   CAROUSEL ITEM STRUCTURAL CENTERING
+   ========================================================================== */
+.carousel-item { 
+      position: absolute; 
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; 
+      opacity: 0; 
+      transform: translateX(0) scale(0.5); 
+      z-index: 0; 
+      pointer-events: none; 
+      
+      /* THE FIX: Forces the image, caption, and badge to share the exact same center axis */
+      display: flex !important; 
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+}
+
+/* ==========================================================================
+   PREMIUM SLIDESHOW: INVISIBLE CLICK ZONES & INDICATORS
+   ========================================================================== */
+/* Invisible 50/50 click layers over the presentation */
+.slide-click-zone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      z-index: 50;
+      cursor: none !important; 
+}
+.slide-click-zone.left-zone { left: 0; }
+.slide-click-zone.right-zone { right: 0; }
+
+/* The cinematic numeric tracker (01 / 04) */
+.slide-indicator {
+      position: absolute;
+      bottom: -2.5rem; /* Sits cleanly below the slide */
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Gotham Black", sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15rem;
+      color: rgba(255, 255, 255, 0.4);
+      z-index: 100;
+      pointer-events: none;
+}
+
+/* Modifies your custom cursor when hovering over the presentation */
+.custom-cursor.hovering-prev, 
+.custom-cursor.hovering-next {
+      width: 60px !important; 
+      height: 60px !important; 
+      background: rgba(0, 68, 255, 0.9) !important; 
+      border-color: transparent !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.custom-cursor.hovering-prev::after {
+      content: "PREV";
+      font-family: "Gotham Black", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.08rem;
+      color: #ffffff;
+}
+
+.custom-cursor.hovering-next::after {
+      content: "NEXT";
+      font-family: "Gotham Black", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.08rem;
+      color: #ffffff;
+}
+
+/* ==========================================================================
+   SLIDESHOW FULLSCREEN OVERRIDES (KEEPS NAVIGATION INTACT)
+   ========================================================================== */
+.presentation-stack:fullscreen {
+      background: #050505 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+}
+
+.presentation-stack:fullscreen .presentation-slide {
+      max-height: 90vh !important; /* Leaves breathing room for the indicator */
+      width: auto !important;
+      max-width: 90vw !important;
+      object-fit: contain !important;
+}
+
+.presentation-stack:fullscreen .slide-indicator {
+      bottom: 2vh; /* Brings the numbers up into the fullscreen view */
+}
