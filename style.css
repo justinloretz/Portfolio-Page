@@ -1,2955 +1,407 @@
-/* =========================================
-   1. BASE STYLING, FONTS & VARIABLES
-   ========================================= */
-@font-face { font-family: "Sequel 85"; src: url(SEQUEL100BLACK-85.TTF); }
-@font-face { font-family: "Gotham Black"; src: url(Gotham-Black.otf); }
-@font-face { font-family: "Gotham Book"; src: url(Gotham-Book.otf); }
-@font-face { font-family: "Tungsten Compressed Medium"; src: url(TUNGSTENCOMPRESSED-MEDIUM.TTF); }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-      --accent: #0044FF; 
-      --paper: #F4F4F0; 
-      --grid: rgba(0, 0, 0, 0.05); 
+@font-face{font-family:"Sequel 85";src:url(SEQUEL100BLACK-85.TTF)}
+@font-face{font-family:"Gotham Black";src:url(Gotham-Black.otf)}
+@font-face{font-family:"Gotham Book";src:url(Gotham-Book.otf)}
+@font-face{font-family:"Tungsten Compressed Medium";src:url(TUNGSTENCOMPRESSED-MEDIUM.TTF)}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#0044FF;--paper:#F4F4F0;--grid:rgba(0, 0, 0, 0.05)}
+html, body{font-family:"Sequel 85", sans-serif;width:100%;max-width:100%;overflow-x:clip;color:var(--paper);scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background-size:cover;background-position:center;background-attachment:fixed}
+h1, h2, h3, .title{font-family:"Sequel 85", sans-serif;color:var(--paper)}
+a{color:var(--paper);text-decoration:none}
+body, a, button, .icon, .thumbnail-dot, .carousel-item{cursor:none}
+.custom-cursor{position:fixed;top:0;left:0;width:24px;height:24px;border:2px solid var(--accent);border-radius:50%;transform:translate(-50%, -50%);transition:width 0.2s ease, height 0.2s ease, background 0.2s ease;box-shadow:0 0 10px rgba(0, 68, 255, 0.4)}
+.custom-cursor.hovering{width:60px;height:60px;background:rgba(0, 68, 255, 0.1);border-width:1px}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#050505}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px}
+.scroll-progress-bar{position:fixed;bottom:0;left:0;height:4px;background:var(--accent);width:0%;z-index:10000;pointer-events:none;box-shadow:0px -2px 10px rgba(0, 68, 255, 0.8)}
+.scroll-progress-bar::before, .scroll-progress-bar::after{content:'';position:fixed;top:0;width:1px;height:100vh;background:rgba(255, 255, 255, 0.04);z-index:-1;pointer-events:none}
+.scroll-progress-bar::before{left:20%}
+.scroll-progress-bar::after{right:20%}
+#particle-canvas{position:fixed;top:0;left:0;width:100%;height:100vh;background-color:#050505;z-index:-1;pointer-events:none;overflow:hidden}
+.star{position:absolute;background-color:#ffffff;border-radius:50%;opacity:0;box-shadow:0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6);animation:pulseAndDrift linear infinite;will-change:transform, opacity}
+@keyframes pulseAndDrift{
+  0%{opacity:0;transform:translate(0, 0) scale(0.5)}
+  50%{opacity:1;transform:translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8)}
+  100%{opacity:0;transform:translate(var(--drift-x), var(--drift-y)) scale(0.5)}
 }
-
-html, body {
-      font-family: "Sequel 85", sans-serif;
-      width: 100%;
-      max-width: 100%; 
-      overflow-x: clip; 
-      color: var(--paper); 
-      scroll-behavior: smooth; 
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed; 
+.reveal-on-scroll{opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(0.25, 1, 0.5, 1);clip-path:none}
+.reveal-on-scroll.is-visible{opacity:1;transform:translateY(0)}
+body::before{content:'';position:fixed;top:-20vh;left:-10vw;width:60vw;height:60vw;background:radial-gradient(circle, rgba(0, 68, 255, 0.08) 0%, transparent 60%);z-index:-2;pointer-events:none}
+body::after{content:'';position:fixed;bottom:-20vh;right:-10vw;width:70vw;height:70vw;background:radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%);z-index:-2;pointer-events:none}
+#vault-preloader{position:fixed;top:0;left:0;width:100%;height:100vh;z-index:999999;display:flex;justify-content:center;align-items:center;pointer-events:none}
+.vault-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;transition:opacity 0.4s ease}
+.vault-door{position:absolute;top:0;width:50%;height:100vh;background:#050505;transition:transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);z-index:1}
+.vault-door.left{left:0}
+.vault-door.right{right:0}
+.vault-title{font-family:"Sequel 85", sans-serif;font-size:4rem;color:var(--paper);letter-spacing:0.2rem;margin-bottom:0.5rem}
+.vault-sub{font-family:"Gotham Book", sans-serif;font-size:1rem;color:var(--accent);letter-spacing:0.5rem}
+.vault-sub::after{content:"";animation:dots 1.5s infinite steps(4)}
+@keyframes dots{
+  0%{content:""}
+  25%{content:"."}
+  50%{content:".."}
+  75%{content:"..."}
 }
-
-h1, h2, h3, .title { font-family: "Sequel 85", sans-serif; color: var(--paper); }
-a { color: var(--paper); text-decoration: none; }
-
-/* =========================================
-   2. CUSTOM UTILITIES (Cursor, Scrollbar, Stars)
-   ========================================= */
-body, a, button, .icon, .thumbnail-dot, .carousel-item { cursor: none; }
-
-.custom-cursor {
-      position: fixed; top: 0; left: 0; width: 24px; height: 24px;
-      border: 2px solid var(--accent); border-radius: 50%; pointer-events: none; 
-      transform: translate(-50%, -50%); z-index: 100000;
-      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-      box-shadow: 0 0 10px rgba(0, 68, 255, 0.4);
+body.vault-open .vault-door.left{transform:translateX(-100%)}
+body.vault-open .vault-door.right{transform:translateX(100%)}
+body.vault-open .vault-content{opacity:0}
+#main-header{position:fixed;top:0;left:0;width:100%;background:rgba(5, 5, 5, 0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10000;border-bottom:1px solid rgba(255, 255, 255, 0.1)}
+nav{align-items:center;justify-content:space-between;height:12vh;width:100%;padding:0 2rem;display:flex}
+.logo-link{display:flex;align-items:center;text-decoration:none}
+.logo-img, .icon{filter:invert(1)}
+.logo-img{height:5rem;width:auto;transition:transform 0.3s ease, opacity 0.3s ease}
+.logo-link:hover .logo-img{transform:scale(1.15);opacity:0.8}
+.icon{cursor:none;height:3rem;transition:transform 0.3s ease}
+.icon:hover{transform:scale(1.15)}
+.nav-links{display:flex;gap:2rem;list-style:none;font-size:1.5rem}
+.nav-links a{position:relative;text-decoration:none;transition:transform 0.3s ease}
+.nav-links a:hover{color:var(--accent);transform:scale(1.05)}
+.nav-links a::after{content:'';position:absolute;width:0;height:3px;bottom:-6px;left:0;background-color:var(--accent);transition:width 0.4s cubic-bezier(0.25, 1, 0.5, 1)}
+.nav-links a:hover::after{width:100%}
+#hamburger-nav{display:none}
+.hamburger-menu{position:relative;display:inline-block}
+.hamburger-icon{display:flex;flex-direction:column;justify-content:space-between;height:24px;width:32px;z-index:10001;position:relative;cursor:pointer}
+.hamburger-icon span{width:100%;height:2px;background-color:var(--paper);transition:all 0.3s ease-in-out;transform-origin:left center}
+.hamburger-icon.open span:first-child{transform:rotate(45deg)}
+.hamburger-icon.open span:nth-child(2){opacity:0;width:0}
+.hamburger-icon.open span:last-child{transform:rotate(-45deg)}
+.menu-links{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at bottom right, rgba(0, 68, 255, 0.2) 0%, rgba(5, 5, 5, 0.98) 60%);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4vh;opacity:0;pointer-events:none;transition:opacity 0.4s ease;z-index:9999}
+.menu-links li{list-style:none;overflow:hidden}
+.menu-links a{font-family:"Sequel 85", sans-serif;font-size:clamp(2rem, 10vw, 4rem);letter-spacing:0.2rem;color:var(--paper);text-transform:uppercase;transform:translateY(100%);opacity:0;transition:transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, color 0.3s ease}
+.menu-links.open{opacity:1;pointer-events:auto}
+.menu-links.open a{transform:translateY(0);opacity:1;transition-delay:calc(0.1s * var(--i))}
+.menu-links a:hover{color:var(--accent)}
+#profile{position:relative;display:flex;justify-content:center;align-items:flex-start;min-height:80vh;padding-top:18vh;padding-bottom:2rem;width:100%}
+.profile-content{display:flex;justify-content:center;align-items:center;gap:5vh;z-index:10;max-width:1300px;width:100%;padding:0 2rem;position:relative}
+.tilt-card{position:relative;width:500px;height:640px;border-radius:0;border:2px solid var(--paper);box-shadow:15px 15px 0px var(--accent);overflow:hidden;margin:0;flex-shrink:0;z-index:2;animation:autonomousFloat 10s ease-in-out infinite;will-change:transform, box-shadow}
+@keyframes autonomousFloat{
+  0%{transform:translateY(0px) rotate3d(1, 1, 0, 0deg);box-shadow:15px 15px 0px var(--accent)}
+  33%{transform:translateY(-12px) rotate3d(1, -1, 0, 2deg);box-shadow:20px 20px 0px rgba(0, 68, 255, 0.6)}
+  66%{transform:translateY(8px) rotate3d(-1, 1, 0, -1deg);box-shadow:10px 10px 0px rgba(0, 68, 255, 0.9)}
+  100%{transform:translateY(0px) rotate3d(1, 1, 0, 0deg);box-shadow:15px 15px 0px var(--accent)}
 }
-
-.custom-cursor.hovering { width: 60px; height: 60px; background: rgba(0, 68, 255, 0.1); border-width: 1px; }
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #050505; }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-.scroll-progress-bar {
-      position: fixed; bottom: 0; left: 0; height: 4px; background: var(--accent);
-      width: 0%; z-index: 10000; pointer-events: none; box-shadow: 0px -2px 10px rgba(0, 68, 255, 0.8);
+.tilt-card img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.section__text{display:flex;flex-direction:column;align-items:flex-start;gap:1.5rem}
+.btn-container{display:flex;justify-content:flex-start;gap:2rem;margin-bottom:2rem}
+.socials-container{display:flex;gap:1.5rem;margin-top:1rem}
+.socials-container .icon{transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease}
+.socials-container .icon:hover{transform:translateY(-8px) scale(1.15);filter:invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8))}
+.btn{font-family:"Tungsten Compressed Medium", sans-serif;font-size:2.25rem;font-weight:600;padding:1.2rem 2rem;width:auto;min-width:16rem;text-transform:uppercase;letter-spacing:0.1rem;transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease}
+.btn::after{content:' \2197\FE0E';margin-left:0.8rem;font-family:"Gotham Book", sans-serif;font-weight:bold}
+.btn-color-1{background:transparent;color:var(--paper);border:2px solid var(--accent);box-shadow:6px 6px 0px rgba(0, 68, 255, 0.2)}
+.btn-color-1:hover{background:var(--accent);color:#ffffff;border-color:var(--accent);transform:translate(-4px, -4px);box-shadow:10px 10px 0px rgba(255, 255, 255, 0.2)}
+#about, #experience, #contact{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%}
+.section__text__p1{text-align:center;width:100%;color:var(--accent);font-family:"Gotham Book", sans-serif;font-size:2rem;letter-spacing:0.15rem;margin-bottom:0.5rem}
+.bento-grid{display:grid;grid-template-columns:repeat(3, 1fr);grid-template-rows:auto auto;gap:1.5rem;width:100%;max-width:1400px;margin:0 auto;padding:0 2rem}
+.bento-tile{background:rgba(15, 15, 15, 0.6);backdrop-filter:blur(12px);border:1px solid rgba(255, 255, 255, 0.08);border-radius:1.5rem;padding:2.5rem;transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;display:flex;flex-direction:column;justify-content:center}
+.bento-heading{font-family:'Sequel 85', sans-serif;font-size:2rem;color:var(--accent);margin-bottom:1rem}
+.bento-text{font-family:'Gotham Book', sans-serif;font-size:1.15rem;line-height:1.6;margin-bottom:1.5rem;color:var(--paper)}
+.secondary-text{color:#cccccc;margin-bottom:0}
+.bento-label{display:block;font-family:"Gotham Black", sans-serif;font-size:clamp(0.7rem, 1.1vw, 0.85rem);color:var(--accent);letter-spacing:0.15rem;margin-bottom:0.5rem;text-transform:uppercase}
+.bento-value{display:block;font-family:"Gotham Book", sans-serif;font-size:1rem;color:#cccccc;line-height:1.4}
+.bio-tile{grid-column:span 2;justify-content:flex-start}
+.music-tile{grid-column:span 1;align-items:center;text-align:center}
+.project-tile{grid-column:span 1;text-align:left}
+.trivia-tile{grid-column:span 2}
+.vinyl-container{width:100px;height:100px;margin-bottom:1.5rem;position:relative}
+.vinyl-record{width:100%;height:100%;background:linear-gradient(45deg, #111, #333, #111, #333);border-radius:50%;border:2px solid rgba(255,255,255,0.1);display:flex;justify-content:center;align-items:center;box-shadow:0 10px 20px rgba(0,0,0,0.5);animation:spinVinyl 4s linear infinite}
+.vinyl-label{width:35%;height:35%;background:var(--accent);border-radius:50%;border:2px solid #111}
+@keyframes spinVinyl{
+  100%{transform:rotate(360deg)}
 }
-
-.scroll-progress-bar::before, .scroll-progress-bar::after {
-      content: ''; position: fixed; top: 0; width: 1px; height: 100vh;
-      background: rgba(255, 255, 255, 0.04); z-index: -1; pointer-events: none;
+.bento-icon{font-size:2.5rem;color:rgba(255,255,255,0.2);margin-bottom:1rem}
+.trivia-list{list-style:none;display:flex;justify-content:space-between;width:100%}
+.trivia-list li{display:flex;flex-direction:column}
+.about-containers{display:grid;grid-template-columns:repeat(2, 1fr);gap:2.5rem;width:100%;max-width:1400px;margin:0 auto}
+.details-container{width:100%;min-width:0;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start}
+.details-container, .contact-info-upper-container{background:rgba(15, 15, 15, 0.6);backdrop-filter:blur(10px);border:1px solid rgba(255, 255, 255, 0.1);border-radius:1rem;padding:2.5rem;color:var(--paper);box-shadow:0 15px 35px rgba(0, 0, 0, 0.5);transition:transform 0.3s ease, border-color 0.3s ease;text-align:center;overflow:hidden;position:relative;animation:pulseGlow 6s infinite alternate ease-in-out}
+.details-container:hover, .contact-info-upper-container:hover{transform:translateY(-5px);border-color:rgba(0, 68, 255, 0.5)}
+.details-container:nth-child(even){animation-delay:3s}
+.details-container.clickable{cursor:pointer}
+.experience-sub-title{color:var(--accent);font-weight:600;font-size:1.4rem;margin-bottom:2rem}
+.promotion-text{font-size:0.85rem;color:#888;margin-bottom:1.2rem;letter-spacing:0.1rem;text-transform:uppercase;font-family:'Gotham Book', sans-serif}
+.details-container h2, .details-container h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1rem;margin-bottom:0.5rem}
+.details-container h3{text-transform:uppercase}
+.details-container p{font-family:"Gotham Book", sans-serif;white-space:normal;line-height:1.6;margin-top:1rem;color:#cccccc;text-wrap:pretty}
+.contact-info-upper-container{display:flex;flex-direction:row;justify-content:center;flex-wrap:wrap;gap:3rem;padding:1.5rem 4rem;border-radius:50px}
+.contact-info-container{display:flex;align-items:center;justify-content:center;gap:.5rem;margin:1rem}
+.contact-text{font-family:'Gotham Book', sans-serif;color:#cccccc;line-height:1.5}
+.contact-text a{color:#cccccc;transition:color 0.3s ease}
+.contact-text a:hover{color:var(--accent)}
+.details-container .icon, .contact-info-upper-container .icon{filter:invert(1);margin-bottom:0.5rem;height:2.5rem}
+@keyframes pulseGlow{
+  0%{box-shadow:0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0)}
+  50%{box-shadow:0 15px 50px rgba(0, 68, 255, 0.15), inset 0 0 15px rgba(0, 68, 255, 0.1)}
+  100%{box-shadow:0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0)}
 }
-.scroll-progress-bar::before { left: 20%; }
-.scroll-progress-bar::after { right: 20%; }
-
-#particle-canvas {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-      background-color: #050505; z-index: -1; pointer-events: none; overflow: hidden;
+.details-container::after, .contact-info-upper-container::after{content:'';position:absolute;top:0;left:-150%;width:50%;height:100%;background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 100%);transform:skewX(-25deg);animation:glassSweep 8s infinite cubic-bezier(0.25, 1, 0.5, 1);pointer-events:none;z-index:10}
+.details-container:nth-child(2)::after{animation-delay:2s}
+.details-container:nth-child(3)::after{animation-delay:4s}
+.details-container:nth-child(4)::after{animation-delay:6s}
+@keyframes glassSweep{
+  0%{left:-150%}
+  20%{left:200%}
+  100%{left:200%}
 }
-
-.star {
-      position: absolute; background-color: #ffffff; border-radius: 50%; opacity: 0; 
-      box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 255, 255, 0.6); 
-      animation: pulseAndDrift linear infinite; will-change: transform, opacity; 
-}
-
-@keyframes pulseAndDrift {
-      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-      50% { opacity: 1; transform: translate(calc(var(--drift-x) / 2), calc(var(--drift-y) / 2)) scale(1.8); }
-      100% { opacity: 0; transform: translate(var(--drift-x), var(--drift-y)) scale(0.5); }
-}
-
-.reveal-on-scroll { 
-      opacity: 0; 
-      transform: translateY(40px); 
-      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
-      clip-path: none; 
-}
-.reveal-on-scroll.is-visible { 
-      opacity: 1;
-      transform: translateY(0);
-}
-
-body::before {
-      content: ''; position: fixed; top: -20vh; left: -10vw; width: 60vw; height: 60vw;
-      background: radial-gradient(circle, rgba(0, 68, 255, 0.08) 0%, transparent 60%); z-index: -2; pointer-events: none;
-}
-body::after {
-      content: ''; position: fixed; bottom: -20vh; right: -10vw; width: 70vw; height: 70vw;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 60%); z-index: -2; pointer-events: none;
-}
-
-/* =========================================
-   3. VAULT PRELOADER
-   ========================================= */
-#vault-preloader { 
-      position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 999999; 
-      display: flex; justify-content: center; align-items: center; pointer-events: none; 
-}
-
-.vault-content { 
-      position: relative; z-index: 2; display: flex; flex-direction: column; 
-      align-items: center; text-align: center; transition: opacity 0.4s ease; 
-}
-
-.vault-door { position: absolute; top: 0; width: 50%; height: 100vh; background: #050505; transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1; }
-.vault-door.left { left: 0; }
-.vault-door.right { right: 0; }
-.vault-title { font-family: "Sequel 85", sans-serif; font-size: 4rem; color: var(--paper); letter-spacing: 0.2rem; margin-bottom: 0.5rem; }
-.vault-sub { font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); letter-spacing: 0.5rem; }
-.vault-sub::after { content: ""; animation: dots 1.5s infinite steps(4); }
-@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
-body.vault-open .vault-door.left { transform: translateX(-100%); }
-body.vault-open .vault-door.right { transform: translateX(100%); }
-body.vault-open .vault-content { opacity: 0; }
-
-/* =========================================
-   4. HEADER & NAVIGATION
-   ========================================= */
-#main-header {
-      position: fixed; top: 0; left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); 
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 10000; 
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-}
-nav { align-items: center; justify-content: space-between; height: 12vh; width: 100%; padding: 0 2rem; display: flex; }
-.logo-link { display: flex; align-items: center; text-decoration: none; }
-.logo-img, .icon { filter: invert(1); }
-.logo-img { height: 5rem; width: auto; transition: transform 0.3s ease, opacity 0.3s ease; }
-.logo-link:hover .logo-img { transform: scale(1.15); opacity: 0.8; }
-.icon { cursor: none; height: 3rem; transition: transform 0.3s ease; }
-.icon:hover { transform: scale(1.15); }
-
-.nav-links { display: flex; gap: 2rem; list-style: none; font-size: 1.5rem; }
-.nav-links a { position: relative; text-decoration: none; transition: transform 0.3s ease; }
-.nav-links a:hover { color: var(--accent); transform: scale(1.05); }
-.nav-links a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -6px; left: 0; background-color: var(--accent); transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-.nav-links a:hover::after { width: 100%; }
-
-#hamburger-nav { display: none; }
-.hamburger-menu { position: relative; display: inline-block; }
-.hamburger-icon { display: flex; flex-direction: column; justify-content: space-between; height: 24px; width: 32px; z-index: 10001; position: relative; cursor: pointer; }
-.hamburger-icon span { width: 100%; height: 2px; background-color: var(--paper); transition: all 0.3s ease-in-out; transform-origin: left center; }
-.hamburger-icon.open span:first-child { transform: rotate(45deg); }
-.hamburger-icon.open span:nth-child(2) { opacity: 0; width: 0; }
-.hamburger-icon.open span:last-child { transform: rotate(-45deg); }
-
-.menu-links { 
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-      background: radial-gradient(circle at bottom right, rgba(0, 68, 255, 0.2) 0%, rgba(5, 5, 5, 0.98) 60%); 
-      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4vh; 
-      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 9999; 
-}    
-.menu-links li { list-style: none; overflow: hidden; }
-.menu-links a { font-family: "Sequel 85", sans-serif; font-size: clamp(2rem, 10vw, 4rem); letter-spacing: 0.2rem; color: var(--paper); text-transform: uppercase; transform: translateY(100%); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, color 0.3s ease; }
-.menu-links.open { opacity: 1; pointer-events: auto; }
-.menu-links.open a { transform: translateY(0); opacity: 1; transition-delay: calc(0.1s * var(--i)); }
-.menu-links a:hover { color: var(--accent); }
-
-/* =========================================
-   5. PROFILE / HERO SECTION
-   ========================================= */
-#profile { position: relative; display: flex; justify-content: center; align-items: flex-start; min-height: 80vh; padding-top: 18vh; padding-bottom: 2rem; width: 100%; }
-.profile-content { display: flex; justify-content: center; align-items: center; gap: 5vh; z-index: 10; max-width: 1300px; width: 100%; padding: 0 2rem; position: relative; }
-
-.tilt-card { 
-      position: relative; width: 500px; height: 640px; border-radius: 0; border: 2px solid var(--paper); 
-      box-shadow: 15px 15px 0px var(--accent); overflow: hidden; margin: 0; flex-shrink: 0; z-index: 2;
-      animation: autonomousFloat 10s ease-in-out infinite; will-change: transform, box-shadow; 
-}
-@keyframes autonomousFloat {
-      0% { transform: translateY(0px) rotate3d(1, 1, 0, 0deg); box-shadow: 15px 15px 0px var(--accent); }
-      33% { transform: translateY(-12px) rotate3d(1, -1, 0, 2deg); box-shadow: 20px 20px 0px rgba(0, 68, 255, 0.6); }
-      66% { transform: translateY(8px) rotate3d(-1, 1, 0, -1deg); box-shadow: 10px 10px 0px rgba(0, 68, 255, 0.9); }
-      100% { transform: translateY(0px) rotate3d(1, 1, 0, 0deg); box-shadow: 15px 15px 0px var(--accent); }
-}
-.tilt-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-
-.section__text { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-#profile .section__text__p1 { font-family: "Gotham Book", sans-serif; font-size: 1.2rem; color: var(--accent); letter-spacing: 0.3rem; text-transform: uppercase; margin-bottom: -1rem; font-weight: bold; text-align: left; width: 100%; display: block; }
-#profile .title { 
-      font-size: clamp(2.5rem, 4.5vw, 5.5rem); 
-      line-height: 1.1; 
-      text-shadow: 4px 4px 0px rgba(0, 68, 255, 0.6); 
-      margin-bottom: 0.5rem; 
-      text-align: left; 
-      white-space: nowrap;
-      color: var(--paper);
-      text-transform: uppercase;
-}
-#profile .section__text__p2 { font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2rem; color: #cccccc; letter-spacing: 0.15rem; text-transform: uppercase; margin-bottom: 2.5rem; }
-
-.btn-container { display: flex; justify-content: flex-start; gap: 2rem; margin-bottom: 2rem; }
-.socials-container { display: flex; gap: 1.5rem; margin-top: 1rem; }
-.socials-container .icon { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease; }
-.socials-container .icon:hover { transform: translateY(-8px) scale(1.15); filter: invert(1) drop-shadow(0px 8px 10px rgba(0, 68, 255, 0.8)); }
-
-.btn { 
-      font-family: "Tungsten Compressed Medium", sans-serif; 
-      font-size: 2.25rem; 
-      font-weight: 600; 
-      padding: 1.2rem 2rem; 
-      width: auto; 
-      min-width: 16rem; 
-      border-radius: 0;
-      border: 1px solid var(--paper);
-      text-transform: uppercase; 
-      letter-spacing: 0.1rem; 
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-.btn-color-2 { 
-      background: var(--paper); color: #050505; box-shadow: 8px 8px 0px var(--accent); 
-}
-.btn-color-2:hover { 
-      transform: translate(-4px, -4px); box-shadow: 12px 12px 0px var(--accent); 
-}
-.btn::after { 
-      content: ' \2197\FE0E'; margin-left: 0.8rem; font-family: "Gotham Book", sans-serif; font-weight: bold; 
-}
-.btn-color-1 { background: transparent; color: var(--paper); border: 2px solid var(--accent); box-shadow: 6px 6px 0px rgba(0, 68, 255, 0.2); }
-.btn-color-1:hover { background: var(--accent); color: #ffffff; border-color: var(--accent); transform: translate(-4px, -4px); box-shadow: 10px 10px 0px rgba(255, 255, 255, 0.2); }
-
-/* =========================================
-   6. GLOBAL SECTION LAYOUTS
-   ========================================= */
-#about, #experience, #contact { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
-.section__text__p1 { 
-      text-align: center; 
-      width: 100%; 
-      color: var(--accent); 
-      font-family: "Gotham Book", sans-serif; 
-      font-size: 2rem; 
-      letter-spacing: 0.15rem; 
-      margin-bottom: 0.5rem; 
-}
-
-/* =========================================
-   7. ABOUT ME: ASYMMETRIC BENTO GRID
-   ========================================= */
-.bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 1.5rem; width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-
-.bento-tile { background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; padding: 2.5rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease; display: flex; flex-direction: column; justify-content: center; }
-.bento-tile:hover { transform: translateY(-5px); border-color: rgba(0, 68, 255, 0.4); opacity: 1; filter: blur(0px); z-index: 10; }
-
-.bento-heading { font-family: 'Sequel 85', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 1rem; }
-.bento-text { font-family: 'Gotham Book', sans-serif; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1.5rem; color: var(--paper); }
-.secondary-text { color: #cccccc; margin-bottom: 0; }
-
-.bento-label { 
-      display: block; 
-      font-family: "Gotham Black", sans-serif; 
-      font-size: clamp(0.7rem, 1.1vw, 0.85rem); 
-      color: var(--accent); 
-      letter-spacing: 0.15rem; 
-      margin-bottom: 0.5rem; 
-      text-transform: uppercase;
-}
-.bento-value { 
-      display: block; 
-      font-family: "Gotham Book", sans-serif; 
-      font-size: 1rem; 
-      color: #cccccc; 
-      line-height: 1.4; 
-}
-
-.bio-tile { grid-column: span 2; justify-content: flex-start; }
-.music-tile { grid-column: span 1; align-items: center; text-align: center; }
-.project-tile { grid-column: span 1; text-align: left; }
-.trivia-tile { grid-column: span 2; }
-
-.vinyl-container { width: 100px; height: 100px; margin-bottom: 1.5rem; position: relative; }
-.vinyl-record { width: 100%; height: 100%; background: linear-gradient(45deg, #111, #333, #111, #333); border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); animation: spinVinyl 4s linear infinite; }
-.vinyl-label { width: 35%; height: 35%; background: var(--accent); border-radius: 50%; border: 2px solid #111; }
-@keyframes spinVinyl { 100% { transform: rotate(360deg); } }
-
-.bento-icon { font-size: 2.5rem; color: rgba(255,255,255,0.2); margin-bottom: 1rem; }
-.trivia-list { list-style: none; display: flex; justify-content: space-between; width: 100%; }
-.trivia-list li { display: flex; flex-direction: column; }
-
-/* =========================================
-   8. GLASSMORPHISM CARDS (EXPERIENCE & CONTACT)
-   ========================================= */
-.about-containers {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 2.5rem;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-}
-
-.details-container {
-      width: 100%;
-      min-width: 0; 
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-}
-
-.details-container, .contact-info-upper-container {
-      background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); 
-      border-radius: 1rem; padding: 2.5rem; color: var(--paper); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); 
-      transition: transform 0.3s ease, border-color 0.3s ease; text-align: center;
-      overflow: hidden; position: relative;
-      animation: pulseGlow 6s infinite alternate ease-in-out;
-}
-.details-container:hover, .contact-info-upper-container:hover { transform: translateY(-5px); border-color: rgba(0, 68, 255, 0.5); }
-.details-container:nth-child(even) { animation-delay: 3s; }
-.details-container.clickable { cursor: pointer; }
-
-.experience-sub-title { color: var(--accent); font-weight: 600; font-size: 1.4rem; margin-bottom: 2rem; }
-.promotion-text { font-size: 0.85rem; color: #888; margin-bottom: 1.2rem; letter-spacing: 0.1rem; text-transform: uppercase; font-family: 'Gotham Book', sans-serif; }
-
-.details-container h2, .details-container h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1rem; margin-bottom: 0.5rem; }
-.details-container h3 { text-transform: uppercase; font-size: 1.5rem; margin-bottom: 0.2rem; }
-
-.details-container p {
-      font-family: "Gotham Book", sans-serif;
-      white-space: normal;
-      line-height: 1.6;
-      margin-top: 1rem;
-      color: #cccccc;
-      text-wrap: pretty;
-}
-
-.contact-info-upper-container { display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 3rem; padding: 1.5rem 4rem; border-radius: 50px; }
-.contact-info-container { display: flex; align-items: center; justify-content: center; gap: .5rem; margin: 1rem; }
-.contact-text { font-family: 'Gotham Book', sans-serif; color: #cccccc; line-height: 1.5; }
-.contact-text a { color: #cccccc; transition: color 0.3s ease; }
-.contact-text a:hover { color: var(--accent); }
-.details-container .icon, .contact-info-upper-container .icon { filter: invert(1); margin-bottom: 0.5rem; height: 2.5rem; }
-
-@keyframes pulseGlow {
-      0% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0); }
-      50% { box-shadow: 0 15px 50px rgba(0, 68, 255, 0.15), inset 0 0 15px rgba(0, 68, 255, 0.1); }
-      100% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 0px rgba(0, 68, 255, 0); }
-}
-
-.details-container::after, .contact-info-upper-container::after {
-      content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0) 100%);
-      transform: skewX(-25deg); animation: glassSweep 8s infinite cubic-bezier(0.25, 1, 0.5, 1); pointer-events: none; z-index: 10;
-}
-.details-container:nth-child(2)::after { animation-delay: 2s; }
-.details-container:nth-child(3)::after { animation-delay: 4s; }
-.details-container:nth-child(4)::after { animation-delay: 6s; }
-@keyframes glassSweep { 0% { left: -150%; } 20% { left: 200%; } 100% { left: 200%; } }
-
-/* =========================================
-   9. PROJECTS & CAROUSEL
-   ========================================= */
-#projects { position: relative; padding-top: 15vh; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-#projects .title { margin-bottom: 2rem; }
-
-.project-filters { display: flex; justify-content: center; gap: 2rem; margin-top: 0; margin-bottom: 3rem; flex-wrap: wrap; z-index: 20; }
-.desktop-filters { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; }
-.mobile-filters { display: none; width: 100%; justify-content: center; margin-bottom: 2rem; }
-#mobile-project-dropdown { width: 80%; max-width: 350px; padding: 0.8rem 1rem; font-family: "Tungsten Compressed Medium", sans-serif; font-size: 1.8rem; letter-spacing: 0.1rem; background: rgba(15, 15, 15, 0.9); color: var(--accent); border: 2px solid var(--accent); border-radius: 6px; outline: none; text-align: center; cursor: pointer; }
-
-.filter-btn { background: transparent; border: none; color: #f0f0f0; font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2.5rem; letter-spacing: 0.15rem; transition: color 0.3s ease, transform 0.3s ease; padding-bottom: 0.2rem; }
-.filter-btn:hover { color: var(--paper); }
-.filter-btn.active-filter { color: var(--accent); border-bottom: 2px solid var(--accent); }
-
-/* Essential Utility class for Javascript toggles */
-.hidden-project { display: none !important; }
-
-.carousel-container { position: relative; width: 100%; height: 48vh; display: flex; align-items: center; justify-content: center; overflow: visible; margin-top: 0; }
-.carousel-gallery { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-
-.carousel-img { height: 45vh; width: auto; max-width: 48vw; object-fit: contain; box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.7); transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-
-.carousel-item { position: absolute; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; opacity: 0; transform: translateX(0) scale(0.5); z-index: 0; pointer-events: none; display: block; }
-.carousel-item.active { opacity: 1; transform: translateX(0) scale(1); z-index: 10; pointer-events: auto; }
-.carousel-item.active:hover .carousel-img { transform: scale(1.08); cursor: none; }
-.carousel-item.prev { opacity: 1; transform: translateX(-22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
-.carousel-item.next { opacity: 1; transform: translateX(22vw) scale(0.8); z-index: 5; pointer-events: auto; filter: brightness(0.6); }
-.carousel-item.prev-2 { opacity: 1; transform: translateX(-40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }
-.carousel-item.next-2 { opacity: 1; transform: translateX(40vw) scale(0.65); z-index: 2; pointer-events: auto; filter: brightness(0.3); }
-.carousel-item.prev:hover, .carousel-item.next:hover { filter: brightness(0.9); }
-.carousel-item.prev-2:hover, .carousel-item.next-2:hover { filter: brightness(0.7); }
-
-.carousel-caption { font-family: "Tungsten Compressed Medium", sans-serif; font-size: 2rem; color: var(--paper); text-align: center; margin-top: 1.5rem; letter-spacing: 0.1rem; opacity: 0; transition: opacity 0.3s; }
-.carousel-item.active .carousel-caption::after { content: "CLICK TO EXPLORE"; display: block; font-family: "Gotham Book", sans-serif; font-size: 1rem; color: var(--accent); margin-top: 0.8rem; letter-spacing: 0.15rem; opacity: 0; animation: pulseText 2s infinite ease-in-out; }
-
-.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--paper); font-size: 4rem; z-index: 20; transition: color 0.3s ease, transform 0.3s ease; }
-.carousel-arrow:hover { color: var(--accent); transform: translateY(-50%) scale(1.1); }
-.left-arrow { left: 5%; }
-.right-arrow { right: 5%; }
-
-/* =========================================
-   10. THUMBNAIL SYSTEM (Standard & Top Ten)
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      justify-content: flex-start; 
-      align-items: center; 
-      flex-wrap: nowrap; 
-      overflow-x: auto; 
-      overflow-y: visible; 
-      width: 100%;
-      max-width: 85vw; 
-      gap: 1.5rem; 
-      margin: 0 auto 3rem auto; 
-      padding: 1.5rem 1rem 2rem 1rem; 
-      z-index: 20; 
-      counter-reset: topTenCounter; 
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-}
-
-.carousel-thumbnails::-webkit-scrollbar {
-      height: 4px; 
-}
-.carousel-thumbnails::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 10px;
-}
-.carousel-thumbnails::-webkit-scrollbar-thumb {
-      background: rgba(0, 68, 255, 0.3); 
-      border-radius: 10px;
-      transition: background 0.3s ease;
-}
-.carousel-thumbnails::-webkit-scrollbar-thumb:hover {
-      background: var(--accent); 
-}
-
-.carousel-thumbnails.top-ten-mode {
-      justify-content: center;
-      overflow-x: visible;
-}
-
-.thumbnail-wrapper { position: relative; cursor: none; z-index: 1; }
-
-.thumbnail-dot { height: 75px; width: auto; object-fit: contain; border-radius: 4px; opacity: 0.35; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(0%); }
-.thumbnail-dot:hover { opacity: 0.8; transform: translateY(-3px); }
-.thumbnail-dot.active-thumb { opacity: 1; transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); }
-.thumbnail-wrapper::before { display: none; }
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper { 
-      counter-increment: topTenCounter; 
-      flex-shrink: 0; 
-}
-
-/* Fluid dimensions: No fixed heights. Relies on aspect-ratio for perfect card shapes */
-.carousel-thumbnails.top-ten-mode .thumbnail-dot { 
-      width: clamp(45px, 5.5vw, 85px) !important; 
-      height: auto !important; 
-
-      
-      opacity: 0.4; 
-      filter: grayscale(100%); 
-      object-fit: cover; 
-      border-radius: 4px; /* Slight softening to catch the glow */
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-dot:hover { 
-      opacity: 0.8; 
-      transform: translateY(-5px); 
-}
-
-/* THE FIX: Massive Electric Blue Prizm Glow */
-.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb { 
-      opacity: 1; 
-      filter: grayscale(0%); 
-      transform: scale(1.15) translateY(-8px); 
-      
-      border: 2px solid var(--accent) !important; 
-      box-shadow: 0 15px 35px rgba(0, 68, 255, 0.5), 
-                  0 0 25px rgba(0, 68, 255, 0.8),
-                  inset 0 0 15px rgba(0, 68, 255, 0.4) !important; 
-}
-
-/* THE FIX: Expanded Gap for Breathing Room */
-.carousel-thumbnails.top-ten-mode { 
-      max-width: 85vw !important; 
-      margin: 0 auto 3rem auto !important;
-      
-      /* Increased the preferred gap to 3vw to push the cards further apart */
-      gap: clamp(1rem, 3vw, 3.5rem) !important; 
-}
-
-/* THE FIX: Restored the Corner Overlap */
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
-      display: block; 
-      content: counter(topTenCounter); 
-      position: absolute; 
-      
-      /* Restores the physical overlap on the bottom-left corner */
-      bottom: -8%; 
-      left: -25%; 
-      
-      font-family: "Sequel 85", sans-serif; 
-      
-      /* THE MATH: Maxes out at 3vw. Since the gap is also 3vw, the number physically cannot hit the next card. */
-      font-size: clamp(1.8rem, 3vw, 3rem) !important; 
-      line-height: 0.75; 
-      letter-spacing: -0.05em; 
-      
-      color: rgba(255, 255, 255, 0.2); 
-      -webkit-text-stroke: 0; 
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-      
-      z-index: 5; 
-      pointer-events: none; 
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* THE FIX: Active Number Glow */
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before { 
-      color: var(--accent); 
-      text-shadow: 0 0 20px rgba(0, 68, 255, 0.6); 
-      transform: scale(1.1) translate(-2px, -2px); 
-}
-/* --- Deep Dive Modal --- */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.98); z-index: 99999; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; overflow-x: hidden; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-.modal-overlay.show-modal { opacity: 1; pointer-events: auto; }
-.modal-content { position: relative; width: 90%; max-width: 1000px; margin: 5vh auto; background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 4rem; color: var(--paper); z-index: 100000; box-shadow: 0px 20px 50px rgba(0,0,0,0.8); }
-.modal-close { position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; color: var(--paper); font-size: 2rem; transition: color 0.3s ease, transform 0.3s ease; z-index: 999999; cursor: pointer; pointer-events: auto; }
-.modal-close:hover { color: var(--accent); transform: scale(1.2); }
-.modal-hero-img { width: 100%; height: auto; max-height: 70vh; object-fit: contain; margin-bottom: 2rem; }
-#modal-body-content h2 { font-family: "Sequel 85", sans-serif; font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
-#modal-body-content p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 1rem; }
-
-.presentation-stack { display: flex; flex-direction: column; align-items: center; width: 100%; }
-.presentation-slide { width: 100%; height: auto; max-width: 900px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 4px; }
-#modal-body-content .presentation-stack { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 0; margin-bottom: 3rem; min-height: 60vh; }
-.modal-slide-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(5, 5, 5, 0.85); border: 2px solid var(--paper); color: var(--paper); font-size: 2.5rem; padding: 0.5rem 1.2rem; z-index: 100; transition: all 0.3s ease; }
-.modal-slide-arrow:hover { background: var(--accent); border-color: var(--accent); color: white; }
-.modal-slide-arrow.left-arrow { left: -2rem; }
-.modal-slide-arrow.right-arrow { right: -2rem; }
-
-/* THE FLUID SINGLE-LINE FIX */
-body section#writing h1.title {
-      /* Min size: 1.2rem (safe for tiny phones). Preferred: 4vw (scales with screen). Max: 3.5rem */
-      font-size: clamp(1.2rem, 4vw, 3.5rem) !important; 
-      
-      /* Physically forces the browser to keep it on one line */
-      white-space: nowrap !important; 
-      
-      margin-bottom: 2rem !important;
-}
-/* =========================================
-   10. STILLMAN EXCHANGE: EDITORIAL INDEX
-   ========================================= */
-#writing { display: flex; flex-direction: column; align-items: center; min-height: auto; padding-bottom: 10vh; }
-
-.editorial-header-controls { width: 96%; max-width: 1900px; display: flex; justify-content: flex-end; margin-bottom: 1rem; }
-.article-sort-select { background: transparent; color: var(--accent); border: 1px solid rgba(255, 255, 255, 0.2); font-family: 'Gotham Book', sans-serif; padding: 0.5rem 1rem; font-size: 1rem; outline: none; }
-.article-sort-select option { color: black; }
-
-.editorial-index-container {
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-      width: 96%; 
-      max-width: 1900px; 
-      margin-top: 2rem; 
-      border-top: 1px solid rgba(255, 255, 255, 0.15); 
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
-      z-index: 10; 
-      max-height: 70vh; 
-      overflow-y: auto; 
-      overflow-x: hidden; 
-      padding-right: 1rem; 
-      display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      
-      /* THE FIX: Replaces column-gap to apply space everywhere */
-      gap: 3rem; 
-      align-content: start; 
-}
-.editorial-index-container::-webkit-scrollbar { width: 4px; }
-.editorial-index-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
-.editorial-row { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: flex-start; 
-      justify-content: flex-start; 
-      gap: 0.8rem; 
-      
-      /* THE FIX: Restores the original minimal padding */
-      padding: 2rem 0.5rem; 
-      
-      /* THE FIX: Kills the full box border and restores the bottom line */
-      border: none; 
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
-      border-radius: 0; 
-      
-      background: transparent; 
-      color: var(--paper); 
-      text-decoration: none; 
-      
-      /* THE FIX: Restores the smooth padding slide */
-      transition: background 0.4s ease, padding-left 0.4s ease; 
-      height: auto; 
-}
-
-.editorial-row:hover { 
-      background: rgba(0, 68, 255, 0.05); 
-      
-      /* THE FIX: Restores the rightward slide effect */
-      padding-left: 1.5rem; 
-      transform: none; 
-      
-      /* THE FIX: Keeps the bottom border static so it doesn't flash */
-      border-color: rgba(255, 255, 255, 0.15) !important; 
-      box-shadow: none;
-                  
-      opacity: 1 !important; 
-      filter: blur(0px) !important; 
-      z-index: 10; 
-}
-
-.editorial-action { 
-      font-family: "Tungsten Compressed Medium", sans-serif; 
-      font-size: 1.3rem; 
-      letter-spacing: 0.1rem; 
-      color: #666666; 
-      transition: color 0.3s ease; 
-      
-      /* THE FIX: Restores the tight spacing to the text above it */
-      margin-top: 0.5rem; 
-}
-.editorial-meta { font-family: "Gotham Book", sans-serif; font-size: 0.85rem; letter-spacing: 0.15rem; color: var(--accent); width: 100%; display: flex; justify-content: space-between; }
-.editorial-title { 
-      /* Swaps out Sequel 85 for geometric Gotham Black */
-      font-family: "Gotham Black", sans-serif !important; 
-      
-      /* Keeps the title punchy and crisp inside the 3-column rows */
-      font-size: clamp(1.1rem, 1.4vw, 1.35rem) !important; 
-      color: var(--paper); 
-      text-transform: uppercase; 
-      margin: 0; 
-      width: 100%; 
-      transition: color 0.3s ease; 
-      line-height: 1.3; 
-      
-      /* THE MAGIC ENGINE: Automatically prevents lonely single-word widows */
-      text-wrap: pretty !important;
-}
-.editorial-row:hover .editorial-title { color: var(--accent); }
-
-.editorial-excerpt { font-family: "Gotham Book", sans-serif; font-size: 0.95rem; color: #999999; line-height: 1.6; margin: 0.5rem 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s ease; }
-.editorial-row:hover .editorial-excerpt { color: #cccccc; }
-
-.editorial-row:hover .editorial-action { color: var(--paper); }
-
-/* =========================================
-   11. FOOTER
-   ========================================= */
-footer { 
-      margin-top: 4vh !important; /* Reduced from 10vh to pull it up closer */
-      border-top: 1px solid rgba(255,255,255,0.1); 
-      padding-top: 5vh; 
-      padding-bottom: 2vh; 
-      width: 100%; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 2rem; 
-      margin-bottom: 0; 
-}
-.footer-logo { font-family: 'Sequel 85', sans-serif; font-size: 10vw; color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.1); line-height: 0.8; margin-bottom: -1rem; margin-top: 0; }
-.footer-tagline { font-family: 'Gotham Book', sans-serif; letter-spacing: 0.3rem; color: var(--accent); margin-bottom: 3rem; text-align: center; }
-.footer-copyright { font-family: 'Gotham Book', sans-serif; color: #666; font-size: 0.8rem; letter-spacing: 0.1rem; text-transform: uppercase; text-align: center; }
-
-/* =========================================
-   12. ATMOSPHERIC OPTICAL GLARE
-   ========================================= */
-.light-stream { position: fixed; pointer-events: none; z-index: 9998; mix-blend-mode: screen; border-radius: 50%; filter: none; background-repeat: no-repeat; will-change: transform, opacity; }
-.stream-1 { width: 150vw; height: 150vw; background: radial-gradient(circle at center, rgba(0, 68, 255, 0.08) 0%, transparent 60%); top: 50%; left: 50%; margin-top: -75vw; margin-left: -75vw; animation: driftLight 20s infinite alternate ease-in-out; }
-.stream-2 { width: 120vw; height: 120vw; background: radial-gradient(circle at center, rgba(0, 229, 255, 0.06) 0%, transparent 60%); top: 50%; left: 50%; margin-top: -60vw; margin-left: -60vw; animation: driftLight 25s infinite alternate-reverse ease-in-out; }
-.stream-3 { width: 150vw; height: 35vh; background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 229, 255, 0.07) 30%, transparent 70%); top: 50%; left: 50%; margin-top: -17.5vh; margin-left: -75vw; animation: sweepGlare 8s infinite linear; }
-@keyframes driftLight { 0% { transform: translate(-15vw, -15vh) scale(1); } 50% { transform: translate(15vw, 10vh) scale(1.1); } 100% { transform: translate(-10vw, 20vh) scale(0.9); } }
-@keyframes sweepGlare { 0% { transform: translate(-100vw, 100vh) rotate(-35deg); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translate(100vw, -100vh) rotate(-35deg); opacity: 0; } }
-/* =========================================
-   PREMIUM GLASS FINISH (Vercel / Apple Aesthetic)
-   ========================================= */
-.bento-tile, .details-container, .contact-info-upper-container {
-      background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(5, 5, 5, 0.95)) !important;
-      backdrop-filter: blur(24px) !important;
-      -webkit-backdrop-filter: blur(24px) !important;
-      
-      /* The magic 1px border that catches the light */
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      border-radius: 1.5rem !important;
-      
-      /* Deep shadow for depth, plus an inner highlight for the "glass" rim */
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
-                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-                  
-      overflow: hidden !important;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
-}
-/* Premium Hover State */
-.bento-tile:hover, .details-container:hover {
-      transform: translateY(-8px) scale(1.01) !important;
-      
-      /* Solid electric blue border */
-      border-color: var(--accent) !important; 
-      
-      /* Deep shadow underneath, strong blue glow outside, and an inner blue rim light */
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 
-                  0 0 40px rgba(0, 68, 255, 0.4), 
-                  inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                  inset 0 0 20px rgba(0, 68, 255, 0.2) !important; 
-}
-
-/* Elegant Button Restoration */
-.btn { 
-      border-radius: 8px !important; /* Softens the harsh corners */
-      border: 1px solid rgba(255,255,255,0.2) !important;
-}
-.btn-color-2 {
-      background: var(--paper);
-      color: #050505;
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1) !important;
-}
-.btn-color-2:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Only targets "THE HUMAN ELEMENT" inside the About section */
-section#about .section__text__p1 {
-    font-family: "Gotham Book", sans-serif !important; 
-}
-
-/* =========================================
-   6. GLOBAL SECTION LAYOUTS (RESTORED)
-   ========================================= */
-section { 
-      padding-top: 4vh; 
-      min-height: 100vh; 
-      height: auto; 
-      box-sizing: border-box; 
-      position: relative; 
-      z-index: 1; 
-      overflow: hidden; 
-}
-section:not(#profile) { scroll-margin-top: 12vh; }
-section:not(#profile) .title { font-size: clamp(4rem, 10vw, 7rem); margin-bottom: 3rem; }
-
-/* THE FIX: Safely shrink contact without breaking global properties */
-#contact {
-      min-height: auto !important;
-      padding-bottom: 6vh !important;
-}
-
-/* THE FIX: Give the bottom of your site breathing room */
-footer { 
-      margin-top: 4vh !important; 
-      border-top: 1px solid rgba(255,255,255,0.1); 
-      padding-top: 6vh !important; 
-      padding-bottom: 10vh !important; /* Pushes content away from screen baseline */
-      width: 100%; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 2rem; 
-      margin-bottom: 0; 
-}
-
-/* =========================================
-   PREMIUM EDITORIAL CAROUSEL UPGRADE
-   ========================================= */
-#projects .section__text__p1 {
-      font-family: "Gotham Book", sans-serif !important;
-      letter-spacing: 0.4rem !important;
-      font-size: 1.1rem !important;
-      font-weight: bold;
-      opacity: 0.8;
-}
-
-/* =========================================
-   CLEAN MINIMAL ONE-LINE FILTER UPGRADE
-   ========================================= */
-.project-filters {
-      /* Strips away the background box and border lines */
-      background: transparent !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      border: none !important;
-      box-shadow: none !important;
-      border-radius: 0 !important;
-      
-      /* Forces all elements to stay strictly on one line across laptop viewports */
+#projects{position:relative;padding-top:15vh;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#projects .title{margin-bottom:2rem}
+.project-filters{margin-top:0;margin-bottom:3rem;z-index:20}
+.desktop-filters {
       display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important; 
       justify-content: center !important;
-      align-items: center !important;
-      gap: clamp(1rem, 2vw, 3rem) !important; /* Dynamically pulls buttons closer together on smaller screens */
-      
+      gap: clamp(0.5rem, 1.5vw, 2rem) !important; /* Dynamically shrinks gap before breaking */
+      flex-wrap: nowrap !important; /* The master switch to prevent the second row */
       width: 100% !important;
-      max-width: 1400px !important;
-      margin: 1rem auto 5rem auto !important;
 }
-
-.filter-btn {
-      font-family: "Gotham Book", sans-serif !important;
-      font-size: 0.9rem !important;
-      font-weight: bold !important;
-      letter-spacing: 0.2rem !important;
-      text-transform: uppercase;
-      color: rgba(244, 244, 240, 0.4) !important; /* Subtle minimal resting state */
-      padding: 0.5rem 0.2rem !important; /* Pulls side padding tight for line alignment */
-      background: transparent !important;
-      border: none !important;
-      white-space: nowrap !important; /* Physically prevents single buttons from breaking internally */
-      transition: all 0.3s ease !important;
-      position: relative !important;
+.mobile-filters{display:none;width:100%;justify-content:center;margin-bottom:2rem}
+#mobile-project-dropdown{width:80%;max-width:350px;padding:0.8rem 1rem;font-family:"Tungsten Compressed Medium", sans-serif;font-size:1.8rem;letter-spacing:0.1rem;background:rgba(15, 15, 15, 0.9);color:var(--accent);border:2px solid var(--accent);border-radius:6px;outline:none;text-align:center;cursor:pointer}
+.filter-btn{padding-bottom:0.2rem}
+.hidden-project{display:none!important}
+.carousel-container{position:relative;width:100%;height:48vh;display:flex;align-items:center;justify-content:center;overflow:visible;margin-top:0}
+.carousel-gallery{position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center}
+.carousel-img{height:45vh;width:auto;max-width:48vw;object-fit:contain;box-shadow:0px 25px 50px rgba(0, 0, 0, 0.7);transition:transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)}
+.carousel-item.active{opacity:1;transform:translateX(0) scale(1);z-index:10;pointer-events:auto}
+.carousel-item.active:hover .carousel-img{cursor:none}
+.carousel-item.prev{opacity:1;transform:translateX(-22vw) scale(0.8);z-index:5;pointer-events:auto;filter:brightness(0.6)}
+.carousel-item.next{opacity:1;transform:translateX(22vw) scale(0.8);z-index:5;pointer-events:auto;filter:brightness(0.6)}
+.carousel-item.prev-2{opacity:1;transform:translateX(-40vw) scale(0.65);z-index:2;pointer-events:auto;filter:brightness(0.3)}
+.carousel-item.next-2{opacity:1;transform:translateX(40vw) scale(0.65);z-index:2;pointer-events:auto;filter:brightness(0.3)}
+.carousel-item.prev:hover, .carousel-item.next:hover{filter:brightness(0.9)}
+.carousel-item.prev-2:hover, .carousel-item.next-2:hover{filter:brightness(0.7)}
+.carousel-caption{font-family:"Tungsten Compressed Medium", sans-serif;font-size:2rem;color:var(--paper);text-align:center;margin-top:1.5rem;letter-spacing:0.1rem;opacity:0;transition:opacity 0.3s}
+.carousel-item.active .carousel-caption::after{content:"CLICK TO EXPLORE";display:block;font-family:"Gotham Book", sans-serif;font-size:1rem;color:var(--accent);margin-top:0.8rem;letter-spacing:0.15rem;opacity:0;animation:pulseText 2s infinite ease-in-out}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--paper);font-size:4rem;z-index:20;transition:color 0.3s ease, transform 0.3s ease}
+.carousel-arrow:hover{color:var(--accent);transform:translateY(-50%) scale(1.1)}
+.left-arrow{left:5%}
+.right-arrow{right:5%}
+.carousel-thumbnails::-webkit-scrollbar-thumb{transition:background 0.3s ease}
+.thumbnail-wrapper{cursor:none;z-index:1}
+.thumbnail-dot{filter:grayscale(0%)}
+.thumbnail-wrapper::before{display:none}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper{flex-shrink:0}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot{border-radius:4px;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot:hover{opacity:0.8;transform:translateY(-5px)}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before{-webkit-text-stroke:0}
+#modal-body-content h2{margin-bottom:1rem;color:var(--accent)}
+.presentation-stack{display:flex;flex-direction:column;align-items:center;width:100%}
+.presentation-slide{width:100%;height:auto;max-width:900px;border:1px solid rgba(255, 255, 255, 0.15);box-shadow:0px 10px 30px rgba(0, 0, 0, 0.5);border-radius:4px}
+#modal-body-content .presentation-stack{position:relative;display:flex;justify-content:center;align-items:center;width:100%;margin-top:0;margin-bottom:3rem;min-height:60vh}
+.modal-slide-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(5, 5, 5, 0.85);border:2px solid var(--paper);color:var(--paper);font-size:2.5rem;padding:0.5rem 1.2rem;z-index:100;transition:all 0.3s ease}
+.modal-slide-arrow:hover{background:var(--accent);border-color:var(--accent);color:white}
+.modal-slide-arrow.left-arrow{left:-2rem}
+.modal-slide-arrow.right-arrow{right:-2rem}
+body section#writing h1.title{font-size:clamp(1.2rem, 4vw, 3.5rem)!important;white-space:nowrap!important;margin-bottom:2rem!important}
+#writing{display:flex;flex-direction:column;align-items:center;min-height:auto;padding-bottom:10vh}
+.editorial-header-controls{width:96%;max-width:1900px;display:flex;justify-content:flex-end;margin-bottom:1rem}
+.article-sort-select{background:transparent;color:var(--accent);border:1px solid rgba(255, 255, 255, 0.2);font-family:'Gotham Book', sans-serif;padding:0.5rem 1rem;font-size:1rem;outline:none}
+.article-sort-select option{color:black}
+.editorial-index-container{-webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);mask-image:linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);width:96%;max-width:1900px;margin-top:2rem;border-top:1px solid rgba(255, 255, 255, 0.15);border-bottom:1px solid rgba(255, 255, 255, 0.15);z-index:10;max-height:70vh;overflow-y:auto;overflow-x:hidden;padding-right:1rem;display:grid;grid-template-columns:repeat(3, 1fr);gap:3rem;align-content:start}
+.editorial-index-container::-webkit-scrollbar{width:4px}
+.editorial-index-container::-webkit-scrollbar-track{background:rgba(255, 255, 255, 0.05)}
+.editorial-row{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0.8rem;padding:2rem 0.5rem;border:none;border-bottom:1px solid rgba(255, 255, 255, 0.15);border-radius:0;background:transparent;color:var(--paper);text-decoration:none;transition:background 0.4s ease, padding-left 0.4s ease;height:auto}
+.editorial-row:hover{background:rgba(0, 68, 255, 0.05);padding-left:1.5rem;transform:none;border-color:rgba(255, 255, 255, 0.15)!important;box-shadow:none;opacity:1!important;filter:blur(0px)!important;z-index:10}
+.editorial-action{font-family:"Tungsten Compressed Medium", sans-serif;font-size:1.3rem;letter-spacing:0.1rem;color:#666666;transition:color 0.3s ease;margin-top:0.5rem}
+.editorial-meta{font-family:"Gotham Book", sans-serif;font-size:0.85rem;letter-spacing:0.15rem;color:var(--accent);width:100%;justify-content:space-between}
+.editorial-title{font-family:"Gotham Black", sans-serif!important;font-size:clamp(1.1rem, 1.4vw, 1.35rem)!important;color:var(--paper);text-transform:uppercase;margin:0;width:100%;transition:color 0.3s ease;line-height:1.3;text-wrap:pretty!important}
+.editorial-row:hover .editorial-title{color:var(--accent)}
+.editorial-excerpt{font-family:"Gotham Book", sans-serif;font-size:0.95rem;color:#999999;line-height:1.6;margin:0.5rem 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;transition:color 0.3s ease}
+.editorial-row:hover .editorial-excerpt{color:#cccccc}
+.editorial-row:hover .editorial-action{color:var(--paper)}
+.footer-logo{font-family:'Sequel 85', sans-serif;font-size:10vw;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,0.1);line-height:0.8;margin-bottom:-1rem;margin-top:0}
+.footer-tagline{font-family:'Gotham Book', sans-serif;letter-spacing:0.3rem;color:var(--accent);margin-bottom:3rem;text-align:center}
+.footer-copyright{font-family:'Gotham Book', sans-serif;color:#666;font-size:0.8rem;letter-spacing:0.1rem;text-transform:uppercase;text-align:center}
+.light-stream{position:fixed;pointer-events:none;z-index:9998;mix-blend-mode:screen;border-radius:50%;filter:none;background-repeat:no-repeat;will-change:transform, opacity}
+.stream-1{width:150vw;height:150vw;background:radial-gradient(circle at center, rgba(0, 68, 255, 0.08) 0%, transparent 60%);top:50%;left:50%;margin-top:-75vw;margin-left:-75vw;animation:driftLight 20s infinite alternate ease-in-out}
+.stream-2{width:120vw;height:120vw;background:radial-gradient(circle at center, rgba(0, 229, 255, 0.06) 0%, transparent 60%);top:50%;left:50%;margin-top:-60vw;margin-left:-60vw;animation:driftLight 25s infinite alternate-reverse ease-in-out}
+.stream-3{width:150vw;height:35vh;background:radial-gradient(ellipse at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 229, 255, 0.07) 30%, transparent 70%);top:50%;left:50%;margin-top:-17.5vh;margin-left:-75vw;animation:sweepGlare 8s infinite linear}
+@keyframes driftLight{
+  0%{transform:translate(-15vw, -15vh) scale(1)}
+  50%{transform:translate(15vw, 10vh) scale(1.1)}
+  100%{transform:translate(-10vw, 20vh) scale(0.9)}
 }
-
-.filter-btn:hover {
-      color: var(--paper) !important;
+@keyframes sweepGlare{
+  0%{transform:translate(-100vw, 100vh) rotate(-35deg);opacity:0}
+  20%{opacity:1}
+  80%{opacity:1}
+  100%{transform:translate(100vw, -100vh) rotate(-35deg);opacity:0}
 }
-
-/* THE UPGRADE: Swaps the thick glowing block for a sharp, sleek editorial line accent */
-.filter-btn.active-filter {
-      color: var(--accent) !important; /* Highlights the active category text in your signature blue */
-      background: transparent !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      
-      /* Clean, precise underline marker */
-      border-bottom: 2px solid var(--accent) !important;
-}
-
-/* =========================================
-   CAROUSEL HEADER PROP-RATIO BALANCING (SPECIFIC LOCK)
-   ========================================= */
-body section#projects {
-      padding-top: 18vh !important; 
-}
-
-/* Stacking "body section#projects" beats the global "!important" higher up */
-body section#projects .title {
-      font-size: clamp(3rem, 7.5vw, 5.2rem) !important; /* Visibly brings the header size down */
-      letter-spacing: -0.02em !important; 
-      margin-bottom: 1rem !important; 
-}
-
-body section#projects .section__text__p1 {
-      font-family: "Gotham Book", sans-serif !important;
-      letter-spacing: 0.35rem !important;
-      font-size: 1rem !important;
-      margin-bottom: 0 !important;
-      text-transform: uppercase;
-      opacity: 0.75;
-}
-
-.project-filters {
-      margin: 2rem auto 5.5rem auto !important; 
-}
-
-/* =========================================
-   UNIVERSAL SECTION HEADER GROW ANIMATIONS
-   ========================================= */
-@keyframes growLineLeft {
-      0% { transform: scaleX(0); opacity: 0; }
-      15% { opacity: 1; } 
-      100% { transform: scaleX(1); opacity: 1; }
-}
-
-@keyframes growLineRight {
-      0% { transform: scaleX(0); opacity: 0; }
-      15% { opacity: 1; }
-      100% { transform: scaleX(1); opacity: 1; }
-}
-
-/* This will now apply to ANY section header container that gains the .start-reveal class */
-.start-reveal .projects-line-left {
-      transform-origin: left !important; 
-      animation: growLineLeft 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-      animation-delay: 0.1s !important;
-}
-
-.start-reveal .projects-line-right {
-      transform-origin: right !important;  
-      animation: growLineRight 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-      animation-delay: 0.1s !important;
-}
-
-/* =========================================
-   GLOBAL SYSTEMIC SECTION HEADER BALANCING
-   ========================================= */
-.section-header-trigger {
-      margin-bottom: 4.5rem !important; /* Standardizes clean spacing before card blocks start */
-}
-
-/* THE FIX: Hard-locks the titles inside your triggers to Gotham Black across the whole site */
-.section-header-trigger .title {
-      font-family: 'Gotham Black', sans-serif !important;
-      font-size: clamp(2.5rem, 6vw, 4rem) !important;
-      letter-spacing: -0.01em !important;
-      line-height: 1 !important;
-      text-transform: uppercase !important;
-      white-space: nowrap !important;
-}
-
-/* Formats "THE HUMAN ELEMENT", "EXPLORE MY", etc. into luxury tags */
-section .section__text__p1 {
-      font-family: 'Gotham Book', sans-serif !important; 
-      letter-spacing: 0.4rem !important; 
-      font-size: 0.85rem !important; 
-      margin-top: 14vh !important; /* Gives breathing room from top section */
-      margin-bottom: 1.2rem !important; 
-      text-transform: uppercase !important; 
-      color: #ffffff !important; 
-      opacity: 0.4 !important;
-      text-align: center !important;
-}
-
-/* =========================================
-   STILLMAN WRITING SECTION HEADER BALANCING
-   ========================================= */
-body section#writing .section-header-trigger .title {
-      font-family: 'Gotham Black', sans-serif !important;
-      /* Drops the ceiling max-size slightly from 4rem to 2.8rem to guarantee a beautiful single line fit */
-      font-size: clamp(1.4rem, 4.5vw, 2.8rem) !important;
-      letter-spacing: -0.01em !important;
-      line-height: 1.1 !important;
-      text-transform: uppercase !important;
-      white-space: nowrap !important;
-}
-
-/* =========================================
-   EXPERIENCE CARD ROLE TYPOGRAPHY UPGRADE
-   ========================================= */
-.details-container h3 {
-      /* Hard-locks the role subheads into clean geometric Gotham Black */
-      font-family: "Gotham Black", sans-serif !important;
-      
-      /* Safely scales the text down slightly so long titles stay on one clean line */
-      font-size: clamp(1.1rem, 1.6vw, 1.35rem) !important;
-      
-      /* Sharp, premium letter-spacing to balance the thick weight */
-      letter-spacing: -0.01em !important;
-      margin-top: 0.5rem !important;
-      margin-bottom: 0.3rem !important;
-}
-
-/* =========================================
-   PREMIUM EDITORIAL TELEMETRY DECK RECONSTRUCT
-   ========================================= */
-.telemetry-strip-container {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto 3rem auto;
-      
-      /* Smooth high-end frosted glass styling */
-      background: linear-gradient(145deg, rgba(15, 15, 15, 0.4), rgba(5, 5, 5, 0.7));
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
-      position: relative;
-}
-
-/* Base structural rules for flanking wings */
-.telemetry-flank {
-      display: flex;
-      align-items: center;
-      flex: 1;
-}
-
-.telemetry-left {
-      justify-content: flex-start;
-      gap: 2rem;
-}
-
-.telemetry-right {
-      justify-content: flex-end;
-      gap: 2rem;
-}
-
-/* Metrics Elements */
-.telemetry-stat {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-}
-
-.stat-divider {
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      padding-left: 2rem;
-}
-
-.telemetry-label-muted {
-      font-family: 'Gotham Black', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.08rem;
-      color: #ffffff;
-      opacity: 0.35;
-      text-transform: uppercase;
-}
-
-.telemetry-number {
-      font-family: 'Gotham Black', sans-serif;
-      font-size: 1.35rem;
-      color: #ffffff;
-      line-height: 1;
-}
-
-.telemetry-unit {
-      font-family: 'Gotham Book', sans-serif;
-      font-size: 0.7rem;
-      color: #ffffff;
-      opacity: 0.4;
-      text-transform: uppercase;
-}
-
-/* Center Core Hero Focus */
-.telemetry-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 0.2rem;
-      padding: 0 1rem;
-}
-
-.telemetry-center-title {
-      font-family: 'Gotham Black', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.18rem;
-      color: var(--accent);
-      text-transform: uppercase;
-}
-
-.telemetry-center-display {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-}
-
-.telemetry-glow-number {
-      font-family: 'Gotham Black', sans-serif;
-      font-size: 2.2rem;
-      color: var(--accent);
-      letter-spacing: -0.01em;
-      line-height: 1;
-      text-shadow: 0 0 25px rgba(0, 68, 255, 0.35);
-}
-
-.telemetry-center-unit {
-      font-family: 'Gotham Book', sans-serif;
-      font-size: 0.85rem;
-      color: #ffffff;
-      opacity: 0.4;
-      letter-spacing: 0.05rem;
-      text-transform: uppercase;
-}
-
-/* Right Side Utilities */
-.telemetry-timestamp {
-      font-family: 'Gotham Book', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.08rem;
-      color: #ffffff;
-      opacity: 0.3;
-      text-transform: uppercase;
-      white-space: nowrap;
-}
-
-/* Custom interactive drop-down indicator wrap */
-.sort-dropdown-wrapper {
-      position: relative;
-}
-
-.sort-dropdown-wrapper::after {
-      content: '▾';
-      font-size: 0.65rem;
-      color: var(--accent);
-      position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      opacity: 0.8;
-}
-
-.sort-dropdown-wrapper select {
-      appearance: none;
-      -webkit-appearance: none;
-      background: rgba(5, 5, 5, 0.75);
-      color: var(--accent);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      font-family: 'Gotham Book', sans-serif;
-      padding: 0.5rem 2.2rem 0.5rem 1rem;
-      font-size: 0.72rem;
-      font-weight: bold;
-      letter-spacing: 0.05rem;
-      border-radius: 6px;
-      outline: none;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.sort-dropdown-wrapper select:hover {
-      border-color: var(--accent);
-      background: rgba(0, 68, 255, 0.05);
-      box-shadow: 0 0 15px rgba(0, 68, 255, 0.15);
-}
-
-/* Responsive adjustment for mid-sized tablets/screens */
-@media (max-width: 900px) {
-      .telemetry-strip-container {
-            flex-direction: column;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            text-align: center;
-      }
-      .telemetry-flank {
-            width: 100%;
-            justify-content: center;
-      }
-      .telemetry-left {
-            gap: 1.5rem;
-      }
-      .telemetry-right {
-            flex-direction: column-reverse;
-            gap: 0.8rem;
-      }
-}
-
-/* Keep the deep glass finish base style for both containers */
-.bento-tile, .details-container, .contact-info-upper-container {
-      background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(5, 5, 5, 0.95)) !important;
-      backdrop-filter: blur(24px) !important;
-      -webkit-backdrop-filter: blur(24px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      border-radius: 1.5rem !important;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
-                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-      overflow: hidden !important;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
-}
-
-/* INTERACTIVE: Keep the intense electric blue hover glow for experience blocks */
-.details-container:hover {
-      transform: translateY(-8px) scale(1.01) !important;
-      border-color: var(--accent) !important; 
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 
+.bento-tile:hover, .details-container:hover{transform:translateY(-8px) scale(1.01)!important;border-color:var(--accent)!important;box-shadow:0 40px 80px rgba(0, 0, 0, 0.8), 
                   0 0 40px rgba(0, 68, 255, 0.4), 
                   inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                  inset 0 0 20px rgba(0, 68, 255, 0.2) !important; 
-}
-
-/* STATIC: Neutralize the Bento tiles completely so they do not react on hover */
-.bento-tile:hover {
-      transform: none !important; /* Prevents the card from lifting up */
-      border-color: rgba(255, 255, 255, 0.08) !important; /* Keeps the resting thin border */
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
-                  inset 0 1px 0 rgba(255, 255, 255, 0.1) !important; /* Matches resting shadow state */
-      opacity: 1 !important;
-      filter: blur(0px) !important;
-      z-index: 1;
-}
-
-/* =========================================
-   HERO TYPOGRAPHY PERFECT BALANCE
-   ========================================= */
-#profile .section__text__p1 { 
-      font-family: "Gotham Black", sans-serif !important; 
-      font-size: 0.85rem !important; 
-      color: var(--accent) !important; 
-      /* Increases space between letters to match the width of the main title */
-      letter-spacing: 0.4rem !important; 
-      text-transform: uppercase !important; 
-      margin-bottom: 0.6rem !important; /* Fixed tight overlap gap */
-      font-weight: normal !important; 
-      text-align: left !important; 
-      width: 100%; 
-      display: block;
-      opacity: 0.9;
-}
-
-#profile .title { 
-      font-family: "Sequel 85", sans-serif !important;
-      font-size: clamp(2.5rem, 5.2vw, 6rem) !important; 
-      line-height: 0.95 !important; /* Pulls line-height tight for block styling */
-      
-      /* Refined Prizm block shadow: slightly smaller offset with a tight ambient backdrop glow */
-      text-shadow: 3px 3px 0px var(--accent), 
-                   0px 0px 20px rgba(0, 68, 255, 0.35) !important; 
-                   
-      margin-bottom: 1.2rem !important; /* Gives the compressed subtitle room to breathe */
-      text-align: left !important; 
-      white-space: nowrap !important; 
-      color: var(--paper) !important;
-      text-transform: uppercase !important;
-      letter-spacing: -0.01em !important;
-}
-
-#profile .section__text__p2 { 
-      font-family: "Tungsten Compressed Medium", sans-serif !important; 
-      font-size: 2.2rem !important; /* Boosted scale for premium presence */
-      color: #a0a0a0 !important; 
-      
-      /* THE KEY FIX: Massive tracking expansion transforms this from "squished" to luxury minimalist */
-      letter-spacing: 0.35rem !important; 
-      
-      text-transform: uppercase !important; 
-      margin-bottom: 3rem !important; 
-      text-align: left !important;
-      display: block;
-}
-
-#profile .section__text__p1 { 
-      font-family: "Gotham Black", sans-serif !important; 
-      font-size: 0.8rem !important; 
-      
-      /* THE FIX: Switch to crisp white for readability, keeping a hint of transparency */
-      color: #ffffff !important; 
-      opacity: 0.9 !important;
-      
-      /* THE DESIGN: Adds a clean blue terminal indicator line on the left */
-      border-left: 2px solid var(--accent) !important;
-      padding-left: 0.6rem !important;
-      
-      letter-spacing: 0.35rem !important; 
-      text-transform: uppercase !important; 
-      margin-bottom: 0.8rem !important; 
-      text-align: left !important; 
-      width: 100%; 
-      display: block;
-}
-
-/* =========================================
-   PROJECTS SECTION WIP BADGE DESIGN
-   ========================================= */
-/* =========================================
-   PROJECTS SECTION WIP BADGE DESIGN (CENTERED)
-   ========================================= */
-.project-wip-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(0, 68, 255, 0.08);
-      border: 1px solid rgba(0, 68, 255, 0.3);
-      padding: 0.35rem 0.75rem;
-      border-radius: 4px;
-      margin-top: 0; /* Reset previous negative alignment offset */
-      box-shadow: 0 0 15px rgba(0, 68, 255, 0.1);
-}
-
-.wip-badge-text {
-      font-family: 'Gotham Black', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.08rem;
-      color: #ffffff;
-      opacity: 0.8;
-      white-space: nowrap;
-}
-
-.pulse-glow-dot {
-      width: 6px;
-      height: 6px;
-      background-color: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulseGlowIndicator 2s infinite ease-in-out;
-}
-
-@keyframes pulseGlowIndicator {
-      0% { transform: scale(0.9); opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 68, 255, 0.7); }
-      50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 8px 3px rgba(0, 68, 255, 0.4); }
-      100% { transform: scale(0.9); opacity: 0.4; box-shadow: 0 0 0 0 rgba(0, 68, 255, 0); }
-}
-
-/* Forces the diagonal arrows in buttons to stay flat text on iPhones */
-.btn::after, .editorial-action::after {
-    font-variant-emoji: text !important;
-}
-
-/* Forces the eye symbols in your article index rows to match your exact CSS color */
-.editorial-meta span {
-    font-variant-emoji: text !important;
-}
-
-/* ==========================================================================
-   GLOBAL MONOCHROME TEXT FORCE ENGINE (ANTI-APPLE EMOJI OVERRIDE)
-   ========================================================================== */
-.editorial-row,
-.editorial-meta,
-.editorial-meta span,
-.editorial-action,
-.contact-info-container p,
-.contact-info-container a {
-      font-variant-emoji: text !important;
-}
-
-/* ==========================================================================
-   VECTOR GRAPHIC DECK ENGINE (CLEAN RENDER CONTROLS)
-   ========================================================================== */
-
-/* Sizes and formats the inline vector eye graphics */
-.view-icon-svg {
-      width: 14px;
-      height: 14px;
-      fill: none;
-      stroke: var(--accent); /* Matches your signature deep blue color exactly */
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 6px;
-      margin-top: -2px;
-}
-
-/* Formatting for the editorial index navigation arrow vector */
-.arrow-icon-svg {
-      width: 11px;
-      height: 11px;
-      fill: none;
-      stroke: currentColor; /* Matches the parent text color state dynamically */
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      display: inline-block;
-      vertical-align: middle;
-      margin-left: 6px;
-      transition: transform 0.3s ease;
-}
-
-.editorial-row:hover .arrow-icon-svg {
-      transform: translate(3px, -3px); /* Interactive accent slide animation */
-}
-
-.editorial-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-}
-
-.editorial-meta span {
-      display: inline-flex;
-      align-items: center;
-}
-
-.carousel-thumbnails.top-ten-mode {
-      justify-content: center !important;   /* Hard-centers the track items on screen */
-      overflow-x: visible !important;       /* Prevents scroll clipping in static mode */
-}
-
-/* =========================================
-   THE HORIZONTAL TRACK VIEW WINDOW
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      
-      /* Hide scrollbars completely in category mode */
-      overflow-x: hidden !important; 
-      overflow-y: visible !important; 
-      
-      /* Fixed width window showing roughly 5-6 thumbnails comfortably */
-      width: 100%;
-      max-width: 650px !important; 
-      margin: 0 auto 3rem auto; 
-      padding: 1.5rem 1rem 2rem 1rem; 
-      z-index: 20; 
-      
-      /* This is the magic: moves the entire runway smoothly behind the view window */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-}
-
-/* Ensure track items maintain exact dimensions and spacing */
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      width: 90px !important; /* Standard static width for predictable alignment math */
-      margin: 0 10px !important; /* Even spacing between items */
-}
-
-/* --- RESTORE TOP TEN FREEDOM --- */
-/* When in Top Ten mode, disable the view-window constraints so all 10 items show normally */
-.carousel-thumbnails.top-ten-mode {
-      max-width: 85vw !important; 
-      justify-content: center !important;
-      overflow-x: visible !important;
-      transform: none !important; /* Lock positioning in place */
-}
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper {
-      width: auto !important;
-      margin: 0 !important;
-}
-
-/* =========================================
-   THE HORIZONTAL TRACK VIEW WINDOW
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      justify-content: flex-start !important;
-      
-      /* Hide scrollbars completely in category mode */
-      overflow-x: visible !important; /* Allow thumbnails to render endlessly out-of-bounds */
-      overflow-y: visible !important; 
-      
-      /* Let the width scale out organically to fit all assets on the filmstrip runway */
-      width: max-content !important;
-      min-width: 100%;
-      
-      margin: 0; 
-      padding: 1.5rem 0 2rem 0; 
-      z-index: 20; 
-      
-      /* Moves the entire runway smoothly behind the parent mask */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-}
-
-/* Ensure track items maintain exact dimensions and spacing */
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      width: 90px !important; /* Standard static width for predictable alignment math */
-      margin: 0 10px !important; /* Even spacing between items */
-}
-
-/* --- THE VIEW WINDOW FRAME MASK --- */
-/* Center alignment window frame wrapper inside section container */
-#projects {
-      overflow-x: hidden !important; /* Blocks side-scrolling window leaks at the section line */
-}
-
-.carousel-container {
-      margin-bottom: 2rem;
-}
-
-/* --- RESTORE TOP TEN FREEDOM --- */
-/* When in Top Ten mode, disable the view-window constraints so all 10 items show normally */
-.carousel-thumbnails.top-ten-mode {
-      width: 100% !important;
-      max-width: 85vw !important; 
-      justify-content: center !important;
-      overflow-x: visible !important;
-      transform: none !important; /* Lock positioning in place */
-      margin: 0 auto 3rem auto !important;
-}
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper {
-      width: auto !important;
-      margin: 0 !important;
-}
-
-/* =========================================
-   THE HORIZONTAL TRACK VIEW WINDOW
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      justify-content: flex-start !important;
-      
-      /* Allows thumbnails to render continuously out-of-bounds */
-      overflow-x: visible !important; 
-      overflow-y: visible !important; 
-      
-      /* Let the width scale out dynamically to fit all filmstrip assets */
-      width: max-content !important;
-      min-width: 100%;
-      
-      margin: 0; 
-      padding: 1.5rem 0 2rem 0; 
-      z-index: 20; 
-      
-      /* Moves the entire runway smoothly behind the parent mask */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-}
-
-/* Ensure track items maintain exact dimensions and spacing */
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      width: 90px !important; /* Standard static width for predictable alignment math */
-      margin: 0 10px !important; /* Even spacing between items */
-}
-
-/* --- THE VIEW WINDOW FRAME MASK --- */
-/* Center alignment window frame wrapper inside section container */
-#projects {
-      overflow-x: hidden !important; /* Blocks side-scrolling window leaks at the section line */
-}
-
-.carousel-container {
-      margin-bottom: 2rem;
-}
-
-/* --- RESTORE TOP TEN FREEDOM --- */
-/* When in Top Ten mode, disable the view-window constraints so all items show normally */
-.carousel-thumbnails.top-ten-mode {
-      width: 100% !important;
-      max-content: none !important;
-      max-width: 85vw !important; 
-      justify-content: center !important;
-      overflow-x: visible !important;
-      transform: none !important; /* Lock positioning in place */
-      margin: 0 auto 3rem auto !important;
-}
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper {
-      width: auto !important;
-      margin: 0 !important;
-}
-
-/* =========================================
-   THE HORIZONTAL TRACK VIEW WINDOW
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      justify-content: flex-start !important;
-      
-      /* Allows infinite elements to extend past the screen edge smoothly */
-      overflow-x: visible !important; 
-      overflow-y: visible !important; 
-      
-      width: max-content !important;
-      margin: 0; 
-      padding: 1.5rem 0 2rem 0; 
-      z-index: 20; 
-      
-      /* Hardware-accelerated transitions */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-}
-
-/* Base static grid specifications for standard posters */
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      width: 90px !important; 
-      height: 75px !important;
-      margin: 0 10px !important; 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-}
-
-.thumbnail-dot { 
-      height: 100% !important; 
-      width: 100% !important; 
-      object-fit: contain; 
-      border-radius: 4px; 
-      opacity: 0.35; 
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
-}
-
-.thumbnail-dot:hover { 
-      opacity: 0.8; 
-      transform: translateY(-3px); 
-}
-
-.thumbnail-dot.active-thumb { 
-      opacity: 1; 
-      transform: scale(1.1); 
-      box-shadow: 0 0 0 2px var(--accent), 0px 5px 15px rgba(0, 68, 255, 0.5); 
-}
-
-/* ==========================================================================
-   THE DECK CRUSH SAFEGUARD (PREVENTS SLIDE SQUEEZING IN LOWER RUNWAY)
-   ========================================================================== */
-.carousel-thumbnails .thumbnail-wrapper.widescreen-deck-fix {
-      width: 133px !important; /* Expands width to safely fit 16:9 widescreen presentation slides */
-}
-
-.carousel-thumbnails .thumbnail-wrapper.widescreen-deck-fix .thumbnail-dot {
-      object-fit: fill !important; /* Forces presentation slide vectors to take up full layout boundaries */
-}
-
-/* ==========================================================================
-   VIEW MASK STABILIZATION HOOKS
-   ========================================================================== */
-#projects {
-      overflow-x: hidden !important; /* Clips the infinite clones so a side scrollbar never breaks the browser viewport */
-}
-
-.carousel-container {
-      margin-bottom: 2rem;
-}
-
-/* --- RESTORE TOP TEN FREEDOM --- */
-.carousel-thumbnails.top-ten-mode {
-      width: 100% !important;
-      max-width: 85vw !important; 
-      justify-content: center !important;
-      overflow-x: visible !important;
-      transform: none !important; 
-      margin: 0 auto 3rem auto !important;
-}
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper {
-      width: clamp(45px, 5.5vw, 85px) !important;
-      height: auto !important;
-      margin: 0 !important;
-}
-
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper.widescreen-deck-fix {
-      width: clamp(45px, 5.5vw, 85px) !important; /* Keeps spacing proportional in top-ten layouts */
-}
-
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      height: 75px !important;            
-      width: fit-content !important; /* Forces it to hug the image width exactly */
-      margin: 0 10px !important; 
-      display: block !important;     /* Disables any centering layout bugs */
-}
-
-/* ==========================================================================
-   10. LOWER TRACK VIEW WINDOW (STABLE BASE REVERSION)
-   ========================================================================== */
-.carousel-thumbnails { 
-      display: flex; 
-      justify-content: flex-start; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      overflow-x: auto !important; 
-      overflow-y: visible !important; 
-      width: 100%;
-      max-width: 85vw !important; 
-      gap: 1.5rem; 
-      margin: 0 auto 3rem auto; 
-      padding: 1.5rem 1rem 2rem 1rem; 
-      z-index: 20; 
-      counter-reset: topTenCounter; 
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-}
-
-.carousel-thumbnails::-webkit-scrollbar {
-      height: 4px; 
-}
-.carousel-thumbnails::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 10px;
-}
-.carousel-thumbnails::-webkit-scrollbar-thumb {
-      background: rgba(0, 68, 255, 0.3); 
-      border-radius: 10px;
-}
-.carousel-thumbnails::-webkit-scrollbar-thumb:hover {
-      background: var(--accent); 
-}
-
-.thumbnail-wrapper { 
-      position: relative; 
-      flex-shrink: 0 !important;
-      width: fit-content !important;
-      height: 75px !important;
-      display: block !important;
-}
-
-.thumbnail-dot { 
-      height: 75px !important; 
-      width: auto !important; 
-      object-fit: contain !important; 
-      border-radius: 4px; 
-      opacity: 0.35; 
-      box-sizing: border-box !important;
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-}
-.thumbnail-dot:hover { 
-      opacity: 0.8; 
-      transform: translateY(-3px); 
-}
-.thumbnail-dot.active-thumb { 
-      opacity: 1; 
-      transform: scale(1.1); 
-      border: 2px solid var(--accent) !important;
-      box-shadow: 0px 5px 15px rgba(0, 68, 255, 0.5); 
-}
-
-/* --- RESTORE TOP TEN FREEDOM --- */
-.carousel-thumbnails.top-ten-mode {
-      justify-content: center !important;
-      overflow-x: visible !important;
-      gap: clamp(1rem, 3vw, 3.5rem) !important; 
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper { 
-      counter-increment: topTenCounter; 
-      height: auto !important;
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-dot { 
-      width: clamp(45px, 5.5vw, 85px) !important; 
-      height: auto !important; 
-      aspect-ratio: 2 / 3 !important; 
-      opacity: 0.4; 
-      filter: grayscale(100%); 
-      object-fit: cover !important;
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb { 
-      opacity: 1; 
-      filter: grayscale(0%); 
-      transform: scale(1.15) translateY(-8px); 
-      border: 2px solid var(--accent) !important; 
-      box-shadow: 0 15px 35px rgba(0, 68, 255, 0.5), 0 0 25px rgba(0, 68, 255, 0.8), inset 0 0 15px rgba(0, 68, 255, 0.4) !important; 
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before {
-      display: block; 
-      content: counter(topTenCounter); 
-      position: absolute; 
-      bottom: -8%; 
-      left: -25%; 
-      font-family: "Sequel 85", sans-serif; 
-      font-size: clamp(1.8rem, 3vw, 3rem) !important; 
-      line-height: 0.75; 
-      letter-spacing: -0.05em; 
-      color: rgba(255, 255, 255, 0.2); 
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-      z-index: 5; 
-      pointer-events: none; 
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before { 
-      color: var(--accent); 
-      text-shadow: 0 0 20px rgba(0, 68, 255, 0.6); 
-      transform: scale(1.1) translate(-2px, -2px); 
-}
-
-/* =========================================
-   THE HORIZONTAL TRACK VIEW WINDOW
-   ========================================= */
-.carousel-thumbnails { 
-      display: flex; 
-      align-items: center; 
-      flex-wrap: nowrap !important; 
-      justify-content: flex-start;
-      
-      /* UNMASK REMAINING ITEMS: Allows all thumbnails to render continuously off-screen */
-      overflow-x: visible !important; 
-      overflow-y: visible !important; 
-      
-      /* FLUID FILMSTRIP RUNWAY: Container scales organically out to fit all category assets */
-      width: max-content;
-      min-width: 100%;
-      
-      margin: 0; 
-      padding: 1.5rem 0 2rem 0; 
-      z-index: 20; 
-      
-      /* Moves the entire runway smoothly behind your section view framing mask */
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-}
-
-/* Ensure track items maintain exact dimensions and spacing with no crushing */
-.carousel-thumbnails .thumbnail-wrapper {
-      flex-shrink: 0 !important;
-      width: fit-content;
-      height: 75px;
-      margin: 0 10px !important; 
-      display: block;
-}
-
-/* --- THE VIEW WINDOW FRAME MASK --- */
-/* Clips the endless horizontal clones at the portfolio border line so scrollbars never appear */
-#projects {
-      overflow-x: hidden !important; 
-}
-
-/* =========================================
-   RE-ANCHORED WHITE SHSP SUB-FILTER HUD
-   ========================================= */
-#shsp-sub-filters {
-    display: flex !important;
-    justify-content: center !important; 
-    width: 100% !important;
-    max-width: 800px !important;
-    margin: 4rem auto 1rem auto !important; /* Visual spacing above the track runway */
-    position: relative;
-    z-index: 30;
-}
-
-/* Formats buttons into clean corporate telemetry tags */
-.shsp-sub-btn {
-    font-family: "Gotham Book", sans-serif !important; /* Clean corporate geometric face */
-    font-size: 0.65rem !important;                     /* Crisp metadata typography sizing */
-    font-weight: bold !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.12rem !important;                
-    color: #ffffff !important;                         /* Swapped completely to white */
-    opacity: 0.25 !important;                          /* Muted resting state helps visibility balance */
-    padding: 0.4rem 1rem !important;                   
-    border: 1px solid transparent !important;          
-    border-radius: 4px !important;                     
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-
-/* Hover reveal effect */
-.shsp-sub-btn:hover {
-    opacity: 0.6 !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-}
-
-/* Crisp white active badge indicator framing */
-.shsp-sub-btn.active-filter {
-    color: #ffffff !important;                         /* Crisp white focus color overrides signature blue */
-    opacity: 1 !important;                             /* Fully illuminates active selection */
-    background: rgba(255, 255, 255, 0.06) !important;  /* Soft frosted white lens tint */
-    border: 1px solid rgba(255, 255, 255, 0.25) !important; /* Fine-line architectural boundary outline box */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important; /* Disables global blue underline inheritances */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* =========================================
-   MODAL DEEP-DIVE TYPOGRAPHY OVERRIDE
-   ========================================= */
-#modal-body-content h2 {
-    font-family: "Gotham Black", sans-serif !important; /* Swaps from wide Sequel 85 */
-    font-size: clamp(1.5rem, 3.5vw, 2.2rem) !important; /* Dynamically balances font ceiling scale */
-    font-weight: 900 !important;
-    letter-spacing: -0.01em !important;                /* Compresses letter spaces tightly */
-    line-height: 1.15 !important;
-    text-transform: uppercase !important;
-    text-wrap: pretty !important;                      /* Prevents single-word orphans/widows */
-}
-
-/* =========================================
-   MODAL FULLSCREEN UTILITY UTILITIES
-   ========================================= */
-.modal-fullscreen-btn {
-    position: absolute;
-    top: 1.5rem;
-    right: 5rem; /* Positions it neatly to the left of your 'X' close button */
-    background: transparent;
-    border: none;
-    color: var(--paper);
-    font-size: 1.3rem; /* Styled box icon look */
-    cursor: none !important;
-    z-index: 999999;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.modal-fullscreen-btn:hover {
-    color: var(--accent);
-    transform: scale(1.15);
-}
-
-/* CUSTOM CURSOR RE-ANCHOR FOR FULLSCREEN LAYER */
-/* When the browser enters full-screen mode on an asset, native rendering changes. 
-   This ensures your backdrop matches your portfolio aesthetic perfectly. */
-.modal-hero-img:fullscreen {
-    object-fit: contain !important;
-    background-color: #050505 !important;
-    padding: 2rem;
-}
-
-/* ==========================================================================
-   FLUID STABILIZATION UPGRADE: OVERFLOW MODAL FIXED RECONSTRUCTION
-   ========================================================================== */
-
-/* 1. THE VIEWPORT HOOK: The overlay now acts as the true scroll container */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh; 
-    background: rgba(5, 5, 5, 0.96); 
-    z-index: 99999; 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; /* Keeps the starting layout at the top ceiling */
-    overflow-y: auto !important; /* ALLOWS SMOOTH SCROLLING WITHIN THE MODAL */
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 2rem 1rem; /* Visual safety margin buffers around all edges */
-}
-
-.modal-overlay.show-modal { 
-    opacity: 1; 
-    pointer-events: auto; 
-}
-
-/* 2. THE CONTAINER FIX: Strips away screen constraints so content scrolls organically */
-.modal-content { 
-    position: relative; 
-    width: 100%; 
-    max-width: 950px; 
-    margin: 4vh auto !important; /* Visual vertical offset */
-    background: #0a0a0a; 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: clamp(2rem, 5vw, 4rem); /* Adaptive inward safety padding */
-    color: var(--paper); 
-    z-index: 100000; 
-    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
-    height: auto !important; /* Disables restrictive strict vertical clamping loops */
-}
-
-/* 3. PINNED HEADER CONTROL HUD: Prevents the control nodes from flying off-screen */
-.modal-close { 
-    position: absolute; 
-    top: 1rem; 
-    right: 1.5rem; 
-    background: transparent; 
-    border: none; 
-    color: var(--paper); 
-    font-size: 1.5rem; 
-    transition: color 0.3s ease, transform 0.3s ease; 
-    z-index: 999999; 
-    cursor: pointer; 
-    pointer-events: auto; 
-}
-
-.modal-close:hover { 
-    color: var(--accent); 
-    transform: scale(1.15); 
-}
-
-/* 4. MAIN INTERACTIVE preview adjustments */
-.modal-hero-img { 
-    width: 100%; 
-    height: auto; 
-    max-height: 60vh; /* Comfortably brings the image height down so it matches standard device bounds */
-    object-fit: contain; 
-    margin-bottom: 2rem; 
-    background: rgba(0, 0, 0, 0.2);
-}
-
-/* ==========================================================================
-   MODAL HUD CONTROL SYSTEM FIXES
-   ========================================================================== */
-
-/* 1. THE VIEWPORT OVERLAY BUFFER */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh; 
-    background: rgba(5, 5, 5, 0.96); 
-    z-index: 99999; 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    overflow-y: auto !important; 
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 6vh 1rem 4vh 1rem !important; /* CRITICAL FIX: Increased top cushion from 2rem to 6vh to slide everything down */
-}
-
-/* 2. THE OVERFLOW CONTENT FRAME */
-.modal-content { 
-    position: relative; 
-    width: 100%; 
-    max-width: 950px; 
-    margin: 0 auto !important; /* Grounded centering alignment framework */
-    background: #0a0a0a; 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: clamp(3rem, 5vw, 4rem) !important; /* Raised top padding block inside card to clear utility HUD */
-    color: var(--paper); 
-    z-index: 100000; 
-    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
-    height: auto !important; 
-}
-
-/* 3. CLOSE BUTTON TYPOGRAPHY SANITIZATION */
-.modal-close { 
-    position: absolute; 
-    top: 1.25rem !important; 
-    right: 1.5rem !important; 
-    background: transparent; 
-    border: none; 
-    color: var(--paper); 
-    font-family: "Gotham Black", sans-serif !important; /* Enforces strict geometric face */
-    font-size: 1.2rem !important; 
-    text-transform: none !important; /* STOPS THE 'X' FROM ACCIDENTALLY CONVERTING TO A CARET SYMBOL */
-    font-weight: 900 !important;
-    transition: color 0.3s ease, transform 0.3s ease; 
-    z-index: 999999; 
-    cursor: none !important; 
-    pointer-events: auto; 
-}
-
-.modal-close:hover { 
-    color: var(--accent); 
-    transform: scale(1.15); 
-}
-
-/* 4. FULLSCREEN BADGE HOOK STYLE */
-.modal-fullscreen-btn {
-    position: absolute;
-    top: 1.35rem !important;
-    right: 4.5rem !important; /* Safely anchors element to the left of your close utility */
-    background: transparent;
-    border: none;
-    color: var(--paper);
-    font-family: "Gotham Black", sans-serif !important;
-    font-size: 0.9rem !important; /* Clean editorial metadata tag appearance */
-    font-weight: bold;
-    letter-spacing: 0.05rem;
-    cursor: none !important;
-    z-index: 999999;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.modal-fullscreen-btn:hover {
-    color: var(--accent);
-    transform: scale(1.1);
-}
-/* ==========================================================================
-   FIXED CONTROL HUD SYSTEM (PREVENTS VIEWPORT CLIPPING)
-   ========================================================================== */
-
-/* 1. THE VIEWPORT OVERLAY SETUP */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh; 
-    background: rgba(5, 5, 5, 0.97); 
-    z-index: 99999; 
-    overflow-y: scroll !important; /* Forces standard scrollbars to avoid layout shifting */
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 12vh 2rem 6vh 2rem !important; /* Massive top cushion pushes project content well below your navigation header */
-}
-
-.modal-overlay.show-modal { 
-    opacity: 1; 
-    pointer-events: auto; 
-}
-
-/* 2. THE MOVED CONTROLS LAYER: Pins buttons relative to the entire screen window instead of the card box */
-.modal-close { 
-    position: fixed !important; /* HARD-LOCK: Pinned to browser viewport boundaries */
-    top: 3vh !important; 
-    right: 3vw !important; 
-    background: rgba(10, 10, 10, 0.85) !important; /* Dark solid background plate ensures contrast against background elements */
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 4px;
-    color: #ffffff !important; 
-    font-family: "Gotham Black", sans-serif !important; 
-    font-size: 1rem !important; 
-    padding: 0.5rem 0.8rem !important;
-    text-transform: none !important; 
-    font-weight: 900 !important;
-    transition: all 0.3s ease; 
-    z-index: 1000000 !important; /* Higher stacking index layer beats all other elements on the page */
-    cursor: none !important; 
-    pointer-events: auto; 
-}
-
-.modal-fullscreen-btn {
-    position: fixed !important; /* HARD-LOCK: Pinned next to the close button */
-    top: 3vh !important;
-    right: calc(3vw + 50px) !important; /* Dynamic structural offset aligns items neatly side-by-side */
-    background: rgba(10, 10, 10, 0.85) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 4px;
-    color: #ffffff !important; 
-    font-family: "Gotham Black", sans-serif !important;
-    font-size: 0.8rem !important; 
-    padding: 0.55rem 0.8rem !important;
-    font-weight: bold;
-    letter-spacing: 0.05rem;
-    cursor: none !important;
-    z-index: 1000000 !important;
-    transition: all 0.3s ease;
-}
-
-/* Hover effects for buttons */
-.modal-close:hover, .modal-fullscreen-btn:hover {
-    color: #ffffff !important;
-    border-color: var(--accent) !important;
-    background: var(--accent) !important;
-    box-shadow: 0 0 15px rgba(0, 68, 255, 0.4);
-}
-
-/* 3. RE-ANCHORED CONTAINER: Content card simply renders beneath the fixed screen controls */
-.modal-content { 
-    position: relative; 
-    width: 100%; 
-    max-width: 900px; 
-    margin: 0 auto !important; 
-    background: #0a0a0a; 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: clamp(2rem, 4vw, 4rem) !important; 
-    color: var(--paper); 
-    z-index: 999999; 
-    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.8); 
-    height: auto !important; 
-}
-
-/* ==========================================================================
-   FLUID STABILIZATION FIX: OVERFLOW MODAL FIXED RECONSTRUCTION
-   ========================================================================== */
-
-/* 1. THE VIEWPORT OVERLAY: Acts as the isolated screen boundaries */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh; 
-    background: rgba(5, 5, 5, 0.98); 
-    z-index: 99999; 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    
-    /* THE OVERFLOW FIX: Forces safe, natural page scrolling within the modal backdrop */
-    overflow-y: auto !important; 
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    
-    /* High top-padding acts as a buffer zone preventing any header collision */
-    padding: 14vh 2rem 8vh 2rem !important; 
-}
-
-.modal-overlay.show-modal { 
-    opacity: 1; 
-    pointer-events: auto; 
-}
-
-/* 2. FIXED HUD OVERHEAD LAYER: Anchors control utilities so they stay visible on scroll */
-.modal-hud-layer {
-    position: fixed !important;
-    top: 4vh;
-    right: 4vw;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 1000001 !important; /* Forces layer above the content layer */
-    pointer-events: auto;
-}
-
-/* 3. CLOSE ACTION CONTROL */
-.modal-close { 
-    position: static !important; /* Strips layout conflict inheritance */
-    background: rgba(15, 15, 15, 0.85) !important; 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 6px;
-    color: #ffffff !important; 
-    font-family: "Gotham Black", sans-serif !important; 
-    font-size: 1rem !important; 
-    padding: 0.5rem 0.85rem !important;
-    text-transform: none !important; 
-    font-weight: 900 !important;
-    line-height: 1 !important;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-    cursor: none !important; 
-}
-
-/* 4. FULLSCREEN ACTION CONTROL */
-.modal-fullscreen-btn {
-    position: static !important; 
-    background: rgba(15, 15, 15, 0.85) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 6px;
-    color: #ffffff !important; 
-    font-family: "Gotham Black", sans-serif !important;
-    font-size: 0.85rem !important; 
-    padding: 0.55rem 0.85rem !important;
-    font-weight: bold;
-    line-height: 1 !important;
-    letter-spacing: 0.05rem;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    cursor: none !important;
-}
-
-/* Premium Interactive Focus States */
-.modal-close:hover, .modal-fullscreen-btn:hover {
-    color: #ffffff !important;
-    border-color: var(--accent) !important;
-    background: var(--accent) !important;
-    box-shadow: 0 0 20px rgba(0, 68, 255, 0.5);
-}
-
-/* 5. THE CONTENT FRAME: Simply flows down naturally without bounding box limits */
-.modal-content { 
-    position: relative; 
-    width: 100%; 
-    max-width: 900px; 
-    margin: 0 auto !important; 
-    background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(5, 5, 5, 0.98)) !important;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08) !important; 
-    border-radius: 1.5rem !important;
-    padding: clamp(2rem, 5vw, 4rem) !important; 
-    color: var(--paper); 
-    z-index: 999999; 
-    box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.7); 
-    height: auto !important; /* Prevents hard calculations loop crashes */
-}
-
-/* ==========================================================================
-   MODAL CONTROL HUD RE-ANCHOR & VISIBILITY OVERRIDES
-   ========================================================================== */
-
-/* Locks the buttons safely relative to the screen window out of the scroll layer */
-.modal-hud-layer {
-    position: fixed !important;
-    top: 4vh !important;
-    right: 4vw !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 12px !important;
-    z-index: 2000000000 !important; /* High-level stacking order clears all page contents */
-    pointer-events: auto !important;
-}
-
-/* Close action element styling */
-.modal-close { 
-    position: static !important; 
-    display: inline-block !important;
-    background: rgba(20, 20, 20, 0.85) !important; 
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 8px !important;
-    color: #ffffff !important; /* Forces high-contrast pure white visual render */
-    font-family: "Gotham Black", sans-serif !important; 
-    font-size: 1.1rem !important; 
-    padding: 0.5rem 0.95rem !important;
-    text-transform: none !important; 
-    font-weight: 900 !important;
-    line-height: 1 !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important; 
-    cursor: pointer !important; /* Swaps the brutalist cursor to standard pointers on interactive nodes */
-    pointer-events: auto !important;
-}
-
-/* Fullscreen zoom action element styling */
-.modal-fullscreen-btn {
-    position: static !important; 
-    display: inline-block !important;
-    background: rgba(20, 20, 20, 0.85) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 8px !important;
-    color: #ffffff !important; 
-    font-family: "Gotham Black", sans-serif !important;
-    font-size: 0.9rem !important; 
-    padding: 0.6rem 0.95rem !important;
-    font-weight: bold !important;
-    line-height: 1 !important;
-    letter-spacing: 0.05rem !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-}
-
-/* Premium Electric Blue Glow Hover Focus States */
-.modal-close:hover, 
-.modal-fullscreen-btn:hover {
-    color: #ffffff !important;
-    border-color: var(--accent) !important;
-    background: var(--accent) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 10px 25px rgba(0, 68, 255, 0.45) !important;
-}
-
-/* ==========================================================================
-   STABILIZATION FIX: SOLID ANTI-BLEED OVERLAY SHEET
-   ========================================================================== */
-.modal-overlay { 
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important; 
-    width: 100vw !important; 
-    height: 100vh !important; 
-    
-    /* THE ANTI-BLEED FIX: 100% Solid true black hex code blocks background visibility completely */
-    background: #050505 !important; 
-    
-    /* Keeps any underlying hardware-accelerated animations from bleeding through */
-    mix-blend-mode: normal !important;
-    backdrop-filter: none !important;
-    
-    z-index: 999999995 !important; 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    overflow-y: auto !important; 
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 14vh 2rem 8vh 2rem !important; 
-}
-
-/* ==========================================================================
-   MODAL INTEGRATION: INSIDE-BOX CORNER HUD LAYOUT
-   ========================================================================== */
-
-/* Gives the content container absolute positioning hooks for its child items */
-.modal-content {
-    position: relative !important;
-}
-
-/* Positions the row neatly inside the top right inner corner padding of the card box */
-.modal-content .modal-hud-layer {
-    position: absolute !important;
-    top: 2rem !important;
-    right: 2rem !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 10px !important;
-    z-index: 100000 !important;
-    background: transparent !important;
-}
-
-/* Reset button styling to integrate organically inside the layout deck */
-.modal-hud-layer .modal-close,
-.modal-hud-layer .modal-fullscreen-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 6px !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    
-    padding: 0.5rem 0.8rem !important;
-    height: 36px !important;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
-    cursor: pointer !important;
-}
-
-/* Tiny crisp micro-label that instantly explains the action to visitors */
-.modal-fullscreen-btn .fs-label {
-    font-family: "Gotham Black", sans-serif !important;
-    font-size: 0.65rem !important;
-    letter-spacing: 0.08rem !important;
-    font-weight: 900 !important;
-    display: inline-block !important;
-}
-
-/* Format inline clean SVG graphic sizes */
-.modal-hud-layer .hud-icon-svg {
-    width: 14px !important;
-    height: 14px !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
-/* Elegant high-contrast indicator highlight states on mouse-over */
-.modal-close:hover,
-.modal-fullscreen-btn:hover {
-    color: #ffffff !important;
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
-    box-shadow: 0 8px 20px rgba(0, 68, 255, 0.4) !important;
-}
-
-/* Structural push padding adjustment for main header inside content tray so nothing overlaps */
-#modal-body-content {
-    margin-top: 2rem !important;
-}
-
-/* ==========================================================================
-   FROSTED GLASS MODAL BACKDROP (STATIONARY VIEWPORT SETTING)
-   ========================================================================== */
-.modal-overlay { 
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important; 
-    width: 100vw !important; 
-    height: 100vh !important; 
-    
-    /* RESTORED: Translucent dark tone let's background structural elements glow through */
-    background: rgba(5, 5, 5, 0.93) !important; 
-    
-    /* RESTORED: Frosted lens blur glass finish */
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    
-    z-index: 999999995 !important; 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    overflow-y: auto !important; 
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 14vh 2rem 8vh 2rem !important; 
-}
-
-/* ==========================================================================
-   STABLE FIX: FROSTED GLASS BACKGROUND LAYER FOR THE BACKDROP
-   ========================================================================== */
-.modal-overlay { 
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important; 
-    width: 100vw !important; 
-    height: 100vh !important; 
-    
-    /* SUCCESS: Subtle dark translucent overlay reveals your background layout nodes */
-    background: rgba(5, 5, 5, 0.82) !important; 
-    
-    /* SUCCESS: High-fidelity blur effect catches ambient light stream glares */
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    mix-blend-mode: normal !important;
-    
-    /* Brought down below your cursor layer (10000000) so your mouse tracker renders on top */
-    z-index: 9999999 !important; 
-    
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    overflow-y: auto !important; 
-    overflow-x: hidden; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease; 
-    padding: 14vh 2rem 8vh 2rem !important; 
-}
-
-/* ==========================================================================
-   VISIBILITY OVERRIDE: CURSOR ELEVATION DECK
-   ========================================================================== */
-.custom-cursor {
-    /* Pushes your tracking circle past the modal layer ceiling seamlessly */
-    z-index: 10000000 !important; 
-    
-    /* Ensures clicking through the center of the cursor circle triggers the link buttons */
-    pointer-events: none !important; 
-}
-
-/* ==========================================================================
-   CLEAN MODAL GLASS BACKDROP (REMOVED SOLID BLACK BACKGROUND OVERRIDE)
-   ========================================================================== */
-.modal-overlay { 
-    position: fixed !important; 
-    top: 0 !important; 
-    left: 0 !important; 
-    width: 100vw !important; 
-    height: 100vh !important; 
-    
-    /* SUCCESS: Translucent smoky tone lets underlying page elements glow through slightly */
-    background: rgba(5, 5, 5, 0.85) !important; 
-    
-    /* SUCCESS: High-density frost blur lens captures your ambient light streams */
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    mix-blend-mode: normal !important;
-    
-    /* Keeps container stacked cleanly beneath the custom cursor layer */
-    z-index: 9999999 !important; 
-    
-    display: flex !important; 
-    justify-content: center !important; 
-    align-items: flex-start !important; 
-    overflow-y: auto !important; 
-    overflow-x: hidden !important; 
-    opacity: 0; 
-    pointer-events: none; 
-    transition: opacity 0.4s ease !important; 
-    padding: 14vh 2rem 8vh 2rem !important; 
-}
-
-/* ==========================================================================
-   ULTRA-SPECIFIC ATOMIC OVERRIDE: FORCE BACKDROP TRANSPRENCY 
-   ========================================================================== */
-
-/* This multi-selector chain forces the browser to kill solid black layers */
-body .modal-overlay,
-html body div#project-modal.modal-overlay,
-div#project-modal[class*="modal-overlay"] {
-    /* Forces the smoky dark translucent backing tint */
-    background-color: rgba(5, 5, 5, 0.82) !important;
-    background: rgba(5, 5, 5, 0.82) !important;
-    
-    /* Forces the frosted-glass lens blur directly onto the overlay viewport */
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    
-    /* Structural variables preservation */
-    z-index: 9999999 !important;
-    display: flex !important;
-    mix-blend-mode: normal !important;
-}
-
-/* Diagnostic Safety check: If the content box background itself became pitch black, 
-   this rule guarantees it uses your premium deep bento-tile finish gradient */
-body #project-modal .modal-content {
-    background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 0.98)) !important;
-    box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.7) !important;
-}
-
-/* ==========================================================================
-   MODAL HEADER HARD LOCK: SINGLE-LINE ENFORCEMENT ENGINE
-   ========================================================================== */
-#modal-body-content h2 {
-    /* Physically forces the browser to keep the text on a single line */
-    white-space: nowrap !important; 
-    text-wrap: nowrap !important; 
-
-    /* Safely truncates the line with clean editorial dots (...) on tiny laptop screens */
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    
-    /* Slightly brings down the font ceiling scale for better structural proportion */
-    font-size: clamp(1.2rem, 3.2vw, 1.9rem) !important; 
-    
-    width: 100% !important;
-    display: block !important;
-}
-
-body section#projects {
-      padding-top: 18vh !important; 
-}
-
-body section#projects {
-      padding-top: 4vh !important; 
-}
-
-.modal-hud-layer .modal-close,
-.modal-hud-layer .modal-fullscreen-btn,
-.modal-hud-layer .modal-share-btn {
-      display: inline-flex;
-      align-items: center;
-      /* ... rest of the existing code stays the same ... */
-}
-
-.modal-close:hover,
-.modal-fullscreen-btn:hover,
-.modal-share-btn:hover {
-      color: #ffffff;
-      background: var(--accent);
-      /* ... rest of the existing code stays the same ... */
-}
-
-.modal-hero-img { 
-      width: 100%; 
-      height: auto; 
-      max-height: 55vh; /* REDUCED FROM 70vh: Shrinks the image slightly so the text pulls up into view */
-      object-fit: contain; 
-      margin-bottom: 2rem; 
-}
-
-.modal-fullscreen-btn .fs-label,
-.modal-share-btn .fs-label {
-      font-size: 0.65rem;
-      /* ... rest of the existing code stays the same ... */
-}
-
-/* ==========================================================================
-   FIXED HUD BUTTONS & IMAGE SCALING
-   ========================================================================== */
-
-/* 1. Fully styles all three HUD buttons perfectly identically */
-.modal-hud-layer .modal-close,
-.modal-hud-layer .modal-fullscreen-btn,
-.modal-hud-layer .modal-share-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      background: rgba(255, 255, 255, 0.03) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      border-radius: 6px !important;
-      color: rgba(255, 255, 255, 0.6) !important;
-      padding: 0.5rem 0.8rem !important;
-      height: 36px !important;
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
-      cursor: pointer !important;
-      font-family: "Gotham Black", sans-serif !important;
-}
-
-/* 2. Unified Hover States for all three buttons */
-.modal-close:hover,
-.modal-fullscreen-btn:hover,
-.modal-share-btn:hover {
-      color: #ffffff !important;
-      background: var(--accent) !important;
-      border-color: var(--accent) !important;
-      box-shadow: 0 8px 20px rgba(0, 68, 255, 0.4) !important;
-}
-
-/* 3. Perfect text alignment for the labels */
-.modal-fullscreen-btn .fs-label,
-.modal-share-btn .fs-label {
-      font-size: 0.65rem !important;
-      letter-spacing: 0.08rem !important;
-      font-weight: 900 !important;
-      display: inline-block !important;
-}
-
-/* 4. Aggressively shrinks the image to guarantee text visibility */
-.modal-hero-img { 
-      width: 100% !important; 
-      height: auto !important; 
-      max-height: 42vh !important; /* Forces the image to take up less than half the screen height */
-      object-fit: contain !important; 
-      margin-bottom: 1.5rem !important; 
-}
-
-/* 4. Balanced Image Scaling & Background Fix */
-.modal-hero-img { 
-      width: 100% !important; 
-      height: auto !important; 
-      
-      /* The Goldilocks Zone: Bumps the size back up so it feels impactful, 
-         but leaves just enough room for the title to peek through */
-      max-height: 52vh !important; 
-      
-      object-fit: contain !important; 
-      margin-bottom: 1.5rem !important; 
-      
-      /* THIS KILLS THE UGLY BLACK RECTANGLE */
-      background: transparent !important; 
-}
-
-
-.footer-signature {
-      height: 5.5rem; 
-      width: auto;
-      margin-bottom: 1.5rem;
-      object-fit: contain;
-      
-      /* Locks it at maximum brightness and keeps the ambient glow permanently */
-      opacity: 1; 
-      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
-}
-
-/* ==========================================================================
-   MODAL TYPOGRAPHY & READABILITY OVERRIDES
-   ========================================================================== */
-
-/* 1. Base Paragraphs: Converts all long description text to your clean reading font */
-#modal-body-content p {
-      font-family: "Gotham Book", sans-serif !important;
-      font-size: 1.15rem !important;
-      line-height: 1.8 !important; /* Adds generous breathing room between lines */
-      color: #cccccc !important; /* Softens the white slightly to reduce eye strain */
-      margin-bottom: 1.5rem !important;
-      letter-spacing: 0.02em !important;
-}
-
-/* 2. The Category Line: Targets ONLY the first paragraph (the category data) */
-#modal-body-content p:first-of-type {
-      font-family: "Gotham Black", sans-serif !important;
-      font-size: 0.85rem !important;
-      letter-spacing: 0.2rem !important;
-      color: #ffffff !important;
-      text-transform: uppercase !important;
-      
-      /* Pushes the long description text further down to create a clean visual break */
-      margin-bottom: 2rem !important; 
-}
-
-/* 3. The Category Label: Turns just the word "CATEGORY :" into your signature blue */
-#modal-body-content p:first-of-type strong {
-      color: var(--accent) !important;
-      font-weight: 900 !important;
-}
-
-/* ==========================================================================
-   MODAL INTERNAL NAVIGATION ARROWS (UPGRADED GLASS CIRCLES)
-   ========================================================================== */
-.modal-nav-arrow {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      
-      /* Sleek dark glass aesthetic */
-      background: rgba(10, 10, 10, 0.65) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      
-      /* THE FIX: Perfect circles instead of clunky rectangles */
-      border-radius: 50% !important; 
-      
-      color: #ffffff !important;
-      font-size: 1.4rem !important;
-      
-      /* Symmetrical dimensions */
-      width: 65px !important;
-      height: 65px !important;
-      
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000005 !important;
-      cursor: none !important; 
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-      pointer-events: auto !important;
-      
-      /* Adds a deep shadow so they separate from the background */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
-}
-
-/* Pulled slightly further inward so they don't hug the absolute edge */
-.modal-nav-prev {
-      left: 4vw !important; 
-}
-
-.modal-nav-next {
-      right: 4vw !important; 
-}
-
-/* Premium Hover Glow */
-.modal-nav-arrow:hover {
-      background: var(--accent) !important;
-      border-color: var(--accent) !important;
-      transform: translateY(-50%) scale(1.1) !important;
-      box-shadow: 0 10px 25px rgba(0, 68, 255, 0.45) !important;
-      color: #ffffff !important;
-}
-
-/* Responsive adjustment for laptops/tablets to keep them out of the way */
-@media (max-width: 1300px) {
-      .modal-nav-arrow {
-            width: 50px !important;
-            height: 50px !important;
-            font-size: 1.1rem !important;
-      }
-      .modal-nav-prev { left: 2vw !important; }
-      .modal-nav-next { right: 2vw !important; }
-}
-
-/* ==========================================================================
-   CAROUSEL HOVER INTERACTION BADGE
-   ========================================================================== */
-/* The hidden floating glass pill */
-.carousel-item.active::before {
-      content: 'VIEW PROJECT \2197\FE0E';
-      position: absolute;
-      top: 45%; /* Slightly above dead center so it doesn't block the focal point */
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      
-      /* Premium frosted glass aesthetic */
-      background: rgba(10, 10, 10, 0.75) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
-      
-      color: #ffffff;
-      padding: 0.8rem 1.8rem;
-      border-radius: 50px;
-      font-family: "Gotham Black", sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.15rem;
-      
-      opacity: 0;
-      z-index: 100;
-      pointer-events: none; /* Lets the user's click pass cleanly through to the image */
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 68, 255, 0.4);
-}
-
-/* Ignites the pill on hover */
-.carousel-item.active:hover::before {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-}
-
-/* Dims the active image slightly on hover to guarantee text readability */
-.carousel-item.active:hover .carousel-img {
-      filter: brightness(0.65);
-      transform: scale(1.05); 
-}
-
-/* ==========================================================================
-   CAROUSEL HOVER INTERACTION BADGE (FIXED)
-   ========================================================================== */
-.carousel-item.active::before {
-      content: 'VIEW PROJECT \2197\FE0E';
-      position: absolute;
-      
-      /* Anchors the pill neatly near the bottom so it never covers the main photo */
-      top: auto; 
-      bottom: 8%; 
-      left: 50%;
-      transform: translate(-50%, 10px) scale(0.9);
-      
-      background: rgba(10, 10, 10, 0.85) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
-      
-      color: #ffffff;
-      padding: 0.6rem 1.6rem;
-      border-radius: 50px;
-      font-family: "Gotham Black", sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.15rem;
-      
-      /* THE FIX: Forces the text and arrow to stay perfectly on a single line */
-      white-space: nowrap !important; 
-      
-      opacity: 0;
-      z-index: 100;
-      pointer-events: none; 
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 68, 255, 0.4);
-}
-
-.carousel-item.active:hover::before {
-      opacity: 1;
-      /* Slides up cleanly into place */
-      transform: translate(-50%, 0) scale(1);
-}
-
-.carousel-item.active:hover .carousel-img {
-      /* Softened the dimming so your graphics remain bright and visible */
-      filter: brightness(0.85);
-      transform: scale(1.03); 
-}
-
-/* ==========================================================================
-   CAROUSEL ITEM STRUCTURAL CENTERING
-   ========================================================================== */
-.carousel-item { 
-      position: absolute; 
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease; 
-      opacity: 0; 
-      transform: translateX(0) scale(0.5); 
-      z-index: 0; 
-      pointer-events: none; 
-      
-      /* THE FIX: Forces the image, caption, and badge to share the exact same center axis */
-      display: flex !important; 
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
-}
-
-/* ==========================================================================
-   PREMIUM SLIDESHOW: INVISIBLE CLICK ZONES & INDICATORS
-   ========================================================================== */
-/* Invisible 50/50 click layers over the presentation */
-.slide-click-zone {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50%;
-      z-index: 50;
-      cursor: none !important; 
-}
-.slide-click-zone.left-zone { left: 0; }
-.slide-click-zone.right-zone { right: 0; }
-
-/* The cinematic numeric tracker (01 / 04) */
-.slide-indicator {
-      position: absolute;
-      bottom: -2.5rem; /* Sits cleanly below the slide */
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: "Gotham Black", sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.15rem;
-      color: rgba(255, 255, 255, 0.4);
-      z-index: 100;
-      pointer-events: none;
-}
-
-/* Modifies your custom cursor when hovering over the presentation */
-.custom-cursor.hovering-prev, 
-.custom-cursor.hovering-next {
-      width: 60px !important; 
-      height: 60px !important; 
-      background: rgba(0, 68, 255, 0.9) !important; 
-      border-color: transparent !important;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-}
-
-.custom-cursor.hovering-prev::after {
-      content: "PREV";
-      font-family: "Gotham Black", sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.08rem;
-      color: #ffffff;
-}
-
-.custom-cursor.hovering-next::after {
-      content: "NEXT";
-      font-family: "Gotham Black", sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.08rem;
-      color: #ffffff;
-}
-
-/* ==========================================================================
-   SLIDESHOW FULLSCREEN OVERRIDES (KEEPS NAVIGATION INTACT)
-   ========================================================================== */
-.presentation-stack:fullscreen {
-      background: #050505 !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-}
-
-.presentation-stack:fullscreen .presentation-slide {
-      max-height: 90vh !important; /* Leaves breathing room for the indicator */
-      width: auto !important;
-      max-width: 90vw !important;
-      object-fit: contain !important;
-}
-
-.presentation-stack:fullscreen .slide-indicator {
-      bottom: 2vh; /* Brings the numbers up into the fullscreen view */
-}
+                  inset 0 0 20px rgba(0, 68, 255, 0.2)!important}
+.btn{border-radius:8px!important;border:1px solid rgba(255,255,255,0.2)!important}
+.btn-color-2{background:var(--paper);color:#050505;box-shadow:0 10px 20px rgba(255, 255, 255, 0.1)!important}
+.btn-color-2:hover{transform:translateY(-4px)!important;box-shadow:0 15px 30px rgba(255, 255, 255, 0.2)!important}
+section#about .section__text__p1{font-family:"Gotham Book", sans-serif!important}
+section{padding-top:4vh;min-height:100vh;height:auto;box-sizing:border-box;position:relative;z-index:1;overflow:hidden}
+section:not(#profile){scroll-margin-top:12vh}
+section:not(#profile) .title{font-size:clamp(4rem, 10vw, 7rem);margin-bottom:3rem}
+#contact{min-height:auto!important;padding-bottom:6vh!important}
+footer{margin-top:4vh!important;border-top:1px solid rgba(255,255,255,0.1);padding-top:6vh!important;padding-bottom:10vh!important;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;margin-bottom:0}
+#projects .section__text__p1{font-family:"Gotham Book", sans-serif!important;letter-spacing:0.4rem!important;font-size:1.1rem!important;font-weight:bold;opacity:0.8}
+.project-filters{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:none!important;box-shadow:none!important;border-radius:0!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:center!important;align-items:center!important;gap:clamp(1rem, 2vw, 3rem)!important;width:100%!important;max-width:1400px!important}
+.filter-btn{font-family:"Gotham Book", sans-serif!important;font-size: clamp(0.65rem, 1vw, 0.9rem) !important;font-weight:bold!important;letter-spacing:0.2rem!important;text-transform:uppercase;color:rgba(244, 244, 240, 0.4)!important;padding:0.5rem 0.2rem!important;background:transparent!important;border:none!important;white-space:nowrap!important;transition:all 0.3s ease!important;position:relative!important}
+.filter-btn:hover{color:var(--paper)!important}
+.filter-btn.active-filter{color:var(--accent)!important;background:transparent!important;border-radius:0!important;box-shadow:none!important;border-bottom:2px solid var(--accent)!important}
+body section#projects .title{font-size:clamp(3rem, 7.5vw, 5.2rem)!important;letter-spacing:-0.02em!important;margin-bottom:1rem!important}
+body section#projects .section__text__p1{font-family:"Gotham Book", sans-serif!important;letter-spacing:0.35rem!important;font-size:1rem!important;margin-bottom:0!important;text-transform:uppercase;opacity:0.75}
+.project-filters{margin:2rem auto 5.5rem auto!important}
+@keyframes growLineLeft{
+  0%{transform:scaleX(0);opacity:0}
+  15%{opacity:1}
+  100%{transform:scaleX(1);opacity:1}
+}
+@keyframes growLineRight{
+  0%{transform:scaleX(0);opacity:0}
+  15%{opacity:1}
+  100%{transform:scaleX(1);opacity:1}
+}
+.start-reveal .projects-line-left{transform-origin:left!important;animation:growLineLeft 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards!important;animation-delay:0.1s!important}
+.start-reveal .projects-line-right{transform-origin:right!important;animation:growLineRight 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards!important;animation-delay:0.1s!important}
+.section-header-trigger{margin-bottom:4.5rem!important}
+.section-header-trigger .title{font-family:'Gotham Black', sans-serif!important;font-size:clamp(2.5rem, 6vw, 4rem)!important;letter-spacing:-0.01em!important;line-height:1!important;text-transform:uppercase!important;white-space:nowrap!important}
+section .section__text__p1{font-family:'Gotham Book', sans-serif!important;letter-spacing:0.4rem!important;font-size:0.85rem!important;margin-top:14vh!important;margin-bottom:1.2rem!important;text-transform:uppercase!important;color:#ffffff!important;opacity:0.4!important;text-align:center!important}
+body section#writing .section-header-trigger .title{font-family:'Gotham Black', sans-serif!important;font-size:clamp(1.4rem, 4.5vw, 2.8rem)!important;letter-spacing:-0.01em!important;line-height:1.1!important;text-transform:uppercase!important;white-space:nowrap!important}
+.details-container h3{font-family:"Gotham Black", sans-serif!important;font-size:clamp(1.1rem, 1.6vw, 1.35rem)!important;letter-spacing:-0.01em!important;margin-top:0.5rem!important;margin-bottom:0.3rem!important}
+.telemetry-strip-container{width:100%;max-width:1100px;margin:0 auto 3rem auto;background:linear-gradient(145deg, rgba(15, 15, 15, 0.4), rgba(5, 5, 5, 0.7));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255, 255, 255, 0.05);border-radius:12px;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;position:relative}
+.telemetry-flank{display:flex;align-items:center;flex:1}
+.telemetry-left{justify-content:flex-start;gap:2rem}
+.telemetry-right{justify-content:flex-end;gap:2rem}
+.telemetry-stat{display:flex;align-items:baseline;gap:0.5rem}
+.stat-divider{border-left:1px solid rgba(255, 255, 255, 0.1);padding-left:2rem}
+.telemetry-label-muted{font-family:'Gotham Black', sans-serif;font-size:0.75rem;letter-spacing:0.08rem;color:#ffffff;opacity:0.35;text-transform:uppercase}
+.telemetry-number{font-family:'Gotham Black', sans-serif;font-size:1.35rem;color:#ffffff;line-height:1}
+.telemetry-unit{font-family:'Gotham Book', sans-serif;font-size:0.7rem;color:#ffffff;opacity:0.4;text-transform:uppercase}
+.telemetry-center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.2rem;padding:0 1rem}
+.telemetry-center-title{font-family:'Gotham Black', sans-serif;font-size:0.65rem;letter-spacing:0.18rem;color:var(--accent);text-transform:uppercase}
+.telemetry-center-display{display:flex;align-items:baseline;gap:0.4rem}
+.telemetry-glow-number{font-family:'Gotham Black', sans-serif;font-size:2.2rem;color:var(--accent);letter-spacing:-0.01em;line-height:1;text-shadow:0 0 25px rgba(0, 68, 255, 0.35)}
+.telemetry-center-unit{font-family:'Gotham Book', sans-serif;font-size:0.85rem;color:#ffffff;opacity:0.4;letter-spacing:0.05rem;text-transform:uppercase}
+.telemetry-timestamp{font-family:'Gotham Book', sans-serif;font-size:0.68rem;letter-spacing:0.08rem;color:#ffffff;opacity:0.3;text-transform:uppercase;white-space:nowrap}
+.sort-dropdown-wrapper{position:relative}
+.sort-dropdown-wrapper::after{content:'▾';font-size:0.65rem;color:var(--accent);position:absolute;right:1rem;top:50%;transform:translateY(-50%);pointer-events:none;opacity:0.8}
+.sort-dropdown-wrapper select{appearance:none;-webkit-appearance:none;background:rgba(5, 5, 5, 0.75);color:var(--accent);border:1px solid rgba(255, 255, 255, 0.08);font-family:'Gotham Book', sans-serif;padding:0.5rem 2.2rem 0.5rem 1rem;font-size:0.72rem;font-weight:bold;letter-spacing:0.05rem;border-radius:6px;outline:none;text-transform:uppercase;transition:all 0.3s ease;box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.05)}
+.sort-dropdown-wrapper select:hover{border-color:var(--accent);background:rgba(0, 68, 255, 0.05);box-shadow:0 0 15px rgba(0, 68, 255, 0.15)}
+@media (max-width: 900px){
+  .telemetry-strip-container{flex-direction:column;gap:1.5rem;padding:1.5rem;text-align:center}
+  .telemetry-flank{width:100%;justify-content:center}
+  .telemetry-left{gap:1.5rem}
+  .telemetry-right{flex-direction:column-reverse;gap:0.8rem}
+}
+.bento-tile, .details-container, .contact-info-upper-container{background:linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(5, 5, 5, 0.95))!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;border:1px solid rgba(255, 255, 255, 0.08)!important;border-radius:1.5rem!important;box-shadow:0 30px 60px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1)!important;overflow:hidden!important;transition:transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease!important}
+.details-container:hover{transform:translateY(-8px) scale(1.01)!important;border-color:var(--accent)!important;box-shadow:0 40px 80px rgba(0, 0, 0, 0.8), 
+                  0 0 40px rgba(0, 68, 255, 0.4), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                  inset 0 0 20px rgba(0, 68, 255, 0.2)!important}
+.bento-tile:hover{transform:none!important;border-color:rgba(255, 255, 255, 0.08)!important;box-shadow:0 30px 60px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1)!important;opacity:1!important;filter:blur(0px)!important;z-index:1}
+#profile .section__text__p1{font-weight:normal!important}
+#profile .title{font-family:"Sequel 85", sans-serif!important;font-size:clamp(2.5rem, 5.2vw, 6rem)!important;line-height:0.95!important;text-shadow:3px 3px 0px var(--accent), 
+                   0px 0px 20px rgba(0, 68, 255, 0.35)!important;margin-bottom:1.2rem!important;text-align:left!important;white-space:nowrap!important;color:var(--paper)!important;text-transform:uppercase!important;letter-spacing:-0.01em!important}
+#profile .section__text__p2{font-family:"Tungsten Compressed Medium", sans-serif!important;font-size:2.2rem!important;color:#a0a0a0!important;letter-spacing:0.35rem!important;text-transform:uppercase!important;margin-bottom:3rem!important;text-align:left!important;display:block}
+#profile .section__text__p1{font-family:"Gotham Black", sans-serif!important;font-size:0.8rem!important;color:#ffffff!important;opacity:0.9!important;border-left:2px solid var(--accent)!important;padding-left:0.6rem!important;letter-spacing:0.35rem!important;text-transform:uppercase!important;margin-bottom:0.8rem!important;text-align:left!important;width:100%;display:block}
+.project-wip-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0, 68, 255, 0.08);border:1px solid rgba(0, 68, 255, 0.3);padding:0.35rem 0.75rem;border-radius:4px;margin-top:0;box-shadow:0 0 15px rgba(0, 68, 255, 0.1)}
+.wip-badge-text{font-family:'Gotham Black', sans-serif;font-size:0.65rem;letter-spacing:0.08rem;color:#ffffff;opacity:0.8;white-space:nowrap}
+.pulse-glow-dot{width:6px;height:6px;background-color:var(--accent);border-radius:50%;display:inline-block;animation:pulseGlowIndicator 2s infinite ease-in-out}
+@keyframes pulseGlowIndicator{
+  0%{transform:scale(0.9);opacity:0.4;box-shadow:0 0 0 0 rgba(0, 68, 255, 0.7)}
+  50%{transform:scale(1.1);opacity:1;box-shadow:0 0 8px 3px rgba(0, 68, 255, 0.4)}
+  100%{transform:scale(0.9);opacity:0.4;box-shadow:0 0 0 0 rgba(0, 68, 255, 0)}
+}
+.btn::after, .editorial-action::after{font-variant-emoji:text!important}
+.editorial-meta span{font-variant-emoji:text!important}
+.editorial-row, .editorial-meta, .editorial-meta span, .editorial-action, .contact-info-container p, .contact-info-container a{font-variant-emoji:text!important}
+.view-icon-svg{width:14px;height:14px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:6px;margin-top:-2px}
+.arrow-icon-svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-left:6px;transition:transform 0.3s ease}
+.editorial-row:hover .arrow-icon-svg{transform:translate(3px, -3px)}
+.editorial-meta{display:flex;align-items:center;gap:0.5rem}
+.editorial-meta span{display:inline-flex;align-items:center}
+.carousel-thumbnails.top-ten-mode{max-content:none!important}
+.carousel-thumbnails{justify-content:flex-start!important;width:max-content!important}
+.carousel-thumbnails .thumbnail-wrapper{justify-content:center;align-items:center}
+.carousel-thumbnails .thumbnail-wrapper.widescreen-deck-fix{width:133px!important}
+.carousel-thumbnails .thumbnail-wrapper.widescreen-deck-fix .thumbnail-dot{object-fit:fill!important}
+.carousel-container{margin-bottom:2rem}
+.carousel-thumbnails.top-ten-mode{width:100%!important;max-width:85vw!important;transform:none!important;margin:0 auto 3rem auto!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper{width:clamp(45px, 5.5vw, 85px)!important;margin:0!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper.widescreen-deck-fix{width:clamp(45px, 5.5vw, 85px)!important}
+.carousel-thumbnails .thumbnail-wrapper{height:75px!important;width:fit-content!important;display:block!important}
+.carousel-thumbnails{max-width:85vw!important;gap:1.5rem;counter-reset:topTenCounter;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.carousel-thumbnails::-webkit-scrollbar{height:4px}
+.carousel-thumbnails::-webkit-scrollbar-track{background:rgba(255, 255, 255, 0.02);border-radius:10px}
+.carousel-thumbnails::-webkit-scrollbar-thumb{background:rgba(0, 68, 255, 0.3);border-radius:10px}
+.carousel-thumbnails::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+.thumbnail-wrapper{position:relative;flex-shrink:0!important;width:fit-content!important;height:75px!important;display:block!important}
+.thumbnail-dot{height:75px!important;width:auto!important;object-fit:contain!important;border-radius:4px;opacity:0.35;box-sizing:border-box!important;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)}
+.thumbnail-dot:hover{opacity:0.8;transform:translateY(-3px)}
+.thumbnail-dot.active-thumb{opacity:1;transform:scale(1.1);border:2px solid var(--accent)!important;box-shadow:0px 5px 15px rgba(0, 68, 255, 0.5)}
+.carousel-thumbnails.top-ten-mode{justify-content:center!important;overflow-x:visible!important;gap:clamp(1rem, 3vw, 3.5rem)!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper{counter-increment:topTenCounter;height:auto!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot{width:clamp(45px, 5.5vw, 85px)!important;height:auto!important;aspect-ratio:2 / 3!important;opacity:0.4;filter:grayscale(100%);object-fit:cover!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-dot.active-thumb{opacity:1;filter:grayscale(0%);transform:scale(1.15) translateY(-8px);border:2px solid var(--accent)!important;box-shadow:0 15px 35px rgba(0, 68, 255, 0.5), 0 0 25px rgba(0, 68, 255, 0.8), inset 0 0 15px rgba(0, 68, 255, 0.4)!important}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper::before{display:block;content:counter(topTenCounter);position:absolute;bottom:-8%;left:-25%;font-family:"Sequel 85", sans-serif;font-size:clamp(1.8rem, 3vw, 3rem)!important;line-height:0.75;letter-spacing:-0.05em;color:rgba(255, 255, 255, 0.2);text-shadow:2px 2px 4px rgba(0, 0, 0, 0.8);z-index:5;pointer-events:none;transition:all 0.4s cubic-bezier(0.25, 1, 0.5, 1)}
+.carousel-thumbnails.top-ten-mode .thumbnail-wrapper:has(.active-thumb)::before{color:var(--accent);text-shadow:0 0 20px rgba(0, 68, 255, 0.6);transform:scale(1.1) translate(-2px, -2px)}
+.carousel-thumbnails{display:flex;align-items:center;flex-wrap:nowrap!important;justify-content:flex-start;overflow-x:visible!important;overflow-y:visible!important;width:max-content;min-width:100%;margin:0;padding:1.5rem 0 2rem 0;z-index:20;transition:transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);will-change:transform}
+.carousel-thumbnails .thumbnail-wrapper{flex-shrink:0!important;width:fit-content;height:75px;margin:0 10px!important;display:block}
+#projects{overflow-x:hidden!important}
+#shsp-sub-filters{display:flex!important;justify-content:center!important;width:100%!important;max-width:800px!important;margin:4rem auto 1rem auto!important;position:relative;z-index:30}
+.shsp-sub-btn{font-family:"Gotham Book", sans-serif!important;font-size:0.65rem!important;font-weight:bold!important;text-transform:uppercase!important;letter-spacing:0.12rem!important;color:#ffffff!important;opacity:0.25!important;padding:0.4rem 1rem!important;border:1px solid transparent!important;border-radius:4px!important;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)!important}
+.shsp-sub-btn:hover{opacity:0.6!important;background:rgba(255, 255, 255, 0.03)!important}
+.shsp-sub-btn.active-filter{color:#ffffff!important;opacity:1!important;background:rgba(255, 255, 255, 0.06)!important;border:1px solid rgba(255, 255, 255, 0.25)!important;border-bottom:1px solid rgba(255, 255, 255, 0.25)!important;box-shadow:0 4px 12px rgba(0, 0, 0, 0.3)!important}
+#modal-body-content h2{font-family:"Gotham Black", sans-serif!important;font-weight:900!important;letter-spacing:-0.01em!important;line-height:1.15!important;text-transform:uppercase!important}
+.modal-hero-img:fullscreen{object-fit:contain!important;background-color:#050505!important;padding:2rem}
+.modal-close:hover{color:var(--accent);transform:scale(1.15)}
+.modal-fullscreen-btn:hover{color:var(--accent);transform:scale(1.1)}
+.modal-close{top:3vh!important;right:3vw!important;z-index:1000000!important}
+.modal-fullscreen-btn{top:3vh!important;right:calc(3vw + 50px)!important;z-index:1000000!important}
+.modal-overlay.show-modal{opacity:1;pointer-events:auto}
+.modal-content{width:100%;max-width:900px;margin:0 auto!important;background:linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(5, 5, 5, 0.98))!important;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255, 255, 255, 0.08)!important;border-radius:1.5rem!important;padding:clamp(2rem, 5vw, 4rem)!important;color:var(--paper);z-index:999999;box-shadow:0px 40px 80px rgba(0, 0, 0, 0.7);height:auto!important}
+.modal-hud-layer{position:fixed!important;top:4vh!important;right:4vw!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;z-index:2000000000!important;pointer-events:auto!important}
+.modal-close{position:static!important;display:inline-block!important;background:rgba(20, 20, 20, 0.85)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;border:1px solid rgba(255, 255, 255, 0.15)!important;border-radius:8px!important;color:#ffffff!important;font-family:"Gotham Black", sans-serif!important;font-size:1.1rem!important;padding:0.5rem 0.95rem!important;text-transform:none!important;font-weight:900!important;line-height:1!important;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1)!important;cursor:pointer!important;pointer-events:auto!important}
+.modal-fullscreen-btn{position:static!important;display:inline-block!important;background:rgba(20, 20, 20, 0.85)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;border:1px solid rgba(255, 255, 255, 0.15)!important;border-radius:8px!important;color:#ffffff!important;font-family:"Gotham Black", sans-serif!important;font-size:0.9rem!important;padding:0.6rem 0.95rem!important;font-weight:bold!important;line-height:1!important;letter-spacing:0.05rem!important;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1)!important;cursor:pointer!important;pointer-events:auto!important}
+.modal-close:hover, .modal-fullscreen-btn:hover{transform:translateY(-2px)!important}
+.modal-content{position:relative!important}
+.modal-content .modal-hud-layer{position:absolute!important;top:2rem!important;right:2rem!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;z-index:100000!important;background:transparent!important}
+.modal-hud-layer .modal-close, .modal-hud-layer .modal-fullscreen-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;background:rgba(255, 255, 255, 0.03)!important;border:1px solid rgba(255, 255, 255, 0.08)!important;border-radius:6px!important;color:rgba(255, 255, 255, 0.6)!important;padding:0.5rem 0.8rem!important;height:36px!important;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)!important;cursor:pointer!important}
+.modal-fullscreen-btn .fs-label{font-family:"Gotham Black", sans-serif!important;font-size:0.65rem!important;letter-spacing:0.08rem!important;font-weight:900!important;display:inline-block!important}
+.modal-hud-layer .hud-icon-svg{width:14px!important;height:14px!important;display:inline-block!important;vertical-align:middle!important}
+.modal-close:hover, .modal-fullscreen-btn:hover{color:#ffffff!important;background:var(--accent)!important;border-color:var(--accent)!important;box-shadow:0 8px 20px rgba(0, 68, 255, 0.4)!important}
+#modal-body-content{margin-top:2rem!important}
+.custom-cursor{z-index:10000000!important;pointer-events:none!important}
+.modal-overlay{position:fixed!important;top:0!important;left:0!important;width:100vw!important;height:100vh!important;background:rgba(5, 5, 5, 0.85)!important;backdrop-filter:blur(15px)!important;-webkit-backdrop-filter:blur(15px)!important;mix-blend-mode:normal!important;z-index:9999999!important;display:flex!important;justify-content:center!important;align-items:flex-start!important;overflow-y:auto!important;overflow-x:hidden!important;opacity:0;pointer-events:none;transition:opacity 0.4s ease!important;padding:14vh 2rem 8vh 2rem!important}
+body .modal-overlay, html body div#project-modal.modal-overlay, div#project-modal[class*="modal-overlay"]{background-color:rgba(5, 5, 5, 0.82)!important;background:rgba(5, 5, 5, 0.82)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;z-index:9999999!important;display:flex!important;mix-blend-mode:normal!important}
+body #project-modal .modal-content{background:linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 0.98))!important;box-shadow:0px 40px 80px rgba(0, 0, 0, 0.7)!important}
+#modal-body-content h2{white-space:nowrap!important;text-wrap:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:clamp(1.2rem, 3.2vw, 1.9rem)!important;width:100%!important;display:block!important}
+body section#projects{padding-top:4vh!important}
+.modal-hud-layer .modal-close, .modal-hud-layer .modal-fullscreen-btn, .modal-hud-layer .modal-share-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;background:rgba(255, 255, 255, 0.03)!important;border:1px solid rgba(255, 255, 255, 0.08)!important;border-radius:6px!important;color:rgba(255, 255, 255, 0.6)!important;padding:0.5rem 0.8rem!important;height:36px!important;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)!important;cursor:pointer!important;font-family:"Gotham Black", sans-serif!important}
+.modal-close:hover, .modal-fullscreen-btn:hover, .modal-share-btn:hover{color:#ffffff!important;background:var(--accent)!important;border-color:var(--accent)!important;box-shadow:0 8px 20px rgba(0, 68, 255, 0.4)!important}
+.modal-fullscreen-btn .fs-label, .modal-share-btn .fs-label{font-size:0.65rem!important;letter-spacing:0.08rem!important;font-weight:900!important;display:inline-block!important}
+.modal-hero-img{width:100%!important;height:auto!important;max-height:52vh!important;object-fit:contain!important;margin-bottom:1.5rem!important;background:transparent!important}
+.footer-signature{height:5.5rem;width:auto;margin-bottom:1.5rem;object-fit:contain;opacity:1;filter:drop-shadow(0 0 15px rgba(255, 255, 255, 0.2))}
+#modal-body-content p{font-family:"Gotham Book", sans-serif!important;font-size:1.15rem!important;line-height:1.8!important;color:#cccccc!important;margin-bottom:1.5rem!important;letter-spacing:0.02em!important}
+#modal-body-content p:first-of-type{font-family:"Gotham Black", sans-serif!important;font-size:0.85rem!important;letter-spacing:0.2rem!important;color:#ffffff!important;text-transform:uppercase!important;margin-bottom:2rem!important}
+#modal-body-content p:first-of-type strong{color:var(--accent)!important;font-weight:900!important}
+.modal-nav-arrow{position:fixed;top:50%;transform:translateY(-50%);background:rgba(10, 10, 10, 0.65)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255, 255, 255, 0.1)!important;border-radius:50%!important;color:#ffffff!important;font-size:1.4rem!important;width:65px!important;height:65px!important;display:flex;justify-content:center;align-items:center;z-index:1000005!important;cursor:none!important;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1)!important;pointer-events:auto!important;box-shadow:0 10px 30px rgba(0, 0, 0, 0.6)!important}
+.modal-nav-prev{left:4vw!important}
+.modal-nav-next{right:4vw!important}
+.modal-nav-arrow:hover{background:var(--accent)!important;border-color:var(--accent)!important;transform:translateY(-50%) scale(1.1)!important;box-shadow:0 10px 25px rgba(0, 68, 255, 0.45)!important;color:#ffffff!important}
+@media (max-width: 1300px){
+  .modal-nav-arrow{width:50px!important;height:50px!important;font-size:1.1rem!important}
+  .modal-nav-prev{left:2vw!important}
+  .modal-nav-next{right:2vw!important}
+}
+.carousel-item.active::before{content:'VIEW PROJECT \2197\FE0E';position:absolute;top:auto;bottom:8%;left:50%;transform:translate(-50%, 10px) scale(0.9);background:rgba(10, 10, 10, 0.85)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255, 255, 255, 0.2)!important;color:#ffffff;padding:0.6rem 1.6rem;border-radius:50px;font-family:"Gotham Black", sans-serif;font-size:0.8rem;letter-spacing:0.15rem;white-space:nowrap!important;opacity:0;z-index:100;pointer-events:none;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 68, 255, 0.4)}
+.carousel-item.active:hover::before{opacity:1;transform:translate(-50%, 0) scale(1)}
+.carousel-item.active:hover .carousel-img{filter:brightness(0.85);transform:scale(1.03)}
+.carousel-item{position:absolute;transition:transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;opacity:0;transform:translateX(0) scale(0.5);z-index:0;pointer-events:none;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
+.slide-click-zone{position:absolute;top:0;height:100%;width:50%;z-index:50;cursor:none!important}
+.slide-click-zone.left-zone{left:0}
+.slide-click-zone.right-zone{right:0}
+.slide-indicator{position:absolute;bottom:-2.5rem;left:50%;transform:translateX(-50%);font-family:"Gotham Black", sans-serif;font-size:0.8rem;letter-spacing:0.15rem;color:rgba(255, 255, 255, 0.4);z-index:100;pointer-events:none}
+.custom-cursor.hovering-prev, .custom-cursor.hovering-next{width:60px!important;height:60px!important;background:rgba(0, 68, 255, 0.9)!important;border-color:transparent!important;display:flex;justify-content:center;align-items:center}
+.custom-cursor.hovering-prev::after{content:"PREV";font-family:"Gotham Black", sans-serif;font-size:0.65rem;letter-spacing:0.08rem;color:#ffffff}
+.custom-cursor.hovering-next::after{content:"NEXT";font-family:"Gotham Black", sans-serif;font-size:0.65rem;letter-spacing:0.08rem;color:#ffffff}
+.presentation-stack:fullscreen{background:#050505!important;display:flex;align-items:center;justify-content:center;padding:0!important;margin:0!important;width:100vw!important;height:100vh!important}
+.presentation-stack:fullscreen .presentation-slide{max-height:90vh!important;width:auto!important;max-width:90vw!important;object-fit:contain!important}
+.presentation-stack:fullscreen .slide-indicator{bottom:2vh}
