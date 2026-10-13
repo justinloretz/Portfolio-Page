@@ -149,8 +149,8 @@ nav{align-items:center;justify-content:space-between;height:12vh;width:100%;padd
 .desktop-filters {
       display: flex !important;
       justify-content: center !important;
-      gap: clamp(0.5rem, 1.5vw, 2rem) !important; /* Dynamically shrinks gap before breaking */
-      flex-wrap: nowrap !important; /* The master switch to prevent the second row */
+      gap: clamp(1.5rem, 3.8vw, 4.5rem) !important; /* Expanded breathing room across the strip */
+      flex-wrap: nowrap !important;
       width: 100% !important;
 }
 .mobile-filters{display:none;width:100%;justify-content:center;margin-bottom:2rem}
@@ -345,7 +345,9 @@ body section#writing .section-header-trigger .title{font-family:'Gotham Black', 
 .carousel-thumbnails{display:flex;align-items:center;flex-wrap:nowrap!important;justify-content:flex-start;overflow-x:visible!important;overflow-y:visible!important;width:max-content;min-width:100%;margin:0;padding:1.5rem 0 2rem 0;z-index:20;transition:transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);will-change:transform}
 .carousel-thumbnails .thumbnail-wrapper{flex-shrink:0!important;width:fit-content;height:75px;margin:0 10px!important;display:block}
 #projects{overflow-x:hidden!important}
-#shsp-sub-filters{display:flex!important;justify-content:center!important;width:100%!important;max-width:800px!important;margin:4rem auto 1rem auto!important;position:relative;z-index:30}
+#shsp-sub-filters .desktop-filters {
+      gap: clamp(1rem, 2.5vw, 2.5rem) !important;
+}
 .shsp-sub-btn{font-family:"Gotham Book", sans-serif!important;font-size:0.65rem!important;font-weight:bold!important;text-transform:uppercase!important;letter-spacing:0.12rem!important;color:#ffffff!important;opacity:0.25!important;padding:0.4rem 1rem!important;border:1px solid transparent!important;border-radius:4px!important;transition:all 0.3s cubic-bezier(0.25, 1, 0.5, 1)!important}
 .shsp-sub-btn:hover{opacity:0.6!important;background:rgba(255, 255, 255, 0.03)!important}
 .shsp-sub-btn.active-filter{color:#ffffff!important;opacity:1!important;background:rgba(255, 255, 255, 0.06)!important;border:1px solid rgba(255, 255, 255, 0.25)!important;border-bottom:1px solid rgba(255, 255, 255, 0.25)!important;box-shadow:0 4px 12px rgba(0, 0, 0, 0.3)!important}
